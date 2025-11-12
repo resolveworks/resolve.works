@@ -135,26 +135,34 @@ class Command(BaseCommand):
                 }
             },
             {
-                'type': 'process_roadmap',
+                'type': 'section',
                 'value': {
-                    'heading': 'From roadmap to rollout',
-                    'steps': [
+                    'title': 'From roadmap to rollout',
+                    'background': 'light',
+                    'content': [
                         {
-                            'title': 'Diagnose',
-                            'description': 'Goals, data, constraints, and risks',
-                        },
-                        {
-                            'title': 'Prototype',
-                            'description': 'Rapid iterations with real user flows',
-                        },
-                        {
-                            'title': 'Pilot',
-                            'description': 'Roll out to a small group',
-                        },
-                        {
-                            'title': 'Scale',
-                            'description': 'Adapt, monitor, and train the team',
-                        },
+                            'type': 'process_roadmap',
+                            'value': {
+                                'steps': [
+                                    {
+                                        'title': 'Diagnose',
+                                        'description': 'Goals, data, constraints, and risks',
+                                    },
+                                    {
+                                        'title': 'Prototype',
+                                        'description': 'Rapid iterations with real user flows',
+                                    },
+                                    {
+                                        'title': 'Pilot',
+                                        'description': 'Roll out to a small group',
+                                    },
+                                    {
+                                        'title': 'Scale',
+                                        'description': 'Adapt, monitor, and train the team',
+                                    },
+                                ]
+                            }
+                        }
                     ]
                 }
             },

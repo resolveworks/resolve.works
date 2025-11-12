@@ -189,14 +189,8 @@ class ProcessStepBlock(blocks.StructBlock):
 
 
 class ProcessRoadmapBlock(blocks.StructBlock):
-    """From Roadmap to Rollout section with animated arrows."""
+    """Process roadmap with 4 steps and animated arrows."""
 
-    heading = blocks.CharBlock(
-        required=True,
-        default="From roadmap to rollout",
-        max_length=255,
-        help_text="Section heading"
-    )
     steps = blocks.ListBlock(
         ProcessStepBlock(),
         min_num=4,
@@ -205,7 +199,7 @@ class ProcessRoadmapBlock(blocks.StructBlock):
     )
 
     class Meta:
-        icon = "doc-full"
+        icon = "list-ol"
         label = "Process Roadmap"
         template = "blocks/process_roadmap.html"
 
@@ -244,6 +238,7 @@ class SectionBlock(blocks.StructBlock):
             ("definition_list", DefinitionListBlock()),
             ("two_column", TwoColumnBlock()),
             ("faq", FAQBlock()),
+            ("process_roadmap", ProcessRoadmapBlock()),
         ],
         required=False,
     )

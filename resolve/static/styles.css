@@ -232,6 +232,12 @@ main > nav > p > span {
   color: var(--color-light);
 }
 
+/* Reduce spacing between consecutive sections with same color */
+.section-light:has(+ .section-light),
+.section-dark:has(+ .section-dark) {
+  padding-bottom: 4rem;
+}
+
 @media (min-width: 1024px) {
   .section > * {
     width: 100%;

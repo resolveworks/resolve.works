@@ -1,11 +1,8 @@
-<section class="section">
-  <h2>{{ self.heading }}</h2>
-  <ol>
-    {% for step in self.steps %}
-      <li>
-        <h3>{{ step.title }}</h3>
-        {{ step.description }}
-      </li>
-    {% endfor %}
-  </ol>
-</section>
+<ol>
+  {% for step in self.steps %}
+    <li>
+      <h3>{{ step.title }}</h3>
+      {{ step.description }}
+    </li>
+  {% endfor %}
+</ol>
