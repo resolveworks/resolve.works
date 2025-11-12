@@ -275,7 +275,39 @@ class Command(BaseCommand):
                 'value': {
                     'title': 'Frequently asked questions',
                     'background': 'light',
-                    'content': []
+                    'content': [
+                        {
+                            'type': 'faq',
+                            'value': {
+                                'items': [
+                                    {
+                                        'question': 'Which LLM APIs and tools do you work with?',
+                                        'answer': '<p>We implement practical solutions using OpenAI\'s GPT models, Anthropic\'s Claude, and other established APIs. We generally use proven, production-ready services rather than experimental models, except when these are the right tool for the job. For data privacy needs, we can work with self-hosted solutions using existing open-source tools and models.</p>',
+                                    },
+                                    {
+                                        'question': 'What\'s the difference between using ChatGPT directly and a custom implementation?',
+                                        'answer': '<p>Custom implementations connect LLMs directly to your existing workflows and databases through API integration. This means automated processing without copy-pasting, consistent prompt engineering for reliable results, and the ability to handle bulk operations. We build practical bridges between AI capabilities and your daily operations.</p>',
+                                    },
+                                    {
+                                        'question': 'Can you integrate AI with our existing software like Slack, Notion, or our CRM?',
+                                        'answer': '<p>Yes, we connect LLMs to the tools you already use through their APIs. Whether it\'s automating Slack responses, processing documents in Notion, or enriching CRM data, we build custom integrations that fit your existing workflow. No need to learn new platforms, the AI works where you work.</p>',
+                                    },
+                                    {
+                                        'question': 'How do you handle GDPR and data privacy for European businesses?',
+                                        'answer': '<p>We clearly document which third-party services process what data, Use API providers that offer DPA agreements and are GDPR-compliant and implement local models (Ollama, vLLM) when clients need data to stay on-premise.</p>',
+                                    },
+                                    {
+                                        'question': 'What happens after the initial implementation?',
+                                        'answer': '<p>We ensure your team understands and can maintain what we\'ve built. This includes clear documentation, training, and handover of all code and configurations. We\'re available for ongoing support, but our goal is to build systems your team can own and operate independently.</p>',
+                                    },
+                                    {
+                                        'question': 'Do you only work with small businesses or also enterprise clients?',
+                                        'answer': '<p>We focus on SMBs - companies that need practical automation but don\'t have huge IT departments. Our sweet spot is businesses with 10-200 employees who have repetitive workflows eating up time. We\'ve worked with investigative journalists, compliance teams, and data processors who need to do more with existing resources.</p>',
+                                    },
+                                ]
+                            }
+                        }
+                    ]
                 }
             }
         ]

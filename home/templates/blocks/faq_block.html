@@ -1,0 +1,27 @@
+{% load wagtailcore_tags %}
+
+{% for item in value.items %}
+<details>
+    <summary>{{ item.question }}</summary>
+    {{ item.answer }}
+</details>
+{% endfor %}
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {% for item in value.items %}
+        {
+            "@type": "Question",
+            "name": "{{ item.question|escapejs }}",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "{{ item.answer|striptags|escapejs }}"
+            }
+        }{% if not forloop.last %},{% endif %}
+        {% endfor %}
+    ]
+}
+</script>

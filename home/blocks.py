@@ -121,6 +121,56 @@ class TwoColumnBlock(blocks.StructBlock):
         template = "blocks/two_column_block.html"
 
 
+class FAQItemBlock(blocks.StructBlock):
+    """Individual FAQ question and answer."""
+
+    question = blocks.CharBlock(
+        required=True,
+        max_length=255,
+        help_text="The question"
+    )
+    answer = blocks.RichTextBlock(
+        required=True,
+        features=["bold", "italic", "link"],
+        help_text="The answer"
+    )
+
+    class Meta:
+        icon = "help"
+
+
+class FAQBlock(blocks.StructBlock):
+    """FAQ section with structured data support."""
+
+    items = blocks.ListBlock(FAQItemBlock(), help_text="FAQ items")
+
+    def get_structured_data(self):
+        """Generate JSON-LD structured data for this FAQ block."""
+        if not self.get('items'):
+            return None
+
+        return {
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+                {
+                    "@type": "Question",
+                    "name": item['question'],
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": item['answer'].source  # Get the raw HTML
+                    }
+                }
+                for item in self.get('items', [])
+            ]
+        }
+
+    class Meta:
+        icon = "help"
+        label = "FAQ"
+        template = "blocks/faq_block.html"
+
+
 class SectionBlock(blocks.StructBlock):
     """Generic section block with title, background, and flexible content."""
 
@@ -154,6 +204,7 @@ class SectionBlock(blocks.StructBlock):
             ("features", FeaturesBlock()),
             ("definition_list", DefinitionListBlock()),
             ("two_column", TwoColumnBlock()),
+            ("faq", FAQBlock()),
         ],
         required=False,
     )
