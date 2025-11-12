@@ -13,9 +13,7 @@ class FooterSettings(BaseSiteSetting):
     """Global footer settings."""
 
     heading = models.CharField(
-        max_length=100,
-        default="Resolve",
-        help_text="Footer heading"
+        max_length=100, default="Resolve", help_text="Footer heading"
     )
 
     column_1 = StreamField(
@@ -25,7 +23,7 @@ class FooterSettings(BaseSiteSetting):
         ],
         blank=True,
         use_json_field=True,
-        help_text="First footer column content"
+        help_text="First footer column content",
     )
 
     column_2 = StreamField(
@@ -35,7 +33,7 @@ class FooterSettings(BaseSiteSetting):
         ],
         blank=True,
         use_json_field=True,
-        help_text="Second footer column content"
+        help_text="Second footer column content",
     )
 
     column_3 = StreamField(
@@ -45,7 +43,7 @@ class FooterSettings(BaseSiteSetting):
         ],
         blank=True,
         use_json_field=True,
-        help_text="Third footer column content"
+        help_text="Third footer column content",
     )
 
     panels = [
@@ -56,7 +54,7 @@ class FooterSettings(BaseSiteSetting):
                 FieldPanel("column_2"),
                 FieldPanel("column_3"),
             ],
-            heading="Footer Columns"
+            heading="Footer Columns",
         ),
     ]
 
@@ -66,11 +64,7 @@ class FooterSettings(BaseSiteSetting):
 
 class HomePage(Page):
     body = StreamField(
-        [
-            ("hero", HeroBlock()),
-            ("section", SectionBlock()),
-            ("process_roadmap", ProcessRoadmapBlock()),
-        ],
+        [("hero", HeroBlock()), ("section", SectionBlock())],
         blank=True,
         use_json_field=True,
     )
