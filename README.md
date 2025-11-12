@@ -19,10 +19,17 @@ A consulting website built with Wagtail CMS.
    uv run python manage.py createsuperuser
    ```
 
-4. **Seed the homepage** (optional):
-   ```bash
-   uv run python manage.py seed_homepage
-   ```
+## Seeding
+
+Populate the site with initial content:
+
+```bash
+# Seed homepage content
+uv run python manage.py seed_homepage
+
+# Seed footer settings
+uv run python manage.py seed_footer
+```
 
 ## Usage
 
