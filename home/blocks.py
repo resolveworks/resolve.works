@@ -42,8 +42,8 @@ class FeaturesBlock(blocks.StructBlock):
 
     columns = blocks.ChoiceBlock(
         choices=[
-            ("3", "3 columns (h4 headings)"),
-            ("4", "4 columns (h6 headings)"),
+            ("3", "3 columns"),
+            ("4", "4 columns"),
         ],
         default="3",
         help_text="Number of columns in grid layout",
@@ -100,7 +100,7 @@ class TwoColumnBlock(blocks.StructBlock):
             (
                 "heading",
                 blocks.RichTextBlock(
-                    features=["h4"], help_text="Heading (h4)"
+                    features=["h3"], help_text="Heading (h3)"
                 ),
             ),
             (
@@ -231,7 +231,7 @@ class SectionBlock(blocks.StructBlock):
             (
                 "heading",
                 blocks.RichTextBlock(
-                    features=["h4"], help_text="Heading (h4)"
+                    features=["h3"], help_text="Heading (h3)"
                 ),
             ),
             (

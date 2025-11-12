@@ -3,11 +3,7 @@
 <ul class="features-block features-block-{{ value.columns }}">
     {% for feature in value.features %}
     <li>
-        {% if value.columns == "3" %}
-        <h4>{{ feature.heading }}</h4>
-        {% else %}
-        <h6>{{ feature.heading }}</h6>
-        {% endif %}
+        <h3>{{ feature.heading }}</h3>
         {{ feature.description }}
     </li>
     {% endfor %}

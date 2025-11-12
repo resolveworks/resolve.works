@@ -232,7 +232,7 @@ class Command(BaseCommand):
                                 'content': [
                                     {
                                         'type': 'heading',
-                                        'value': '<h4>Selected experience</h4>',
+                                        'value': '<h3>Selected experience</h3>',
                                     },
                                     {
                                         'type': 'definition_list',
@@ -255,7 +255,7 @@ class Command(BaseCommand):
                                     },
                                     {
                                         'type': 'heading',
-                                        'value': '<h4>Let\'s get in touch</h4>',
+                                        'value': '<h3>Let\'s get in touch</h3>',
                                     },
                                     {
                                         'type': 'definition_list',

@@ -62,6 +62,21 @@ h6 {
   font-size: var(--text-size-h6);
 }
 
+/* Context-specific h3 styling for correct visual hierarchy */
+.features-block-3 h3,
+.section > ol > li > h3,
+.two-column-block h3 {
+  font-size: var(--text-size-h4);
+  margin-top: 1.5em;
+  margin-bottom: 1em;
+}
+
+.features-block-4 h3 {
+  font-size: var(--text-size-h6);
+  margin-top: 1.5em;
+  margin-bottom: 1em;
+}
+
 button {
   border: none;
   padding: 0.5rem 1rem;
