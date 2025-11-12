@@ -5,7 +5,7 @@ from wagtail.admin.panels import FieldPanel, MultiFieldPanel
 from wagtail.contrib.settings.models import BaseSiteSetting, register_setting
 from wagtail import blocks
 
-from .blocks import HeroBlock, SectionBlock, DefinitionListBlock
+from .blocks import HeroBlock, SectionBlock, DefinitionListBlock, ProcessRoadmapBlock
 
 
 @register_setting
@@ -69,6 +69,7 @@ class HomePage(Page):
         [
             ("hero", HeroBlock()),
             ("section", SectionBlock()),
+            ("process_roadmap", ProcessRoadmapBlock()),
         ],
         blank=True,
         use_json_field=True,

@@ -171,6 +171,45 @@ class FAQBlock(blocks.StructBlock):
         template = "blocks/faq_block.html"
 
 
+class ProcessStepBlock(blocks.StructBlock):
+    """Individual step in the process roadmap."""
+
+    title = blocks.CharBlock(
+        required=True,
+        max_length=100,
+        help_text="Step title (e.g., 'Diagnose', 'Prototype')"
+    )
+    description = blocks.TextBlock(
+        required=True,
+        help_text="Brief description of this step"
+    )
+
+    class Meta:
+        icon = "list-ol"
+
+
+class ProcessRoadmapBlock(blocks.StructBlock):
+    """From Roadmap to Rollout section with animated arrows."""
+
+    heading = blocks.CharBlock(
+        required=True,
+        default="From roadmap to rollout",
+        max_length=255,
+        help_text="Section heading"
+    )
+    steps = blocks.ListBlock(
+        ProcessStepBlock(),
+        min_num=4,
+        max_num=4,
+        help_text="Exactly 4 process steps (arrows connect first 3)"
+    )
+
+    class Meta:
+        icon = "doc-full"
+        label = "Process Roadmap"
+        template = "blocks/process_roadmap.html"
+
+
 class SectionBlock(blocks.StructBlock):
     """Generic section block with title, background, and flexible content."""
 
