@@ -45,6 +45,29 @@
 
     {% block content %}{% endblock %}
 
+    <footer class="section">
+      {% if settings.home.FooterSettings %}
+        <h2>{{ settings.home.FooterSettings.heading }}</h2>
+        <section>
+          <div>
+            {% for block in settings.home.FooterSettings.column_1 %}
+              {% include_block block %}
+            {% endfor %}
+          </div>
+          <div>
+            {% for block in settings.home.FooterSettings.column_2 %}
+              {% include_block block %}
+            {% endfor %}
+          </div>
+          <div>
+            {% for block in settings.home.FooterSettings.column_3 %}
+              {% include_block block %}
+            {% endfor %}
+          </div>
+        </section>
+      {% endif %}
+    </footer>
+
     {# Global javascript #}
     <script type="text/javascript" src="{% static 'scripts.js' %}"></script>
 

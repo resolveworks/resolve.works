@@ -259,6 +259,24 @@ img.two-column-right {
   margin-top: 4rem;
 }
 
+footer.section {
+  background: var(--color-dark);
+  color: var(--color-light);
+}
+
+footer.section a,
+footer.section a:visited {
+  color: #a5a5a5;
+}
+
+footer.section a:hover {
+  color: var(--color-light);
+}
+
+footer.section > h2 {
+  margin-bottom: 0rem;
+}
+
 @media (min-width: 768px) {
   img.two-column-right {
     float: right;
@@ -268,5 +286,25 @@ img.two-column-right {
   img.two-column-left {
     float: left;
     width: 50%;
+  }
+
+  footer.section > section > div {
+    grid-column: span 2;
+  }
+
+  footer.section > section {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  footer.section > section > div {
+    grid-column: span 1;
+  }
+
+  footer.section > section {
+    grid-template-columns: repeat(3, 1fr);
   }
 }
