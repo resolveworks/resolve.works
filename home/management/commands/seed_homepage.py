@@ -39,8 +39,15 @@ class Command(BaseCommand):
                 self.style.WARNING('HomePage already exists. Updating content...')
             )
         except HomePage.DoesNotExist:
-            # Get the root page
+            # Clear default Wagtail site and welcome page
+            Site.objects.all().delete()
             root_page = Page.objects.get(slug='root')
+            for page in root_page.get_children():
+                page.delete()
+            root_page.refresh_from_db()
+            self.stdout.write(
+                self.style.SUCCESS('Cleared default Wagtail content')
+            )
 
             # Create new HomePage
             home_page = HomePage(
@@ -338,14 +345,21 @@ class Command(BaseCommand):
 
         home_page.save()
 
-        # Update the site to use this homepage
+        # Update or create the site to use this homepage
         site = Site.objects.filter(is_default_site=True).first()
         if site:
             site.root_page = home_page
             site.save()
-            self.stdout.write(
-                self.style.SUCCESS(f'Updated site to use HomePage as root')
+        else:
+            Site.objects.create(
+                hostname='localhost',
+                root_page=home_page,
+                is_default_site=True,
+                site_name='Resolve',
             )
+        self.stdout.write(
+            self.style.SUCCESS('Updated site to use HomePage as root')
+        )
 
         self.stdout.write(
             self.style.SUCCESS('Successfully seeded homepage content!')
