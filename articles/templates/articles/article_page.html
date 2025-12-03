@@ -1,10 +1,11 @@
 {% extends "base.html" %}
-{% load wagtailcore_tags wagtailmarkdown %}
+{% load static wagtailcore_tags wagtailmarkdown %}
 
 {% block content %}
 <main class="section article">
   <article>
     <header>
+      <div class="embedding-viz" data-page-id="{{ page.pk }}"></div>
       <h1>{{ page.title }}</h1>
       {% if page.intro %}
       <p class="intro">{{ page.intro }}</p>
@@ -21,4 +22,8 @@
     </div>
   </article>
 </main>
+{% endblock %}
+
+{% block extra_js %}
+<script type="module" src="{% static 'embedding-viz.js' %}"></script>
 {% endblock %}

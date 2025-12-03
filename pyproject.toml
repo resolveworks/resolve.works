@@ -9,6 +9,9 @@ dependencies = [
     "django-browser-reload>=1.21.0",
     "wagtail>=7.2",
     "wagtail-markdown>=0.13.0",
+    "sentence-transformers>=3.3.0",
+    "umap-learn>=0.5.7",
+    "nltk>=3.9.0",
 ]
 
 [dependency-groups]

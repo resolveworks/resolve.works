@@ -1,3 +1,5 @@
+import logging
+
 from django.db import models
 from wagtail.models import Page
 from wagtail.fields import RichTextField
@@ -5,6 +7,8 @@ from wagtail.admin.panels import FieldPanel
 from wagtailmarkdown.fields import MarkdownField
 
 from home.models import SeoMixin
+
+logger = logging.getLogger(__name__)
 
 
 class ArticleIndexPage(Page):
@@ -43,6 +47,13 @@ class ArticlePage(SeoMixin, Page):
 
     body = MarkdownField()
 
+    embedding_visualization = models.JSONField(
+        blank=True,
+        null=True,
+        editable=False,
+        help_text="Pre-computed 2D coordinates for embedding visualization",
+    )
+
     content_panels = Page.content_panels + [
         FieldPanel("intro"),
         FieldPanel("body"),
@@ -56,6 +67,24 @@ class ArticlePage(SeoMixin, Page):
     @property
     def og_type(self):
         return "article"
+
+    def generate_embedding_visualization(self):
+        """Generate and store embedding visualization data for this article."""
+        from articles.embeddings import generate_visualization_data
+
+        if not self.body:
+            self.embedding_visualization = {"nodes": []}
+            return
+
+        try:
+            self.embedding_visualization = generate_visualization_data(self.body)
+            logger.info(
+                f"Generated embedding visualization for '{self.title}' "
+                f"with {len(self.embedding_visualization.get('nodes', []))} nodes"
+            )
+        except Exception as e:
+            logger.exception(f"Failed to generate embedding visualization: {e}")
+            self.embedding_visualization = {"nodes": []}
 
     class Meta:
         verbose_name = "Article"
