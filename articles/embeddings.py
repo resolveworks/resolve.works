@@ -83,11 +83,11 @@ def generate_embeddings(
     return embeddings
 
 
-def reduce_to_2d(
+def reduce_to_3d(
     embeddings: np.ndarray, n_neighbors: int = 15, min_dist: float = 0.1
 ) -> np.ndarray:
     """
-    Reduce high-dimensional embeddings to 2D using UMAP.
+    Reduce high-dimensional embeddings to 3D using UMAP.
 
     Args:
         embeddings: NumPy array of shape (n_sentences, embedding_dim)
@@ -95,73 +95,117 @@ def reduce_to_2d(
         min_dist: UMAP min_dist parameter (clustering tightness)
 
     Returns:
-        NumPy array of shape (n_sentences, 2) with normalized 0-1 coordinates
+        NumPy array of shape (n_sentences, 3) with normalized 0-1 coordinates
     """
     n_samples = embeddings.shape[0]
 
     # UMAP needs at least 2 samples
     if n_samples < 2:
         # Return center point for single sample
-        return np.array([[0.5, 0.5]])
+        return np.array([[0.5, 0.5, 0.5]])
 
     # Adjust n_neighbors for small datasets
     adjusted_neighbors = min(n_neighbors, n_samples - 1)
 
     reducer = UMAP(
-        n_components=2,
+        n_components=3,
         n_neighbors=adjusted_neighbors,
         min_dist=min_dist,
         metric="cosine",
         random_state=42,  # Reproducible results
     )
 
-    coords_2d = reducer.fit_transform(embeddings)
+    coords_3d = reducer.fit_transform(embeddings)
 
-    # Normalize to 0-1 range
-    min_vals = coords_2d.min(axis=0)
-    max_vals = coords_2d.max(axis=0)
+    # Normalize each dimension to 0-1 range
+    min_vals = coords_3d.min(axis=0)
+    max_vals = coords_3d.max(axis=0)
     range_vals = max_vals - min_vals
 
     # Avoid division by zero
     range_vals[range_vals == 0] = 1
 
-    normalized = (coords_2d - min_vals) / range_vals
+    normalized = (coords_3d - min_vals) / range_vals
 
     return normalized
 
 
-def generate_visualization_data(text: str) -> dict:
+def compute_cosine_similarities(
+    embeddings: np.ndarray, threshold: float = 0.5
+) -> list[tuple[int, int, float]]:
+    """
+    Compute pairwise cosine similarities between embeddings.
+
+    Args:
+        embeddings: NumPy array of shape (n_sentences, embedding_dim)
+        threshold: Minimum similarity to include (0-1)
+
+    Returns:
+        List of (source_id, target_id, similarity) tuples for pairs above threshold
+    """
+    # Normalize embeddings for cosine similarity
+    norms = np.linalg.norm(embeddings, axis=1, keepdims=True)
+    norms[norms == 0] = 1  # Avoid division by zero
+    normalized = embeddings / norms
+
+    # Compute cosine similarity matrix
+    similarity_matrix = np.dot(normalized, normalized.T)
+
+    edges = []
+    n = len(embeddings)
+    for i in range(n):
+        for j in range(i + 1, n):
+            sim = similarity_matrix[i, j]
+            if sim >= threshold:
+                edges.append((i, j, float(sim)))
+
+    return edges
+
+
+def generate_visualization_data(text: str, similarity_threshold: float = 0.5) -> dict:
     """
     Generate complete visualization data from article text.
 
     Args:
         text: The article body text (markdown)
+        similarity_threshold: Minimum cosine similarity for edge creation (0-1)
 
     Returns:
-        Dict with nodes array containing id, x, y, text, and position for each sentence
+        Dict with:
+        - nodes: array with id, x, y, z (for size), text, position
+        - edges: array with source, target, similarity
     """
     sentences = chunk_to_sentences(text)
 
     if not sentences:
-        return {"nodes": []}
+        return {"nodes": [], "edges": []}
 
     embeddings = generate_embeddings(sentences)
-    coords = reduce_to_2d(embeddings)
+    coords = reduce_to_3d(embeddings)
+    edge_tuples = compute_cosine_similarities(
+        embeddings, threshold=similarity_threshold
+    )
 
     nodes = []
-    for i, (sentence, (x, y)) in enumerate(zip(sentences, coords)):
+    for i, (sentence, (x, y, z)) in enumerate(zip(sentences, coords)):
         position = i / max(len(sentences) - 1, 1)
         nodes.append(
             {
                 "id": i,
                 "x": float(x),
                 "y": float(y),
+                "z": float(z),
                 "text": sentence[:100] + "..." if len(sentence) > 100 else sentence,
                 "position": float(position),
             }
         )
 
-    return {"nodes": nodes}
+    edges = [
+        {"source": src, "target": tgt, "similarity": sim}
+        for src, tgt, sim in edge_tuples
+    ]
+
+    return {"nodes": nodes, "edges": edges}
 
 
 def visualization_data_to_json(data: dict) -> str:

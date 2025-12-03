@@ -6,10 +6,13 @@ class EmbeddingVisualization {
     this.container = container;
     this.pageId = pageId;
     this.nodes = [];
+    this.edges = [];
     this.svg = null;
     this.width = 0;
     this.height = 0;
-    this.padding = 20;
+    this.padding = 40;
+    this.minRadius = 8;
+    this.maxRadius = 20;
   }
 
   async init() {
@@ -29,9 +32,15 @@ class EmbeddingVisualization {
       if (!response.ok) return;
       const data = await response.json();
       this.nodes = data.nodes || [];
+      this.edges = data.edges || [];
     } catch (e) {
       console.warn("Failed to load embedding data:", e);
     }
+  }
+
+  getNodeRadius(z) {
+    // Map z (0-1) to radius range
+    return this.minRadius + z * (this.maxRadius - this.minRadius);
   }
 
   createSvg() {
@@ -89,19 +98,21 @@ class EmbeddingVisualization {
 
     const g = this.svg.append("g");
 
-    // Draw edges between nearby nodes (in embedding space, not document order)
-    const edges = this.computeEdges();
+    // Build node lookup for edges
+    const nodeById = new Map(this.nodes.map((n) => [n.id, n]));
+
+    // Draw edges using precomputed similarities
     g.selectAll("line")
-      .data(edges)
+      .data(this.edges)
       .enter()
       .append("line")
-      .attr("x1", (d) => xScale(d.source.x))
-      .attr("y1", (d) => yScale(d.source.y))
-      .attr("x2", (d) => xScale(d.target.x))
-      .attr("y2", (d) => yScale(d.target.y))
+      .attr("x1", (d) => xScale(nodeById.get(d.source).x))
+      .attr("y1", (d) => yScale(nodeById.get(d.source).y))
+      .attr("x2", (d) => xScale(nodeById.get(d.target).x))
+      .attr("y2", (d) => yScale(nodeById.get(d.target).y))
       .attr("stroke", "#D5D5D5")
-      .attr("stroke-width", 1)
-      .attr("stroke-opacity", 0.4);
+      .attr("stroke-width", (d) => d.similarity * 2)
+      .attr("stroke-opacity", (d) => 0.2 + d.similarity * 0.4);
 
     // Draw nodes
     const nodeGroups = g
@@ -112,10 +123,10 @@ class EmbeddingVisualization {
       .attr("class", "node")
       .attr("transform", (d) => `translate(${xScale(d.x)}, ${yScale(d.y)})`);
 
-    // Node circles
+    // Node circles with z-based radius
     nodeGroups
       .append("circle")
-      .attr("r", 12)
+      .attr("r", (d) => this.getNodeRadius(d.z))
       .attr("fill", (d) => this.getNodeColor(d.position))
       .attr("stroke", "#fff")
       .attr("stroke-width", 2)
@@ -139,7 +150,9 @@ class EmbeddingVisualization {
 
     nodeGroups
       .on("mouseenter", (event, d) => {
-        d3.select(event.currentTarget).select("circle").attr("r", 16);
+        d3.select(event.currentTarget)
+          .select("circle")
+          .attr("r", this.getNodeRadius(d.z) + 4);
         tooltip.style("visibility", "visible").text(d.text);
       })
       .on("mousemove", (event) => {
@@ -147,36 +160,15 @@ class EmbeddingVisualization {
           .style("top", event.pageY - 10 + "px")
           .style("left", event.pageX + 10 + "px");
       })
-      .on("mouseleave", (event) => {
-        d3.select(event.currentTarget).select("circle").attr("r", 12);
+      .on("mouseleave", (event, d) => {
+        d3.select(event.currentTarget)
+          .select("circle")
+          .attr("r", this.getNodeRadius(d.z));
         tooltip.style("visibility", "hidden");
       });
 
     // Animate nodes fading in
     nodeGroups.style("opacity", 0).transition().duration(500).style("opacity", 1);
-  }
-
-  computeEdges() {
-    // Connect nodes that are close in embedding space (using Euclidean distance)
-    const edges = [];
-    const threshold = 0.15; // Distance threshold for edge creation
-
-    for (let i = 0; i < this.nodes.length; i++) {
-      for (let j = i + 1; j < this.nodes.length; j++) {
-        const dx = this.nodes[i].x - this.nodes[j].x;
-        const dy = this.nodes[i].y - this.nodes[j].y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-
-        if (dist < threshold) {
-          edges.push({
-            source: this.nodes[i],
-            target: this.nodes[j],
-          });
-        }
-      }
-    }
-
-    return edges;
   }
 
   setupResize() {
