@@ -1,4 +1,4 @@
-{% load static wagtailcore_tags wagtailimages_tags wagtailuserbar %}
+{% load static wagtailcore_tags wagtailimages_tags wagtailuserbar url_tags %}
 
 <!doctype html>
 <html lang="en">
@@ -78,26 +78,55 @@
     {% block content %}{% endblock %}
 
     <footer class="section">
-      {% if settings.home.FooterSettings %}
-        <h2>{{ settings.home.FooterSettings.heading }}</h2>
+      {% with footer=settings.home.FooterSettings business=settings.home.BusinessSettings %}
+        <h2>{{ footer.heading }}</h2>
         <section>
           <div>
-            {% for block in settings.home.FooterSettings.column_1 %}
+            {% for block in footer.tagline %}
               {% include_block block %}
             {% endfor %}
           </div>
-          <div>
-            {% for block in settings.home.FooterSettings.column_2 %}
-              {% include_block block %}
-            {% endfor %}
-          </div>
-          <div>
-            {% for block in settings.home.FooterSettings.column_3 %}
-              {% include_block block %}
-            {% endfor %}
-          </div>
+          <address>
+            <dl>
+              {% if business.linkedin_url %}
+              <dt>LinkedIn</dt>
+              <dd><a target="_blank" href="{{ business.linkedin_url }}">{{ business.linkedin_url }}</a></dd>
+              {% endif %}
+              {% if business.github_url %}
+              <dt>GitHub</dt>
+              <dd><a target="_blank" href="{{ business.github_url }}">{{ business.github_url }}</a></dd>
+              {% endif %}
+              {% if business.email %}
+              <dt>Email</dt>
+              <dd><a href="mailto:{{ business.email }}">{{ business.email }}</a></dd>
+              {% endif %}
+              {% if business.telephone %}
+              <dt>Phone</dt>
+              <dd><a href="tel:{{ business.telephone }}">{{ business.telephone }}</a></dd>
+              {% endif %}
+            </dl>
+          </address>
+          <address>
+            <dl>
+              {% if business.address %}
+              <dt>Address</dt>
+              <dd>{{ business.address }}</dd>
+              {% endif %}
+              {% if business.vat_number %}
+              <dt>VAT</dt>
+              <dd>{{ business.vat_number }}</dd>
+              {% endif %}
+              {% if business.register_url %}
+              <dt>Register</dt>
+              <dd><a href="{{ business.register_url }}" target="_blank">{{ business.register_url|url_root }}</a></dd>
+              {% endif %}
+            </dl>
+            {% if footer.registration_note %}
+            <p>{{ footer.registration_note }}</p>
+            {% endif %}
+          </address>
         </section>
-      {% endif %}
+      {% endwith %}
     </footer>
 
     {# Global javascript #}

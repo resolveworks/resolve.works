@@ -6,7 +6,7 @@ from wagtail.admin.panels import FieldPanel, MultiFieldPanel
 from wagtail.contrib.settings.models import BaseSiteSetting, register_setting
 from wagtail import blocks
 
-from .blocks import HeroBlock, SectionBlock, DefinitionListBlock, ProcessRoadmapBlock
+from .blocks import HeroBlock, SectionBlock
 
 
 class SeoMixin(models.Model):
@@ -54,9 +54,13 @@ class BusinessSettings(BaseSiteSetting):
     description = models.TextField(blank=True)
     telephone = models.CharField(max_length=50, blank=True)
     email = models.EmailField(blank=True)
-    address_country = models.CharField(max_length=100, blank=True, default="Netherlands")
+    address_country = models.CharField(
+        max_length=100, blank=True, default="Netherlands"
+    )
     price_range = models.CharField(max_length=10, blank=True, default="€€€")
-    opening_hours = models.CharField(max_length=100, blank=True, default="Mo-Fr 09:00-18:00")
+    opening_hours = models.CharField(
+        max_length=100, blank=True, default="Mo-Fr 09:00-18:00"
+    )
     founder = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         null=True,
@@ -65,15 +69,51 @@ class BusinessSettings(BaseSiteSetting):
         related_name="+",
     )
 
+    # Social links
+    linkedin_url = models.URLField(blank=True, help_text="LinkedIn profile URL")
+    github_url = models.URLField(blank=True, help_text="GitHub profile URL")
+
+    # Business registration
+    address = models.TextField(blank=True, help_text="Full business address")
+    vat_number = models.CharField(
+        max_length=50, blank=True, help_text="VAT registration number"
+    )
+    register_url = models.URLField(blank=True, help_text="Business register URL")
+
     panels = [
-        FieldPanel("name"),
-        FieldPanel("description"),
-        FieldPanel("telephone"),
-        FieldPanel("email"),
-        FieldPanel("address_country"),
-        FieldPanel("price_range"),
-        FieldPanel("opening_hours"),
-        FieldPanel("founder"),
+        MultiFieldPanel(
+            [
+                FieldPanel("name"),
+                FieldPanel("description"),
+                FieldPanel("founder"),
+            ],
+            heading="Basic Information",
+        ),
+        MultiFieldPanel(
+            [
+                FieldPanel("telephone"),
+                FieldPanel("email"),
+                FieldPanel("linkedin_url"),
+                FieldPanel("github_url"),
+            ],
+            heading="Contact",
+        ),
+        MultiFieldPanel(
+            [
+                FieldPanel("address"),
+                FieldPanel("address_country"),
+                FieldPanel("vat_number"),
+                FieldPanel("register_url"),
+            ],
+            heading="Business Registration",
+        ),
+        MultiFieldPanel(
+            [
+                FieldPanel("price_range"),
+                FieldPanel("opening_hours"),
+            ],
+            heading="Structured Data",
+        ),
     ]
 
     class Meta:
@@ -88,46 +128,25 @@ class FooterSettings(BaseSiteSetting):
         max_length=100, default="Resolve", help_text="Footer heading"
     )
 
-    column_1 = StreamField(
+    tagline = StreamField(
         [
             ("paragraph", blocks.RichTextBlock(features=["bold", "italic", "link"])),
-            ("definition_list", DefinitionListBlock()),
         ],
         blank=True,
         use_json_field=True,
-        help_text="First footer column content",
+        help_text="Footer tagline content",
     )
 
-    column_2 = StreamField(
-        [
-            ("paragraph", blocks.RichTextBlock(features=["bold", "italic", "link"])),
-            ("definition_list", DefinitionListBlock()),
-        ],
+    registration_note = models.CharField(
+        max_length=200,
         blank=True,
-        use_json_field=True,
-        help_text="Second footer column content",
-    )
-
-    column_3 = StreamField(
-        [
-            ("paragraph", blocks.RichTextBlock(features=["bold", "italic", "link"])),
-            ("definition_list", DefinitionListBlock()),
-        ],
-        blank=True,
-        use_json_field=True,
-        help_text="Third footer column content",
+        help_text="Note displayed below business registration info (e.g. 'Estonian e-residency program')",
     )
 
     panels = [
         FieldPanel("heading"),
-        MultiFieldPanel(
-            [
-                FieldPanel("column_1"),
-                FieldPanel("column_2"),
-                FieldPanel("column_3"),
-            ],
-            heading="Footer Columns",
-        ),
+        FieldPanel("tagline"),
+        FieldPanel("registration_note"),
     ]
 
     class Meta:
