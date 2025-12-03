@@ -300,6 +300,17 @@ footer.section > h2 {
   margin-bottom: 0rem;
 }
 
+footer.section > h2 a,
+footer.section > h2 a:visited {
+  color: inherit;
+  text-decoration: none;
+}
+
+footer.section > h2 a:hover {
+  color: #a5a5a5;
+  text-decoration: none;
+}
+
 @media (min-width: 768px) {
   img.two-column-right {
     float: right;
