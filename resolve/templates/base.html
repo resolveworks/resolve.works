@@ -81,11 +81,7 @@
       {% with footer=settings.home.FooterSettings business=settings.home.BusinessSettings %}
         <h2>{{ footer.heading }}</h2>
         <section>
-          <div>
-            {% for block in footer.tagline %}
-              {% include_block block %}
-            {% endfor %}
-          </div>
+          <div>{{ footer.tagline|richtext }}</div>
           <address>
             <dl>
               {% if business.linkedin_url %}

@@ -441,12 +441,9 @@ class Command(BaseCommand):
         footer_settings.heading = "Resolve"
 
         # Tagline
-        footer_settings.tagline = [
-            {
-                "type": "paragraph",
-                "value": "<p>Makes machines empower humans</p><p>Made by 👨 and 🤖 in Europe</p>",
-            },
-        ]
+        footer_settings.tagline = (
+            "<p>Makes machines empower humans</p><p>Made by 👨 and 🤖 in Europe</p>"
+        )
 
         footer_settings.registration_note = "Estonian e-residency program"
 

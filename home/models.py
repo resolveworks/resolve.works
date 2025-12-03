@@ -1,10 +1,9 @@
 from django.conf import settings
 from django.db import models
 from wagtail.models import Page
-from wagtail.fields import StreamField
+from wagtail.fields import RichTextField, StreamField
 from wagtail.admin.panels import FieldPanel, MultiFieldPanel
 from wagtail.contrib.settings.models import BaseSiteSetting, register_setting
-from wagtail import blocks
 
 from resolve.fields import PhoneField
 
@@ -153,12 +152,9 @@ class FooterSettings(BaseSiteSetting):
         max_length=100, default="Resolve", help_text="Footer heading"
     )
 
-    tagline = StreamField(
-        [
-            ("paragraph", blocks.RichTextBlock(features=["bold", "italic", "link"])),
-        ],
+    tagline = RichTextField(
+        features=["bold", "italic", "link"],
         blank=True,
-        use_json_field=True,
         help_text="Footer tagline content",
     )
 
