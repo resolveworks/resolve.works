@@ -7,6 +7,7 @@ from wagtail.models import Page, Site
 from wagtail.users.models import UserProfile
 
 from accounts.models import User, WorkExperience
+from articles.models import ArticleIndexPage
 from home.models import BusinessSettings, ContactSettings, FooterSettings, HomePage
 
 
@@ -17,6 +18,7 @@ class Command(BaseCommand):
         profile_image = self.get_or_create_profile_image()
         user = self.seed_user(profile_image)
         self.seed_homepage(user)
+        self.seed_articles()
         self.seed_footer()
         self.seed_business_settings()
         self.seed_contact_settings()
@@ -417,6 +419,31 @@ class Command(BaseCommand):
             )
         self.stdout.write(self.style.SUCCESS("Updated site to use HomePage as root"))
         self.stdout.write(self.style.SUCCESS("Successfully seeded homepage content!"))
+
+    def seed_articles(self):
+        """Seed article index and example article."""
+        home_page = HomePage.objects.filter(slug="home").first()
+        if not home_page:
+            self.stdout.write(
+                self.style.ERROR("HomePage not found. Please seed homepage first.")
+            )
+            return
+
+        # Check if ArticleIndexPage already exists
+        if ArticleIndexPage.objects.filter(slug="articles").exists():
+            self.stdout.write(
+                self.style.WARNING("ArticleIndexPage already exists, skipping")
+            )
+            return
+
+        # Create article index page
+        article_index = ArticleIndexPage(
+            title="Articles",
+            slug="articles",
+            intro="<p>Thoughts on AI, automation, and building practical systems.</p>",
+        )
+        home_page.add_child(instance=article_index)
+        self.stdout.write(self.style.SUCCESS("Created ArticleIndexPage"))
 
     def seed_footer(self):
         # Get the default site
