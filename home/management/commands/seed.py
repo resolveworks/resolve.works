@@ -7,7 +7,7 @@ from wagtail.models import Page, Site
 from wagtail.users.models import UserProfile
 
 from accounts.models import User, WorkExperience
-from home.models import BusinessSettings, FooterSettings, HomePage
+from home.models import BusinessSettings, ContactSettings, FooterSettings, HomePage
 
 
 class Command(BaseCommand):
@@ -19,6 +19,7 @@ class Command(BaseCommand):
         self.seed_homepage(user)
         self.seed_footer()
         self.seed_business_settings()
+        self.seed_contact_settings()
         self.stdout.write(self.style.SUCCESS("Successfully seeded all content!"))
 
     def get_or_create_profile_image(self):
@@ -53,7 +54,7 @@ class Command(BaseCommand):
                 "bio": "I am an autodidact software and data engineer who loves turning ambiguous problems into practical, human-centered systems. With 15+ years of experience I spot inefficiencies in processes very quickly. I use LLMs to accelerate development, but never at the expense of clarity, reliability, or ethics.\n\nI work remotely, Europe-focused but global clients welcome.",
                 "linkedin_url": "https://www.linkedin.com/in/johanschuijt/",
                 "github_url": "https://github.com/monneyboi/",
-                "phone": "+31 651 952 461",
+                "phone": "+31651952461",
                 "is_staff": True,
                 "is_superuser": True,
             },
@@ -165,8 +166,6 @@ class Command(BaseCommand):
                 "value": {
                     "heading": "Change your trajectory",
                     "body_text": "We help ethical SMBs use large language models (LLMs) to save time without replacing people.",
-                    "cta_email": "johan@resolve.works",
-                    "cta_phone": "+31 651 952 461",
                 },
             },
             {
@@ -478,7 +477,7 @@ class Command(BaseCommand):
             "We implement large language models (LLMs) to automate workflows, "
             "reduce costs, and amplify human capabilities."
         )
-        business_settings.telephone = "+31651952461"
+        business_settings.phone = "+31651952461"
         business_settings.email = "johan@resolve.works"
         business_settings.address_country = "Estonia"
         business_settings.price_range = "€€€"
@@ -508,3 +507,33 @@ class Command(BaseCommand):
 
         business_settings.save()
         self.stdout.write(self.style.SUCCESS("Successfully seeded business settings!"))
+
+    def seed_contact_settings(self):
+        # Get the default site
+        site = Site.objects.filter(is_default_site=True).first()
+        if not site:
+            self.stdout.write(
+                self.style.ERROR("No default site found. Please create a site first.")
+            )
+            return
+
+        # Check if contact settings already exist
+        if ContactSettings.objects.filter(site=site).exists():
+            self.stdout.write(
+                self.style.WARNING("Contact settings already exist, skipping")
+            )
+            return
+
+        # Create contact settings
+        contact_settings = ContactSettings(site=site)
+        contact_settings.email_subject = "Free consultation request"
+        contact_settings.email_body = (
+            "Hi,\n\n"
+            "We're curious about how you could help us with our current challenge.\n\n"
+            "...\n\n"
+            "Best regards,\n"
+            "..."
+        )
+
+        contact_settings.save()
+        self.stdout.write(self.style.SUCCESS("Successfully seeded contact settings!"))

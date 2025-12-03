@@ -16,12 +16,6 @@ class HeroBlock(blocks.StructBlock):
         required=True, help_text="Body text for the hero section"
     )
 
-    cta_email = blocks.EmailBlock(required=False, help_text="Email address for contact")
-
-    cta_phone = blocks.CharBlock(
-        required=False, max_length=50, help_text="Phone number for contact"
-    )
-
     class Meta:
         icon = "placeholder"
         label = "Hero Section"

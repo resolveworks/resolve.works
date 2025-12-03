@@ -1,4 +1,4 @@
-{% load static wagtailcore_tags wagtailimages_tags wagtailuserbar url_tags %}
+{% load static wagtailcore_tags wagtailimages_tags wagtailuserbar url_tags phone_tags %}
 
 <!doctype html>
 <html lang="en">
@@ -100,9 +100,9 @@
               <dt>Email</dt>
               <dd><a href="mailto:{{ business.email }}">{{ business.email }}</a></dd>
               {% endif %}
-              {% if business.telephone %}
+              {% if business.phone %}
               <dt>Phone</dt>
-              <dd><a href="tel:{{ business.telephone }}">{{ business.telephone }}</a></dd>
+              <dd><a href="tel:{{ business.phone }}">{{ business.phone|format_phone }}</a></dd>
               {% endif %}
             </dl>
           </address>

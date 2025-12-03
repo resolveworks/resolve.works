@@ -1,3 +1,6 @@
+{% load phone_tags wagtailsettings_tags %}
+{% get_settings %}
+
 <header class="hero-block">
     <h1>{{ self.heading }}</h1>
     <p>
@@ -5,12 +8,12 @@
 
         <br />
 
-        {% if self.cta_email %}
-        <a href="mailto:{{ self.cta_email }}?subject=Free consultation request&body=Hi Johan,%0D%0A%0D%0AWe're curious about how you could help us with our current challenge.%0D%0A%0D%0A...%0D%0A%0D%0ABest regards,%0D%0A...">✉️ Book a free call</a>
+        {% if settings.home.BusinessSettings.email %}
+        <a href="mailto:{{ settings.home.BusinessSettings.email }}?subject={{ settings.home.ContactSettings.email_subject|urlencode_newlines }}&body={{ settings.home.ContactSettings.email_body|urlencode_newlines }}">✉️ Book a free call</a>
         {% endif %}
 
-        {% if self.cta_phone %}
-        <a href="tel:{{ self.cta_phone }}">💬 {{ self.cta_phone }}</a>
+        {% if settings.home.BusinessSettings.phone %}
+        <a href="tel:{{ settings.home.BusinessSettings.phone }}">💬 {{ settings.home.BusinessSettings.phone|format_phone }}</a>
         {% endif %}
     </p>
 </header>

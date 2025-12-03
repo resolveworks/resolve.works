@@ -6,6 +6,8 @@ from wagtail.admin.panels import FieldPanel, MultiFieldPanel
 from wagtail.contrib.settings.models import BaseSiteSetting, register_setting
 from wagtail import blocks
 
+from resolve.fields import PhoneField
+
 from .blocks import HeroBlock, SectionBlock
 
 
@@ -52,7 +54,7 @@ class BusinessSettings(BaseSiteSetting):
 
     name = models.CharField(max_length=100, default="Resolve")
     description = models.TextField(blank=True)
-    telephone = models.CharField(max_length=50, blank=True)
+    phone = PhoneField()
     email = models.EmailField(blank=True)
     address_country = models.CharField(
         max_length=100, blank=True, default="Netherlands"
@@ -91,7 +93,7 @@ class BusinessSettings(BaseSiteSetting):
         ),
         MultiFieldPanel(
             [
-                FieldPanel("telephone"),
+                FieldPanel("phone"),
                 FieldPanel("email"),
                 FieldPanel("linkedin_url"),
                 FieldPanel("github_url"),
@@ -117,7 +119,30 @@ class BusinessSettings(BaseSiteSetting):
     ]
 
     class Meta:
-        verbose_name = "Business Information"
+        verbose_name = "Business"
+
+
+@register_setting
+class ContactSettings(BaseSiteSetting):
+    """Contact email template settings."""
+
+    email_subject = models.CharField(
+        max_length=200,
+        default="Free consultation request",
+        help_text="Subject line for contact emails",
+    )
+    email_body = models.TextField(
+        default="Hi,\n\nWe're curious about how you could help us with our current challenge.\n\n...\n\nBest regards,\n...",
+        help_text="Default email body template",
+    )
+
+    panels = [
+        FieldPanel("email_subject"),
+        FieldPanel("email_body"),
+    ]
+
+    class Meta:
+        verbose_name = "Contact"
 
 
 @register_setting

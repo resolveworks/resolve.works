@@ -6,6 +6,8 @@ from modelcluster.models import ClusterableModel
 from wagtail.admin.panels import FieldPanel
 from wagtail.models import Orderable
 
+from resolve.fields import PhoneField
+
 
 class User(ClusterableModel, AbstractUser):
     """Custom user model with additional profile fields."""
@@ -14,7 +16,7 @@ class User(ClusterableModel, AbstractUser):
     bio = models.TextField(blank=True)
     linkedin_url = models.URLField(blank=True)
     github_url = models.URLField(blank=True)
-    phone = models.CharField(max_length=50, blank=True)
+    phone = PhoneField()
 
 
 class WorkExperience(Orderable):

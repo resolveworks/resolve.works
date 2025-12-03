@@ -1,4 +1,4 @@
-{% load wagtailcore_tags %}
+{% load wagtailcore_tags phone_tags %}
 
 {% with user=value.user %}
 {{ user.bio|linebreaks }}
@@ -35,7 +35,7 @@
             {% endif %}
             {% if user.phone %}
                 <dt>Phone</dt>
-                <dd><a href="tel:{{ user.phone|cut:' ' }}">{{ user.phone }}</a></dd>
+                <dd><a href="tel:{{ user.phone }}">{{ user.phone|format_phone }}</a></dd>
             {% endif %}
         </dl>
     </address>
