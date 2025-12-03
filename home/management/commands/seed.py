@@ -13,8 +13,8 @@ class Command(BaseCommand):
     help = "Seeds the homepage and footer with initial content"
 
     def handle(self, *args, **options):
-        self.seed_user()
-        self.seed_homepage()
+        user = self.seed_user()
+        self.seed_homepage(user)
         self.seed_footer()
         self.seed_business_settings()
         self.stdout.write(self.style.SUCCESS("Successfully seeded all content!"))
@@ -30,6 +30,8 @@ class Command(BaseCommand):
                 "bio": "Autodidact software and data engineer who loves turning ambiguous problems into practical, human-centered systems.",
                 "linkedin_url": "https://www.linkedin.com/in/johanschuijt/",
                 "github_url": "https://github.com/monneyboi/",
+                "is_staff": True,
+                "is_superuser": True,
             },
         )
 
@@ -38,7 +40,9 @@ class Command(BaseCommand):
         else:
             self.stdout.write(self.style.WARNING("User 'johan' already exists"))
 
-    def seed_homepage(self):
+        return user
+
+    def seed_homepage(self, user):
         # Load or create profile image
         profile_image = None
         try:
@@ -79,6 +83,7 @@ class Command(BaseCommand):
                 slug="home",
                 seo_title="Resolve - AI Consulting for ethical SMBs | LLM Implementation & Automation",
                 search_description="Expert AI consulting services for ethical SMBs. We implement large language models (LLMs) to automate workflows, reduce costs, and amplify human capabilities. Free consultation.",
+                owner=user,
             )
             root_page.add_child(instance=home_page)
             self.stdout.write(self.style.SUCCESS("Created new HomePage"))

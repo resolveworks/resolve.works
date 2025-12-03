@@ -17,6 +17,9 @@
     <meta name="description" content="{{ page.search_description }}" />
     {% endif %}
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    {% if page.owner %}
+    <meta name="author" content="{{ page.owner.get_full_name }}" />
+    {% endif %}
 
     {# SEO meta tags #}
     {% if page.robots %}
