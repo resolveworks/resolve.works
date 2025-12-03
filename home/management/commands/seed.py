@@ -4,6 +4,7 @@ from django.core.files.images import ImageFile
 from django.core.management.base import BaseCommand
 from wagtail.images.models import Image
 from wagtail.models import Page, Site
+from wagtail.users.models import UserProfile
 
 from accounts.models import User, WorkExperience
 from home.models import BusinessSettings, FooterSettings, HomePage
@@ -53,7 +54,6 @@ class Command(BaseCommand):
                 "linkedin_url": "https://www.linkedin.com/in/johanschuijt/",
                 "github_url": "https://github.com/monneyboi/",
                 "phone": "+31 651 952 461",
-                "profile_image": profile_image,
                 "is_staff": True,
                 "is_superuser": True,
             },
@@ -66,10 +66,34 @@ class Command(BaseCommand):
                 self.style.WARNING("User 'johan' already exists, skipping")
             )
 
+        # Set the user's profile avatar
+        self.seed_user_avatar(user, profile_image)
+
         # Seed work experiences
         self.seed_work_experiences(user)
 
         return user
+
+    def seed_user_avatar(self, user, wagtail_image):
+        """Set the user's Wagtail profile avatar from a Wagtail Image."""
+        if not wagtail_image:
+            return
+
+        user_profile = UserProfile.get_for_user(user)
+        if user_profile.avatar:
+            self.stdout.write(self.style.WARNING("User avatar already set, skipping"))
+            return
+
+        # Copy the image file to the avatar field
+        image_path = wagtail_image.file.path
+        if os.path.exists(image_path):
+            with open(image_path, "rb") as f:
+                user_profile.avatar.save(
+                    os.path.basename(image_path),
+                    ImageFile(f),
+                    save=True,
+                )
+            self.stdout.write(self.style.SUCCESS("Set user avatar"))
 
     def seed_work_experiences(self, user):
         """Seed work experience entries for a user."""

@@ -1,13 +1,12 @@
-{% load wagtailcore_tags wagtailimages_tags %}
+{% load wagtailcore_tags %}
 
 {% with user=value.user %}
 {{ user.bio|linebreaks }}
 
 <div class="two-column-block">
-    {% if user.profile_image %}
+    {% if user.wagtail_userprofile.avatar %}
         <p>
-            {% image user.profile_image original as img %}
-            <img src="{{ img.url }}" alt="Profile shot of {{ user.get_full_name }}" class="two-column-right">
+            <img src="{{ user.wagtail_userprofile.avatar.url }}" alt="Profile shot of {{ user.get_full_name }}" class="two-column-right">
         </p>
     {% endif %}
 

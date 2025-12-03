@@ -13,13 +13,6 @@ class User(AbstractUser):
     linkedin_url = models.URLField(blank=True)
     github_url = models.URLField(blank=True)
     phone = models.CharField(max_length=50, blank=True)
-    profile_image = models.ForeignKey(
-        "wagtailimages.Image",
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name="+",
-    )
 
 
 class WorkExperience(models.Model):

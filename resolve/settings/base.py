@@ -183,4 +183,26 @@ WAGTAILADMIN_BASE_URL = "http://example.com"
 # This can be omitted to allow all files, but note that this may present a security risk
 # if untrusted users are allowed to upload files -
 # see https://docs.wagtail.org/en/stable/advanced_topics/deploying.html#user-uploaded-files
-WAGTAILDOCS_EXTENSIONS = ['csv', 'docx', 'key', 'odt', 'pdf', 'pptx', 'rtf', 'txt', 'xlsx', 'zip']
+WAGTAILDOCS_EXTENSIONS = [
+    "csv",
+    "docx",
+    "key",
+    "odt",
+    "pdf",
+    "pptx",
+    "rtf",
+    "txt",
+    "xlsx",
+    "zip",
+]
+
+# Custom user forms for profile editing
+WAGTAIL_USER_EDIT_FORM = "accounts.forms.CustomUserEditForm"
+WAGTAIL_USER_CREATION_FORM = "accounts.forms.CustomUserCreationForm"
+WAGTAIL_USER_CUSTOM_FIELDS = [
+    "job_title",
+    "bio",
+    "linkedin_url",
+    "github_url",
+    "phone",
+]
