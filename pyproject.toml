@@ -9,3 +9,12 @@ dependencies = [
     "django-browser-reload>=1.21.0",
     "wagtail>=7.1,<7.2",
 ]
+
+[dependency-groups]
+dev = [
+    "pre-commit>=4.0.0",
+]
+
+[tool.ruff]
+line-length = 88
+target-version = "py312"
