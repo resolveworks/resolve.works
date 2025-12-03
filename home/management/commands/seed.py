@@ -5,6 +5,7 @@ from django.core.management.base import BaseCommand
 from wagtail.images.models import Image
 from wagtail.models import Page, Site
 
+from accounts.models import User
 from home.models import BusinessSettings, FooterSettings, HomePage
 
 
@@ -12,10 +13,30 @@ class Command(BaseCommand):
     help = "Seeds the homepage and footer with initial content"
 
     def handle(self, *args, **options):
+        self.seed_user()
         self.seed_homepage()
         self.seed_footer()
         self.seed_business_settings()
         self.stdout.write(self.style.SUCCESS("Successfully seeded all content!"))
+
+    def seed_user(self):
+        user, created = User.objects.get_or_create(
+            username="johan",
+            defaults={
+                "email": "johan@resolve.works",
+                "first_name": "Johan",
+                "last_name": "Schuijt",
+                "job_title": "Founder",
+                "bio": "Autodidact software and data engineer who loves turning ambiguous problems into practical, human-centered systems.",
+                "linkedin_url": "https://www.linkedin.com/in/johanschuijt/",
+                "github_url": "https://github.com/monneyboi/",
+            },
+        )
+
+        if created:
+            self.stdout.write(self.style.SUCCESS("Created user 'johan'"))
+        else:
+            self.stdout.write(self.style.WARNING("User 'johan' already exists"))
 
     def seed_homepage(self):
         # Load or create profile image
@@ -511,6 +532,15 @@ class Command(BaseCommand):
         business_settings.address_country = "Estonia"
         business_settings.price_range = "€€€"
         business_settings.opening_hours = "Mo-Fr 09:00-18:00"
+
+        # Set founder
+        try:
+            founder = User.objects.get(username="johan")
+            business_settings.founder = founder
+        except User.DoesNotExist:
+            self.stdout.write(
+                self.style.WARNING("User 'johan' not found. Founder not set.")
+            )
 
         business_settings.save()
         self.stdout.write(self.style.SUCCESS("Successfully seeded business settings!"))
