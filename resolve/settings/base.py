@@ -24,6 +24,7 @@ BASE_DIR = os.path.dirname(PROJECT_DIR)
 # Application definition
 
 INSTALLED_APPS = [
+    "accounts",
     "home",
     "wagtail.contrib.forms",
     "wagtail.contrib.redirects",
@@ -158,6 +159,9 @@ STORAGES = {
 # can exceed this limit within Wagtail's page editor.
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 10_000
 
+
+# Custom user model
+AUTH_USER_MODEL = "accounts.User"
 
 # Wagtail settings
 

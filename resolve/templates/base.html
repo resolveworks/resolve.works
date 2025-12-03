@@ -18,6 +18,34 @@
     {% endif %}
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
+    {# SEO meta tags #}
+    {% if page.robots %}
+    <meta name="robots" content="{{ page.robots }}" />
+    {% endif %}
+    <link rel="canonical" href="{{ page.full_url }}" />
+
+    {# Open Graph #}
+    <meta property="og:type" content="{{ page.og_type|default:'website' }}" />
+    <meta property="og:url" content="{{ page.full_url }}" />
+    <meta property="og:title" content="{% if page.seo_title %}{{ page.seo_title }}{% else %}{{ page.title }}{% endif %}" />
+    {% if page.search_description %}
+    <meta property="og:description" content="{{ page.search_description }}" />
+    {% endif %}
+    {% if page.og_image %}
+    <meta property="og:image" content="{{ page.og_image.get_rendition('fill-1200x630').full_url }}" />
+    {% endif %}
+
+    {# Twitter Card #}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="{{ page.full_url }}" />
+    <meta name="twitter:title" content="{% if page.seo_title %}{{ page.seo_title }}{% else %}{{ page.title }}{% endif %}" />
+    {% if page.search_description %}
+    <meta name="twitter:description" content="{{ page.search_description }}" />
+    {% endif %}
+    {% if page.og_image %}
+    <meta name="twitter:image" content="{{ page.og_image.get_rendition('fill-1200x630').full_url }}" />
+    {% endif %}
+
     {# Force all links in the live preview panel to be opened in a new tab #}
     {% if request.in_preview_panel %}
     <base target="_blank" />

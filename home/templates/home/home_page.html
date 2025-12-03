@@ -8,3 +8,38 @@
         {% include_block block %}
     {% endfor %}
 {% endblock content %}
+
+{% block extra_js %}
+{% with business=settings.home.BusinessSettings %}
+{% if business %}
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": "{{ business.name }}",
+    "description": "{{ business.description|escapejs }}",
+    "url": "{{ page.full_url }}",
+    "telephone": "{{ business.telephone }}",
+    "email": "{{ business.email }}",
+    "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "{{ business.address_country }}"
+    },
+    "priceRange": "{{ business.price_range }}",
+    "openingHours": "{{ business.opening_hours }}"{% if business.founder %},
+    "founder": {
+        "@type": "Person",
+        "name": "{{ business.founder.get_full_name }}",
+        "jobTitle": "{{ business.founder.job_title }}"{% if business.founder.linkedin_url %},
+        "url": "{{ business.founder.linkedin_url }}"{% endif %}
+    },
+    "sameAs": [
+        {% if business.founder.linkedin_url %}"{{ business.founder.linkedin_url }}"{% endif %}{% if business.founder.linkedin_url and business.founder.github_url %},{% endif %}
+        {% if business.founder.github_url %}"{{ business.founder.github_url }}"{% endif %}
+    ]{% endif %},
+    "knowsAbout": ["AI", "Machine Learning", "LLM", "Business Automation", "Data Engineering", "Software Engineering"]
+}
+</script>
+{% endif %}
+{% endwith %}
+{% endblock extra_js %}
