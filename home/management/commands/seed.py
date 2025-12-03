@@ -5,7 +5,7 @@ from django.core.management.base import BaseCommand
 from wagtail.images.models import Image
 from wagtail.models import Page, Site
 
-from home.models import FooterSettings, HomePage
+from home.models import BusinessSettings, FooterSettings, HomePage
 
 
 class Command(BaseCommand):
@@ -14,6 +14,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         self.seed_homepage()
         self.seed_footer()
+        self.seed_business_settings()
         self.stdout.write(self.style.SUCCESS("Successfully seeded all content!"))
 
     def seed_homepage(self):
@@ -479,3 +480,37 @@ class Command(BaseCommand):
 
         footer_settings.save()
         self.stdout.write(self.style.SUCCESS("Successfully seeded footer settings!"))
+
+    def seed_business_settings(self):
+        # Get the default site
+        site = Site.objects.filter(is_default_site=True).first()
+        if not site:
+            self.stdout.write(
+                self.style.ERROR("No default site found. Please create a site first.")
+            )
+            return
+
+        # Seed business settings
+        business_settings, created = BusinessSettings.objects.get_or_create(site=site)
+
+        if not created:
+            self.stdout.write(
+                self.style.WARNING(
+                    "Business settings already exist. Updating content..."
+                )
+            )
+
+        business_settings.name = "Resolve"
+        business_settings.description = (
+            "Expert AI consulting services for ethical SMBs. "
+            "We implement large language models (LLMs) to automate workflows, "
+            "reduce costs, and amplify human capabilities."
+        )
+        business_settings.telephone = "+31651952461"
+        business_settings.email = "johan@resolve.works"
+        business_settings.address_country = "Estonia"
+        business_settings.price_range = "€€€"
+        business_settings.opening_hours = "Mo-Fr 09:00-18:00"
+
+        business_settings.save()
+        self.stdout.write(self.style.SUCCESS("Successfully seeded business settings!"))
