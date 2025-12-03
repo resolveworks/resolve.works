@@ -1,11 +1,13 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
-from wagtail.snippets.models import register_snippet
+from modelcluster.fields import ParentalKey
+from modelcluster.models import ClusterableModel
+from wagtail.admin.panels import FieldPanel
+from wagtail.models import Orderable
 
 
-@register_snippet
-class User(AbstractUser):
+class User(ClusterableModel, AbstractUser):
     """Custom user model with additional profile fields."""
 
     job_title = models.CharField(max_length=100, blank=True)
@@ -15,10 +17,10 @@ class User(AbstractUser):
     phone = models.CharField(max_length=50, blank=True)
 
 
-class WorkExperience(models.Model):
+class WorkExperience(Orderable):
     """Work experience entry for a user."""
 
-    user = models.ForeignKey(
+    user = ParentalKey(
         User,
         on_delete=models.CASCADE,
         related_name="work_experiences",
@@ -32,7 +34,14 @@ class WorkExperience(models.Model):
         help_text="Leave blank if current position",
     )
 
-    class Meta:
+    panels = [
+        FieldPanel("company"),
+        FieldPanel("role"),
+        FieldPanel("start_year"),
+        FieldPanel("end_year"),
+    ]
+
+    class Meta(Orderable.Meta):
         ordering = ["-start_year"]
 
     def __str__(self):
