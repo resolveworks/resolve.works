@@ -1,11 +1,14 @@
 from django.utils.translation import gettext_lazy as _
 
 from wagtail import hooks
-from wagtail.admin.panels import InlinePanel, ObjectList
-from wagtail.admin.views.account import BaseSettingsPanel
+from wagtail.admin.panels import InlinePanel
+from wagtail.admin.views.account import BaseSettingsPanel, SettingsTab
 
 from .forms import ProfileSettingsForm
 from .models import User
+
+
+experience_tab = SettingsTab("experience", _("Experience"), order=150)
 
 
 class ProfileSettingsPanel(BaseSettingsPanel):
@@ -28,17 +31,14 @@ class WorkExperienceSettingsPanel(BaseSettingsPanel):
 
     name = "work_experience"
     title = _("Work experience")
-    order = 250
+    tab = experience_tab
+    order = 100
     template_name = "accounts/account/work_experience_panel.html"
 
     def __init__(self, request, user, profile):
         super().__init__(request, user, profile)
         # Create the panel definition with InlinePanel
-        self.edit_handler = ObjectList(
-            [
-                InlinePanel("work_experiences", label="Work experience"),
-            ]
-        ).bind_to_model(User)
+        self.edit_handler = InlinePanel("work_experiences").bind_to_model(User)
 
     def get_form(self):
         form_class = self.edit_handler.get_form_class()
