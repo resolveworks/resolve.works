@@ -62,13 +62,8 @@ class Command(BaseCommand):
         if created:
             self.stdout.write(self.style.SUCCESS("Created user 'johan'"))
         else:
-            # Update existing user with new fields
-            user.phone = "+31 651 952 461"
-            user.profile_image = profile_image
-            user.bio = "I am an autodidact software and data engineer who loves turning ambiguous problems into practical, human-centered systems. With 15+ years of experience I spot inefficiencies in processes very quickly. I use LLMs to accelerate development, but never at the expense of clarity, reliability, or ethics.\n\nI work remotely, Europe-focused but global clients welcome."
-            user.save()
             self.stdout.write(
-                self.style.WARNING("User 'johan' already exists, updated profile")
+                self.style.WARNING("User 'johan' already exists, skipping")
             )
 
         # Seed work experiences
@@ -119,37 +114,28 @@ class Command(BaseCommand):
         profile_image = user.profile_image
 
         # Check if HomePage already exists
-        try:
-            home_page = HomePage.objects.get(slug="home")
-            self.stdout.write(
-                self.style.WARNING("HomePage already exists. Updating content...")
-            )
-        except HomePage.DoesNotExist:
-            # Clear default Wagtail site and welcome page
-            Site.objects.all().delete()
-            root_page = Page.objects.get(slug="root")
-            for page in root_page.get_children():
-                page.delete()
-            root_page.refresh_from_db()
-            self.stdout.write(self.style.SUCCESS("Cleared default Wagtail content"))
+        if HomePage.objects.filter(slug="home").exists():
+            self.stdout.write(self.style.WARNING("HomePage already exists, skipping"))
+            return
 
-            # Create new HomePage
-            home_page = HomePage(
-                title="Resolve - AI Consulting for ethical SMBs",
-                slug="home",
-                seo_title="Resolve - AI Consulting for ethical SMBs | LLM Implementation & Automation",
-                search_description="Expert AI consulting services for ethical SMBs. We implement large language models (LLMs) to automate workflows, reduce costs, and amplify human capabilities. Free consultation.",
-                owner=user,
-            )
-            root_page.add_child(instance=home_page)
-            self.stdout.write(self.style.SUCCESS("Created new HomePage"))
+        # Clear default Wagtail site and welcome page
+        Site.objects.all().delete()
+        root_page = Page.objects.get(slug="root")
+        for page in root_page.get_children():
+            page.delete()
+        root_page.refresh_from_db()
+        self.stdout.write(self.style.SUCCESS("Cleared default Wagtail content"))
 
-        # Update SEO fields
-        home_page.title = "Resolve - AI Consulting for ethical SMBs"
-        home_page.seo_title = (
-            "Resolve - AI Consulting for ethical SMBs | LLM Implementation & Automation"
+        # Create new HomePage
+        home_page = HomePage(
+            title="Resolve - AI Consulting for ethical SMBs",
+            slug="home",
+            seo_title="Resolve - AI Consulting for ethical SMBs | LLM Implementation & Automation",
+            search_description="Expert AI consulting services for ethical SMBs. We implement large language models (LLMs) to automate workflows, reduce costs, and amplify human capabilities. Free consultation.",
+            owner=user,
         )
-        home_page.search_description = "Expert AI consulting services for ethical SMBs. We implement large language models (LLMs) to automate workflows, reduce costs, and amplify human capabilities. Free consultation."
+        root_page.add_child(instance=home_page)
+        self.stdout.write(self.style.SUCCESS("Created new HomePage"))
 
         # Set the homepage content
         home_page.body = [
@@ -484,14 +470,15 @@ class Command(BaseCommand):
             )
             return
 
-        # Seed footer settings
-        footer_settings, created = FooterSettings.objects.get_or_create(site=site)
-
-        if not created:
+        # Check if footer settings already exist
+        if FooterSettings.objects.filter(site=site).exists():
             self.stdout.write(
-                self.style.WARNING("Footer settings already exist. Updating content...")
+                self.style.WARNING("Footer settings already exist, skipping")
             )
+            return
 
+        # Create footer settings
+        footer_settings = FooterSettings(site=site)
         footer_settings.heading = "Resolve"
 
         # Column 1: Taglines
@@ -572,16 +559,15 @@ class Command(BaseCommand):
             )
             return
 
-        # Seed business settings
-        business_settings, created = BusinessSettings.objects.get_or_create(site=site)
-
-        if not created:
+        # Check if business settings already exist
+        if BusinessSettings.objects.filter(site=site).exists():
             self.stdout.write(
-                self.style.WARNING(
-                    "Business settings already exist. Updating content..."
-                )
+                self.style.WARNING("Business settings already exist, skipping")
             )
+            return
 
+        # Create business settings
+        business_settings = BusinessSettings(site=site)
         business_settings.name = "Resolve"
         business_settings.description = (
             "Expert AI consulting services for ethical SMBs. "
