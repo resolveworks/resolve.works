@@ -2,7 +2,6 @@
 
 from wagtail import blocks
 from wagtail.images.blocks import ImageChooserBlock
-from wagtail.snippets.blocks import SnippetChooserBlock
 
 
 class HeroBlock(blocks.StructBlock):
@@ -192,15 +191,13 @@ class ProcessRoadmapBlock(blocks.StructBlock):
         template = "blocks/process_roadmap.html"
 
 
-class AboutUserBlock(blocks.StructBlock):
-    """About section for a user profile. Reusable for team pages."""
-
-    user = SnippetChooserBlock("accounts.User")
+class AboutFounderBlock(blocks.StructBlock):
+    """About section for the business founder. Uses founder from BusinessSettings."""
 
     class Meta:
         icon = "user"
-        label = "About User"
-        template = "blocks/about_user_block.html"
+        label = "About Founder"
+        template = "blocks/about_founder_block.html"
 
 
 class SectionBlock(blocks.StructBlock):
@@ -236,7 +233,7 @@ class SectionBlock(blocks.StructBlock):
             ("two_column", TwoColumnBlock()),
             ("faq", FAQBlock()),
             ("process_roadmap", ProcessRoadmapBlock()),
-            ("about_user", AboutUserBlock()),
+            ("about_founder", AboutFounderBlock()),
         ],
         required=False,
     )

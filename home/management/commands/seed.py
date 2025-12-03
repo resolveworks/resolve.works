@@ -353,10 +353,8 @@ class Command(BaseCommand):
                     "background": "light",
                     "content": [
                         {
-                            "type": "about_user",
-                            "value": {
-                                "user": user.id,
-                            },
+                            "type": "about_founder",
+                            "value": {},
                         },
                     ],
                 },

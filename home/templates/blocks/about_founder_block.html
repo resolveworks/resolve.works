@@ -1,6 +1,7 @@
-{% load wagtailcore_tags phone_tags %}
+{% load wagtailcore_tags wagtailsettings_tags phone_tags %}
 
-{% with user=value.user %}
+{% get_settings use_default_site=True %}
+{% with user=settings.home.BusinessSettings.founder %}
 {{ user.bio|linebreaks }}
 
 <div class="two-column-block">
