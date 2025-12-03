@@ -5,7 +5,7 @@ from django.core.management.base import BaseCommand
 from wagtail.images.models import Image
 from wagtail.models import Page, Site
 
-from accounts.models import User
+from accounts.models import User, WorkExperience
 from home.models import BusinessSettings, FooterSettings, HomePage
 
 
@@ -13,40 +13,17 @@ class Command(BaseCommand):
     help = "Seeds the homepage and footer with initial content"
 
     def handle(self, *args, **options):
-        user = self.seed_user()
+        profile_image = self.get_or_create_profile_image()
+        user = self.seed_user(profile_image)
         self.seed_homepage(user)
         self.seed_footer()
         self.seed_business_settings()
         self.stdout.write(self.style.SUCCESS("Successfully seeded all content!"))
 
-    def seed_user(self):
-        user, created = User.objects.get_or_create(
-            username="johan",
-            defaults={
-                "email": "johan@resolve.works",
-                "first_name": "Johan",
-                "last_name": "Schuijt",
-                "job_title": "Founder",
-                "bio": "Autodidact software and data engineer who loves turning ambiguous problems into practical, human-centered systems.",
-                "linkedin_url": "https://www.linkedin.com/in/johanschuijt/",
-                "github_url": "https://github.com/monneyboi/",
-                "is_staff": True,
-                "is_superuser": True,
-            },
-        )
-
-        if created:
-            self.stdout.write(self.style.SUCCESS("Created user 'johan'"))
-        else:
-            self.stdout.write(self.style.WARNING("User 'johan' already exists"))
-
-        return user
-
-    def seed_homepage(self, user):
-        # Load or create profile image
-        profile_image = None
+    def get_or_create_profile_image(self):
+        """Load or create the profile image."""
         try:
-            profile_image = Image.objects.get(title="Profile shot of Johan")
+            return Image.objects.get(title="Profile shot of Johan")
         except Image.DoesNotExist:
             image_path = "./images/profile.webp"
             if os.path.exists(image_path):
@@ -57,10 +34,89 @@ class Command(BaseCommand):
                     )
                     profile_image.save()
                     self.stdout.write(self.style.SUCCESS("Created profile image"))
+                    return profile_image
             else:
                 self.stdout.write(
                     self.style.WARNING(f"Profile image not found at {image_path}")
                 )
+                return None
+
+    def seed_user(self, profile_image):
+        user, created = User.objects.get_or_create(
+            username="johan",
+            defaults={
+                "email": "johan@resolve.works",
+                "first_name": "Johan",
+                "last_name": "Schuijt",
+                "job_title": "Founder",
+                "bio": "I am an autodidact software and data engineer who loves turning ambiguous problems into practical, human-centered systems. With 15+ years of experience I spot inefficiencies in processes very quickly. I use LLMs to accelerate development, but never at the expense of clarity, reliability, or ethics.\n\nI work remotely, Europe-focused but global clients welcome.",
+                "linkedin_url": "https://www.linkedin.com/in/johanschuijt/",
+                "github_url": "https://github.com/monneyboi/",
+                "phone": "+31 651 952 461",
+                "profile_image": profile_image,
+                "is_staff": True,
+                "is_superuser": True,
+            },
+        )
+
+        if created:
+            self.stdout.write(self.style.SUCCESS("Created user 'johan'"))
+        else:
+            # Update existing user with new fields
+            user.phone = "+31 651 952 461"
+            user.profile_image = profile_image
+            user.bio = "I am an autodidact software and data engineer who loves turning ambiguous problems into practical, human-centered systems. With 15+ years of experience I spot inefficiencies in processes very quickly. I use LLMs to accelerate development, but never at the expense of clarity, reliability, or ethics.\n\nI work remotely, Europe-focused but global clients welcome."
+            user.save()
+            self.stdout.write(
+                self.style.WARNING("User 'johan' already exists, updated profile")
+            )
+
+        # Seed work experiences
+        self.seed_work_experiences(user)
+
+        return user
+
+    def seed_work_experiences(self, user):
+        """Seed work experience entries for a user."""
+        experiences = [
+            {
+                "company": "OpenSanctions",
+                "role": "Data Engineer",
+                "start_year": 2025,
+                "end_year": None,
+            },
+            {
+                "company": "Follow the Money",
+                "role": "Full Stack Developer",
+                "start_year": 2021,
+                "end_year": 2025,
+            },
+            {
+                "company": "Forest.host",
+                "role": "Founder",
+                "start_year": 2017,
+                "end_year": 2021,
+            },
+        ]
+
+        for exp in experiences:
+            obj, created = WorkExperience.objects.get_or_create(
+                user=user,
+                company=exp["company"],
+                defaults={
+                    "role": exp["role"],
+                    "start_year": exp["start_year"],
+                    "end_year": exp["end_year"],
+                },
+            )
+            if created:
+                self.stdout.write(
+                    self.style.SUCCESS(f"Created work experience: {exp['company']}")
+                )
+
+    def seed_homepage(self, user):
+        # Get profile image from user
+        profile_image = user.profile_image
 
         # Check if HomePage already exists
         try:
