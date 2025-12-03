@@ -1,0 +1,44 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+
+{% with user=value.user %}
+{{ user.bio|linebreaks }}
+
+<div class="two-column-block">
+    {% if user.profile_image %}
+        <p>
+            {% image user.profile_image original as img %}
+            <img src="{{ img.url }}" alt="Profile shot of {{ user.get_full_name }}" class="two-column-right">
+        </p>
+    {% endif %}
+
+    <h3>Selected experience</h3>
+    <dl>
+        {% for exp in user.work_experiences.all %}
+            <dt>{{ exp.company }}</dt>
+            <dd>{{ exp.role }} ({{ exp.date_range }})</dd>
+        {% endfor %}
+    </dl>
+
+    <h3>Let's get in touch</h3>
+    <address>
+        <dl>
+            {% if user.linkedin_url %}
+                <dt>LinkedIn</dt>
+                <dd><a target="_blank" href="{{ user.linkedin_url }}">{{ user.linkedin_url }}</a></dd>
+            {% endif %}
+            {% if user.github_url %}
+                <dt>GitHub</dt>
+                <dd><a target="_blank" href="{{ user.github_url }}">{{ user.github_url }}</a></dd>
+            {% endif %}
+            {% if user.email %}
+                <dt>Email</dt>
+                <dd><a href="mailto:{{ user.email }}?subject=Free consultation request&body=Hi {{ user.first_name }},%0D%0A%0D%0AWe're curious about how you could help us with our current challenge.%0D%0A%0D%0A...%0D%0A%0D%0ABest regards,%0D%0A...">{{ user.email }}</a></dd>
+            {% endif %}
+            {% if user.phone %}
+                <dt>Phone</dt>
+                <dd><a href="tel:{{ user.phone|cut:' ' }}">{{ user.phone }}</a></dd>
+            {% endif %}
+        </dl>
+    </address>
+</div>
+{% endwith %}

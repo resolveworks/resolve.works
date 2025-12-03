@@ -1,7 +1,10 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
+from wagtail.snippets.models import register_snippet
 
+
+@register_snippet
 class User(AbstractUser):
     """Custom user model with additional profile fields."""
 

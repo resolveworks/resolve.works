@@ -2,6 +2,7 @@
 
 from wagtail import blocks
 from wagtail.images.blocks import ImageChooserBlock
+from wagtail.snippets.blocks import SnippetChooserBlock
 
 
 class HeroBlock(blocks.StructBlock):
@@ -59,11 +60,13 @@ class FeaturesBlock(blocks.StructBlock):
 class DefinitionListItemBlock(blocks.StructBlock):
     """Individual term-definition pair for a definition list."""
 
-    term = blocks.CharBlock(required=True, max_length=100, help_text="Definition term (dt)")
+    term = blocks.CharBlock(
+        required=True, max_length=100, help_text="Definition term (dt)"
+    )
     definition = blocks.RichTextBlock(
         required=True,
         features=["bold", "italic", "link"],
-        help_text="Definition description (dd)"
+        help_text="Definition description (dd)",
     )
 
     class Meta:
@@ -99,9 +102,7 @@ class TwoColumnBlock(blocks.StructBlock):
         [
             (
                 "heading",
-                blocks.RichTextBlock(
-                    features=["h3"], help_text="Heading (h3)"
-                ),
+                blocks.RichTextBlock(features=["h3"], help_text="Heading (h3)"),
             ),
             (
                 "paragraph",
@@ -124,15 +125,9 @@ class TwoColumnBlock(blocks.StructBlock):
 class FAQItemBlock(blocks.StructBlock):
     """Individual FAQ question and answer."""
 
-    question = blocks.CharBlock(
-        required=True,
-        max_length=255,
-        help_text="The question"
-    )
+    question = blocks.CharBlock(required=True, max_length=255, help_text="The question")
     answer = blocks.RichTextBlock(
-        required=True,
-        features=["bold", "italic", "link"],
-        help_text="The answer"
+        required=True, features=["bold", "italic", "link"], help_text="The answer"
     )
 
     class Meta:
@@ -146,7 +141,7 @@ class FAQBlock(blocks.StructBlock):
 
     def get_structured_data(self):
         """Generate JSON-LD structured data for this FAQ block."""
-        if not self.get('items'):
+        if not self.get("items"):
             return None
 
         return {
@@ -155,14 +150,14 @@ class FAQBlock(blocks.StructBlock):
             "mainEntity": [
                 {
                     "@type": "Question",
-                    "name": item['question'],
+                    "name": item["question"],
                     "acceptedAnswer": {
                         "@type": "Answer",
-                        "text": item['answer'].source  # Get the raw HTML
-                    }
+                        "text": item["answer"].source,  # Get the raw HTML
+                    },
                 }
-                for item in self.get('items', [])
-            ]
+                for item in self.get("items", [])
+            ],
         }
 
     class Meta:
@@ -177,11 +172,10 @@ class ProcessStepBlock(blocks.StructBlock):
     title = blocks.CharBlock(
         required=True,
         max_length=100,
-        help_text="Step title (e.g., 'Diagnose', 'Prototype')"
+        help_text="Step title (e.g., 'Diagnose', 'Prototype')",
     )
     description = blocks.TextBlock(
-        required=True,
-        help_text="Brief description of this step"
+        required=True, help_text="Brief description of this step"
     )
 
     class Meta:
@@ -195,13 +189,24 @@ class ProcessRoadmapBlock(blocks.StructBlock):
         ProcessStepBlock(),
         min_num=4,
         max_num=4,
-        help_text="Exactly 4 process steps (arrows connect first 3)"
+        help_text="Exactly 4 process steps (arrows connect first 3)",
     )
 
     class Meta:
         icon = "list-ol"
         label = "Process Roadmap"
         template = "blocks/process_roadmap.html"
+
+
+class AboutUserBlock(blocks.StructBlock):
+    """About section for a user profile. Reusable for team pages."""
+
+    user = SnippetChooserBlock("accounts.User")
+
+    class Meta:
+        icon = "user"
+        label = "About User"
+        template = "blocks/about_user_block.html"
 
 
 class SectionBlock(blocks.StructBlock):
@@ -224,9 +229,7 @@ class SectionBlock(blocks.StructBlock):
         [
             (
                 "heading",
-                blocks.RichTextBlock(
-                    features=["h3"], help_text="Heading (h3)"
-                ),
+                blocks.RichTextBlock(features=["h3"], help_text="Heading (h3)"),
             ),
             (
                 "paragraph",
@@ -239,6 +242,7 @@ class SectionBlock(blocks.StructBlock):
             ("two_column", TwoColumnBlock()),
             ("faq", FAQBlock()),
             ("process_roadmap", ProcessRoadmapBlock()),
+            ("about_user", AboutUserBlock()),
         ],
         required=False,
     )

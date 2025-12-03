@@ -110,9 +110,6 @@ class Command(BaseCommand):
                 )
 
     def seed_homepage(self, user):
-        # Get profile image from user
-        profile_image = user.profile_image
-
         # Check if HomePage already exists
         if HomePage.objects.filter(slug="home").exists():
             self.stdout.write(self.style.WARNING("HomePage already exists, skipping"))
@@ -333,70 +330,9 @@ class Command(BaseCommand):
                     "background": "light",
                     "content": [
                         {
-                            "type": "paragraph",
-                            "value": "<p>I am an autodidact software and data engineer who loves turning ambiguous problems into practical, human-centered systems. With 15+ years of experience I spot inefficiencies in processes very quickly. I use LLMs to accelerate development, but never at the expense of clarity, reliability, or ethics.</p>",
-                        },
-                        {
-                            "type": "paragraph",
-                            "value": "<p>I work remotely, Europe-focused but global clients welcome.</p>",
-                        },
-                        {
-                            "type": "two_column",
+                            "type": "about_user",
                             "value": {
-                                "image_position": "right",
-                                "image": profile_image.id if profile_image else None,
-                                "content": [
-                                    {
-                                        "type": "heading",
-                                        "value": "<h3>Selected experience</h3>",
-                                    },
-                                    {
-                                        "type": "definition_list",
-                                        "value": {
-                                            "items": [
-                                                {
-                                                    "term": "OpenSanctions",
-                                                    "definition": "<p>Data Engineer (2025–present)</p>",
-                                                },
-                                                {
-                                                    "term": "Follow the Money",
-                                                    "definition": "<p>Full Stack Developer (2021–2025)</p>",
-                                                },
-                                                {
-                                                    "term": "Forest.host",
-                                                    "definition": "<p>Founder (2017–2021)</p>",
-                                                },
-                                            ]
-                                        },
-                                    },
-                                    {
-                                        "type": "heading",
-                                        "value": "<h3>Let's get in touch</h3>",
-                                    },
-                                    {
-                                        "type": "definition_list",
-                                        "value": {
-                                            "items": [
-                                                {
-                                                    "term": "LinkedIn",
-                                                    "definition": '<p><a target="_blank" href="https://www.linkedin.com/in/johanschuijt/">https://www.linkedin.com/in/johanschuijt/</a></p>',
-                                                },
-                                                {
-                                                    "term": "GitHub",
-                                                    "definition": '<p><a target="_blank" href="https://github.com/monneyboi/">https://github.com/monneyboi/</a></p>',
-                                                },
-                                                {
-                                                    "term": "Email",
-                                                    "definition": '<p><a href="mailto:johan@resolve.works?subject=Free consultation request&body=Hi Johan,%0D%0A%0D%0AWe\'re curious about how you could help us with our current challenge.%0D%0A%0D%0A...%0D%0A%0D%0ABest regards,%0D%0A...">johan@resolve.works</a></p>',
-                                                },
-                                                {
-                                                    "term": "Phone",
-                                                    "definition": '<p><a href="tel:+31651952461">+31 651 952 461</a></p>',
-                                                },
-                                            ]
-                                        },
-                                    },
-                                ],
+                                "user": user.id,
                             },
                         },
                     ],
