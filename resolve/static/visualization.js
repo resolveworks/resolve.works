@@ -51,6 +51,16 @@ class EmbeddingVisualization {
     return this.getBaseSize() * 0.002;
   }
 
+  positionTooltip(tooltip, event) {
+    const tooltipWidth = tooltip.node().offsetWidth;
+    const offset = 10;
+    const wouldOverflow = event.clientX + offset + tooltipWidth > window.innerWidth;
+    const left = wouldOverflow ? event.clientX - offset - tooltipWidth : event.clientX + offset;
+    tooltip
+      .style("top", event.clientY - 10 + "px")
+      .style("left", left + "px");
+  }
+
   createSvg() {
     const rect = this.container.getBoundingClientRect();
     this.width = rect.width;
@@ -140,15 +150,12 @@ class EmbeddingVisualization {
           .select("body")
           .append("div")
           .attr("class", "tooltip")
-          .style("top", event.clientY - 10 + "px")
-          .style("left", event.clientX + 10 + "px")
           .text(d.text);
+        this.positionTooltip(tooltip, event);
       })
       .on("mousemove", (event) => {
         if (tooltip) {
-          tooltip
-            .style("top", event.clientY - 10 + "px")
-            .style("left", event.clientX + 10 + "px");
+          this.positionTooltip(tooltip, event);
         }
       })
       .on("mouseleave", (event, d) => {
