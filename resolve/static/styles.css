@@ -462,6 +462,12 @@ footer.section > a.site-name:hover {
 }
 
 /* Article List Styles */
+.article-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+}
+
 .article-list article {
   display: flex;
   flex-direction: column;
