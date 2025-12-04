@@ -116,7 +116,7 @@ summary,
 dt,
 ul > li,
 ol > li {
-  line-height: 1.6rem;
+  line-height: 1.6;
 }
 
 dt {
@@ -202,6 +202,34 @@ main > nav > p > span {
 .section-hero > .visualization > svg {
   width: 100%;
   height: 100%;
+}
+
+/* Visualization Node and Edge Styles */
+.visualization line {
+  stroke: #D5D5D5;
+}
+
+.visualization circle {
+  stroke: var(--color-light);
+  stroke-width: 2;
+  cursor: pointer;
+}
+
+.visualization .node {
+  opacity: 0;
+}
+
+/* Embedding Tooltip */
+.embedding-tooltip {
+  position: fixed;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  max-width: 250px;
+  pointer-events: none;
+  z-index: 1000;
 }
 
 /* Hero Block Styles */

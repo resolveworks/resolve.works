@@ -109,9 +109,7 @@ class EmbeddingVisualization {
       .attr("y1", (d) => yScale(nodeById.get(d.source).y))
       .attr("x2", (d) => xScale(nodeById.get(d.target).x))
       .attr("y2", (d) => yScale(nodeById.get(d.target).y))
-      .attr("stroke", "#D5D5D5")
-      .attr("stroke-width", (d) => d.similarity * 2)
-      .attr("stroke-opacity", (d) => 0.2 + d.similarity * 0.4);
+      .attr("stroke-width", (d) => d.similarity * 2);
 
     // Draw nodes
     const nodeGroups = g
@@ -126,10 +124,7 @@ class EmbeddingVisualization {
     nodeGroups
       .append("circle")
       .attr("r", (d) => this.getNodeRadius(d.z))
-      .attr("fill", (d) => this.getNodeColor(d.position))
-      .attr("stroke", "#fff")
-      .attr("stroke-width", 2)
-      .style("cursor", "pointer");
+      .attr("fill", (d) => this.getNodeColor(d.position));
 
     // Tooltips on hover
     let tooltip = null;
@@ -143,15 +138,6 @@ class EmbeddingVisualization {
           .select("body")
           .append("div")
           .attr("class", "embedding-tooltip")
-          .style("position", "fixed")
-          .style("background", "rgba(0, 0, 0, 0.8)")
-          .style("color", "#fff")
-          .style("padding", "8px 12px")
-          .style("border-radius", "4px")
-          .style("font-size", "12px")
-          .style("max-width", "250px")
-          .style("pointer-events", "none")
-          .style("z-index", "1000")
           .style("top", event.clientY - 10 + "px")
           .style("left", event.clientX + 10 + "px")
           .text(d.text);
@@ -173,8 +159,8 @@ class EmbeddingVisualization {
         }
       });
 
-    // Animate nodes fading in
-    nodeGroups.style("opacity", 0).transition().duration(500).style("opacity", 1);
+    // Animate nodes fading in (initial opacity set via CSS)
+    nodeGroups.transition().duration(500).style("opacity", 1);
   }
 
 }
