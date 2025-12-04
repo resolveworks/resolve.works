@@ -45,7 +45,7 @@ class EmbeddingVisualization {
     return minRadius + z * (maxRadius - minRadius);
   }
 
-  getEdgeStrokeWidth() {
+  getStrokeWidth() {
     return this.getBaseSize() * 0.002;
   }
 
@@ -101,7 +101,7 @@ class EmbeddingVisualization {
       .attr("y1", (d) => yScale(nodeById.get(d.source).y))
       .attr("x2", (d) => xScale(nodeById.get(d.target).x))
       .attr("y2", (d) => yScale(nodeById.get(d.target).y))
-      .attr("stroke-width", this.getEdgeStrokeWidth());
+      .attr("stroke-width", this.getStrokeWidth());
 
     // Draw nodes
     const nodeGroups = g
@@ -116,7 +116,8 @@ class EmbeddingVisualization {
     nodeGroups
       .append("circle")
       .attr("r", (d) => this.getNodeRadius(d.z))
-      .attr("fill", (d) => this.getNodeColor(d.position));
+      .attr("fill", (d) => this.getNodeColor(d.position))
+      .attr("stroke-width", this.getStrokeWidth());
 
     // Tooltips on hover
     let tooltip = null;

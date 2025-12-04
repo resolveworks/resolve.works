@@ -17,7 +17,7 @@
     {% for article in articles %}
     <li>
       <article>
-        <div class="visualization visualization-mini" data-page-id="{{ article.pk }}"></div>
+        <div class="visualization" data-page-id="{{ article.pk }}"></div>
         <div class="article-content">
           <h2><a href="{% pageurl article %}">{{ article.title }}</a></h2>
           {% if article.intro %}

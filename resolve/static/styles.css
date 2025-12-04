@@ -222,7 +222,6 @@ main > nav > p > span {
 
 .visualization circle {
   stroke: var(--color-light);
-  stroke-width: 2;
   cursor: pointer;
 }
 
@@ -472,22 +471,13 @@ footer.section > a.site-name:hover {
   flex-direction: column;
 }
 
+.article-list .visualization {
+  width: 100%;
+  aspect-ratio: 1;
+}
+
 .article-content {
   flex: 1;
-}
-
-/* Mini Visualization Styles */
-.visualization-mini {
-  width: 80px;
-  height: 80px;
-}
-
-.visualization-mini line {
-  stroke: #e0e0e0;
-}
-
-.visualization-mini circle {
-  stroke-width: 1;
 }
 
 @media (min-width: 600px) {
@@ -496,10 +486,8 @@ footer.section > a.site-name:hover {
     gap: 2rem;
   }
 
-  .visualization-mini {
+  .article-list .visualization {
     width: 25%;
-    aspect-ratio: 1;
-    height: auto;
     flex-shrink: 0;
   }
 }
