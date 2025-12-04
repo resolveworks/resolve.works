@@ -157,6 +157,11 @@ body > nav {
   padding: 0 1rem;
   display: flex;
   align-items: center;
+  pointer-events: none;
+}
+
+body > nav > * {
+  pointer-events: auto;
 }
 
 
@@ -263,7 +268,6 @@ main > nav > p > span {
   display: inline-block;
   border-radius: 0.25rem;
   transition: background-color 0.05s ease;
-  margin-top: 2rem;
   padding: 1rem 2rem 1rem 1.5rem;
 }
 

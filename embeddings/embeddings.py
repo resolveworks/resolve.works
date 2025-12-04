@@ -1,12 +1,14 @@
 """
-Embedding pipeline for article visualization.
+Embedding pipeline for page visualization.
 
-Generates 2D coordinates from article text using sentence-transformers and UMAP.
+Generates 2D coordinates from page content using sentence-transformers and UMAP.
+Works with any Wagtail page by extracting text from rendered HTML.
 """
 
-import json
 import logging
+from html.parser import HTMLParser
 
+import markdown
 import nltk
 import numpy as np
 from sentence_transformers import SentenceTransformer
@@ -20,46 +22,72 @@ try:
 except LookupError:
     nltk.download("punkt_tab", quiet=True)
 
+# Block-level HTML elements from markdown library
+BLOCK_TAGS = set(markdown.Markdown().block_level_elements)
 
-def chunk_to_sentences(text: str) -> list[str]:
-    """
-    Split markdown text into sentences.
+# Elements to skip entirely (non-content)
+SKIP_TAGS = {"script", "style", "nav", "header", "footer", "aside", "head", "meta"}
 
-    Uses Python-Markdown to parse the document structure, then NLTK to split
-    block elements into sentences.
-    """
-    import markdown
-    from xml.etree import ElementTree as ET
 
-    md = markdown.Markdown(extensions=["fenced_code"])
-    block_tags = set(md.block_level_elements) | {"root"}
+class HTMLTextExtractor(HTMLParser):
+    """Extract text from HTML, respecting block structure."""
 
-    def extract_chunks(elem) -> list[str]:
-        chunks = []
-        has_block_children = any(child.tag in block_tags for child in elem)
+    def __init__(self):
+        super().__init__()
+        self.chunks = []
+        self.current_text = []
+        self.skip_depth = 0
 
-        if has_block_children:
-            for child in elem:
-                chunks.extend(extract_chunks(child))
-        else:
-            text = "".join(elem.itertext()).strip()
+    def handle_starttag(self, tag, attrs):
+        if tag in SKIP_TAGS:
+            self.skip_depth += 1
+        elif tag in BLOCK_TAGS and self.current_text:
+            self._flush_text()
+
+    def handle_endtag(self, tag):
+        if tag in SKIP_TAGS:
+            self.skip_depth -= 1
+        elif tag in BLOCK_TAGS:
+            self._flush_text()
+
+    def handle_data(self, data):
+        if self.skip_depth == 0:
+            self.current_text.append(data)
+
+    def _flush_text(self):
+        if self.current_text:
+            text = "".join(self.current_text).strip()
             if text:
-                chunks.extend(nltk.sent_tokenize(text))
+                self.chunks.append(text)
+            self.current_text = []
 
-        return chunks
+    def get_chunks(self):
+        self._flush_text()
+        return self.chunks
 
-    html = md.convert(text)
 
-    try:
-        root = ET.fromstring(f"<root>{html}</root>")
-    except ET.ParseError:
-        logger.warning(
-            "Failed to parse markdown HTML, falling back to simple tokenization"
-        )
-        sentences = nltk.sent_tokenize(text)
-        return [s.strip() for s in sentences if len(s.strip()) >= 10]
+def chunk_html_to_sentences(html: str) -> list[str]:
+    """
+    Extract sentences from HTML content.
 
-    return extract_chunks(root)
+    Parses HTML structure, extracts text from block elements,
+    and splits into sentences using NLTK.
+
+    Args:
+        html: HTML string
+
+    Returns:
+        List of sentences with minimum length of 10 characters
+    """
+    extractor = HTMLTextExtractor()
+    extractor.feed(html)
+    chunks = extractor.get_chunks()
+
+    sentences = []
+    for chunk in chunks:
+        sentences.extend(nltk.sent_tokenize(chunk))
+
+    return [s.strip() for s in sentences if len(s.strip()) >= 10]
 
 
 def generate_embeddings(
@@ -160,12 +188,12 @@ def compute_cosine_similarities(
     return edges
 
 
-def generate_visualization_data(text: str, similarity_threshold: float = 0.5) -> dict:
+def generate_visualization_data(html: str, similarity_threshold: float = 0.5) -> dict:
     """
-    Generate complete visualization data from article text.
+    Generate complete visualization data from page HTML.
 
     Args:
-        text: The article body text (markdown)
+        html: The rendered page HTML
         similarity_threshold: Minimum cosine similarity for edge creation (0-1)
 
     Returns:
@@ -173,7 +201,7 @@ def generate_visualization_data(text: str, similarity_threshold: float = 0.5) ->
         - nodes: array with id, x, y, z (for size), text, position
         - edges: array with source, target, similarity
     """
-    sentences = chunk_to_sentences(text)
+    sentences = chunk_html_to_sentences(html)
 
     if not sentences:
         return {"nodes": [], "edges": []}
@@ -206,6 +234,49 @@ def generate_visualization_data(text: str, similarity_threshold: float = 0.5) ->
     return {"nodes": nodes, "edges": edges}
 
 
-def visualization_data_to_json(data: dict) -> str:
-    """Serialize visualization data to JSON string."""
-    return json.dumps(data)
+def render_page_to_html(page, block_name: str = "content") -> str:
+    """
+    Render a specific block from a Wagtail page's template.
+
+    Args:
+        page: A Wagtail Page instance
+        block_name: Name of the template block to render
+
+    Returns:
+        Rendered HTML string of the specified block
+    """
+    from django.template import RequestContext
+    from django.template.loader import get_template
+    from django.template.loader_tags import (
+        BlockContext,
+        BlockNode,
+        ExtendsNode,
+        BLOCK_CONTEXT_KEY,
+    )
+    from django.test import RequestFactory
+
+    request = RequestFactory().get(page.url or "/")
+    template = get_template(page.template).template
+    context = RequestContext(request, page.get_context(request))
+
+    # Collect all blocks from the template hierarchy
+    blocks = {}
+
+    def collect_blocks(nodelist):
+        for node in nodelist:
+            if isinstance(node, BlockNode):
+                blocks[node.name] = node
+            if isinstance(node, ExtendsNode):
+                # Collect blocks defined in this child template
+                blocks.update(node.blocks)
+
+    collect_blocks(template.nodelist)
+
+    # Set up block context and render the requested block
+    block_context = BlockContext()
+    block_context.add_blocks(blocks)
+
+    with context.render_context.push_state(template):
+        context.render_context[BLOCK_CONTEXT_KEY] = block_context
+        block = block_context.get_block(block_name)
+        return block.nodelist.render(context)

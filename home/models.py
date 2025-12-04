@@ -6,6 +6,7 @@ from wagtail.admin.panels import FieldPanel, MultiFieldPanel
 from wagtail.contrib.settings.models import BaseSiteSetting, register_setting
 
 from resolve.fields import PhoneField
+from embeddings.models import EmbeddingMixin
 
 from .blocks import HeroBlock, SectionBlock
 
@@ -174,7 +175,7 @@ class FooterSettings(BaseSiteSetting):
         verbose_name = "Footer"
 
 
-class HomePage(SeoMixin, Page):
+class HomePage(EmbeddingMixin, SeoMixin, Page):
     body = StreamField(
         [("hero", HeroBlock()), ("section", SectionBlock())],
         blank=True,

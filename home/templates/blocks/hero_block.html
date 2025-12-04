@@ -2,13 +2,11 @@
 {% get_settings %}
 
 <section class="section section-hero">
+    <div class="visualization" data-page-id="{{ page.pk }}"></div>
     <header class="hero-block">
         <h1>{{ self.heading }}</h1>
-        <p>
-            {{ self.body_text }}
-
-            <br />
-
+        <p>{{ self.body_text }}</p>
+        <p class="hero-cta">
             {% if settings.home.BusinessSettings.email %}
             <a href="mailto:{{ settings.home.BusinessSettings.email }}?subject={{ settings.home.ContactSettings.email_subject|urlencode_newlines }}&body={{ settings.home.ContactSettings.email_body|urlencode_newlines }}">✉️ Book a free call</a>
             {% endif %}

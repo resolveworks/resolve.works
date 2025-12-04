@@ -27,7 +27,7 @@ class EmbeddingVisualization {
 
   async fetchData() {
     try {
-      const response = await fetch(`/api/articles/${this.pageId}/embeddings/`);
+      const response = await fetch(`/api/pages/${this.pageId}/embeddings/`);
       if (!response.ok) return;
       const data = await response.json();
       this.nodes = data.nodes || [];

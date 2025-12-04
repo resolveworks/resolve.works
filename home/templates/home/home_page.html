@@ -10,6 +10,7 @@
 {% endblock content %}
 
 {% block extra_js %}
+<script type="module" src="{% static 'visualization.js' %}"></script>
 {% with business=settings.home.BusinessSettings %}
 {% if business %}
 <script type="application/ld+json">
