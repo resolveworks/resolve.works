@@ -204,8 +204,8 @@ main > nav > p > span {
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 0;
-  width: max(100vw, 100vh);
-  height: max(100vw, 100vh);
+  width: max(105vw, 105vh);
+  height: max(105vw, 105vh);
   max-width: none;
   padding: 0;
 }
