@@ -1,24 +1,33 @@
-# Resolve.works - Wagtail Migration
+# Resolve.works
 
 ## Overview
 
-Migrating static HTML site to Wagtail CMS. Single-page consulting site with section-based structure ideal for StreamField blocks.
+Consulting site built with Wagtail CMS. Single-page homepage with section-based StreamField blocks, articles with AI-powered semantic search.
 
-## Current Structure
+## Project Structure
 
-**Static files (located in project root):**
+- `resolve/` - Django project config (settings, urls, static files)
+- `home/` - Homepage app with StreamField blocks
+- `articles/` - Blog/articles with embedding-based visualization
+- `accounts/` - Custom user model with work experience
+- `images/` - Static image assets
+- `media/` - User-uploaded files
 
-- `./index.html` - Single page, semantic sections
-- `./styles.css` - CSS custom properties, responsive grids
-- `./scripts.js` - Analytics consent
-- `./images/` - Assets
+## Tech Stack
 
-**Wagtail project:**
+- Python 3.12, Django 5.2, Wagtail 7.2
+- uv for dependency management
+- sentence-transformers + UMAP for article visualizations
+- ruff for linting
 
-- `resolve/` - Django project config
-- `home/` - App for homepage
-- `manage.py` - Django management
+## Commands
+
+```bash
+uv run manage.py runserver     # Dev server
+uv run manage.py migrate       # Run migrations
+uv run manage.py createsuperuser
+```
 
 ## SEO
 
-Preserve all existing SEO features and implement best practices throughout the migration.
+Preserve all existing SEO features and implement best practices.
