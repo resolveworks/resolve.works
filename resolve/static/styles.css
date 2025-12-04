@@ -225,10 +225,6 @@ main > nav > p > span {
   cursor: pointer;
 }
 
-.visualization .node {
-  opacity: 0;
-}
-
 /* Tooltip */
 .tooltip {
   position: fixed;

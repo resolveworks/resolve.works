@@ -103,10 +103,11 @@ class EmbeddingVisualization {
       .attr("y2", (d) => yScale(nodeById.get(d.target).y))
       .attr("stroke-width", this.getStrokeWidth());
 
-    // Draw nodes
+    // Draw nodes (sorted by z so larger nodes appear in front)
+    const sortedNodes = [...this.nodes].sort((a, b) => a.z - b.z);
     const nodeGroups = g
       .selectAll("g.node")
-      .data(this.nodes)
+      .data(sortedNodes)
       .enter()
       .append("g")
       .attr("class", "node")
@@ -152,8 +153,6 @@ class EmbeddingVisualization {
         }
       });
 
-    // Animate nodes fading in (initial opacity set via CSS)
-    nodeGroups.transition().duration(500).style("opacity", 1);
   }
 
 }
