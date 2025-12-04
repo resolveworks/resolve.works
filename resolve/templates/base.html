@@ -73,13 +73,15 @@
   <body class="{% block body_class %}{% endblock %}">
     {% wagtailuserbar %}
 
-    <nav></nav>
+    <nav>
+      <a class="site-name" href="/">Resolve</a>
+    </nav>
 
     {% block content %}{% endblock %}
 
     <footer class="section">
       {% with footer=settings.home.FooterSettings business=settings.home.BusinessSettings %}
-        <h2><a href="/">{{ footer.heading }}</a></h2>
+        <a class="site-name" href="/">{{ footer.heading }}</a>
         <section>
           <div>{{ footer.tagline|richtext }}</div>
           <address>

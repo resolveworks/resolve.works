@@ -36,7 +36,8 @@ h2,
 h3,
 h4,
 h5,
-h6 {
+h6,
+.site-name {
   font-family: "Inter", sans-serif;
   font-optical-sizing: auto;
   font-weight: 700;
@@ -147,8 +148,17 @@ body {
 }
 
 body > nav {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
   height: 5rem;
+  padding: 0 1rem;
+  display: flex;
+  align-items: center;
 }
+
 
 main > nav > *,
 body > footer > * {
@@ -170,8 +180,11 @@ main > nav > p > span {
 
 /* Hero Section Styles */
 .section.section-hero {
-  padding: 10rem 0;
+  min-height: 100vh;
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .section.section-hero > .visualization {
@@ -179,6 +192,7 @@ main > nav > p > span {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  z-index: -1;
   width: max(100vw, 100vh);
   height: max(100vw, 100vh);
   max-width: none;
@@ -191,6 +205,10 @@ main > nav > p > span {
 }
 
 /* Hero Block Styles */
+
+.hero-block {
+  position: relative;
+}
 
 .hero-block > h1 {
   font-size: var(--text-size-h0);
@@ -240,7 +258,8 @@ main > nav > p > span {
 }
 
 @media (min-width: 1024px) {
-  .section > * {
+  .section > *,
+  body > nav {
     width: 100%;
     max-width: 70rem;
     margin-left: auto;
@@ -297,19 +316,26 @@ footer.section a:hover {
   color: var(--color-light);
 }
 
-footer.section > h2 {
-  margin-bottom: 0rem;
-}
-
-footer.section > h2 a,
-footer.section > h2 a:visited {
-  color: inherit;
+.site-name {
+  font-size: var(--text-size-h2);
   text-decoration: none;
 }
 
-footer.section > h2 a:hover {
+body > nav > .site-name {
   color: #a5a5a5;
-  text-decoration: none;
+}
+
+body > nav > .site-name:hover {
+  color: var(--color-dark);
+}
+
+footer.section > a.site-name {
+  display: block;
+  color: var(--color-light);
+}
+
+footer.section > a.site-name:hover {
+  color: #a5a5a5;
 }
 
 @media (min-width: 768px) {
