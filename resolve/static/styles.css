@@ -1,8 +1,8 @@
 :root {
   --color-dark: #1a1a1a;
   --color-light: #fafafa;
-  --shadow-light: 0 0 1rem var(--color-light), 0 0 2rem var(--color-light);
-  --shadow-dark: 0 0 1rem var(--color-dark), 0 0 2rem var(--color-dark);
+  --shadow-light: 0 0 2em var(--color-light), 0 0 4em var(--color-light);
+  --shadow-dark: 0 0 2em var(--color-dark), 0 0 4em var(--color-dark);
 
   --color-primary: #0077b2;
   --color-primary-lighter: #53afdc;
@@ -166,23 +166,8 @@ body > nav > * {
   pointer-events: auto;
 }
 
-
-main > nav > *,
 body > footer > * {
   padding: 0 1rem;
-}
-
-main > nav {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  background: var(--color-light);
-}
-
-main > nav > p > span {
-  white-space: nowrap;
-  margin-left: 1rem;
 }
 
 /* Hero Section Styles */
@@ -220,7 +205,7 @@ main > nav > p > span {
 
 /* Visualization Node and Edge Styles */
 .visualization line {
-  stroke: #D5D5D5;
+  stroke: #d5d5d5;
 }
 
 .visualization circle {
@@ -244,14 +229,12 @@ main > nav > p > span {
 /* Hero Block Styles */
 
 .hero-block {
-  position: relative;
-  z-index: 1;
   pointer-events: none;
 }
 
-.hero-block > * {
+.hero-block a,
+.hero-block button {
   pointer-events: auto;
-  width: fit-content;
 }
 
 .hero-block > h1 {
@@ -297,15 +280,12 @@ main > nav > p > span {
 /* Section Block Styles */
 .section {
   padding: 4rem 0 8rem;
-  position: relative;
-  z-index: 1;
-  pointer-events: none;
 }
 
 .section > * {
   padding: 0 1rem;
-  pointer-events: auto;
-  width: fit-content;
+  position: relative;
+  z-index: 1;
 }
 
 .section-light {
