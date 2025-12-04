@@ -28,7 +28,7 @@ body {
   color: var(--color-dark);
   margin: 0;
 
-  font-size: var(--text-base);
+  font-size: var(--text-size-base);
 }
 
 h1,
@@ -172,10 +172,7 @@ main > nav > p > span {
 
 /* Hero Block Styles */
 .hero-block {
-  min-height: 50vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  padding: 10rem 0;
 }
 
 .hero-block > * {
