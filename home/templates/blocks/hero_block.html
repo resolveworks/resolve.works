@@ -1,19 +1,21 @@
 {% load phone_tags wagtailsettings_tags %}
 {% get_settings %}
 
-<header class="hero-block">
-    <h1>{{ self.heading }}</h1>
-    <p>
-        {{ self.body_text }}
+<section class="section section-hero">
+    <header class="hero-block">
+        <h1>{{ self.heading }}</h1>
+        <p>
+            {{ self.body_text }}
 
-        <br />
+            <br />
 
-        {% if settings.home.BusinessSettings.email %}
-        <a href="mailto:{{ settings.home.BusinessSettings.email }}?subject={{ settings.home.ContactSettings.email_subject|urlencode_newlines }}&body={{ settings.home.ContactSettings.email_body|urlencode_newlines }}">✉️ Book a free call</a>
-        {% endif %}
+            {% if settings.home.BusinessSettings.email %}
+            <a href="mailto:{{ settings.home.BusinessSettings.email }}?subject={{ settings.home.ContactSettings.email_subject|urlencode_newlines }}&body={{ settings.home.ContactSettings.email_body|urlencode_newlines }}">✉️ Book a free call</a>
+            {% endif %}
 
-        {% if settings.home.BusinessSettings.phone %}
-        <a href="tel:{{ settings.home.BusinessSettings.phone }}">💬 {{ settings.home.BusinessSettings.phone|format_phone }}</a>
-        {% endif %}
-    </p>
-</header>
+            {% if settings.home.BusinessSettings.phone %}
+            <a href="tel:{{ settings.home.BusinessSettings.phone }}">💬 {{ settings.home.BusinessSettings.phone|format_phone }}</a>
+            {% endif %}
+        </p>
+    </header>
+</section>

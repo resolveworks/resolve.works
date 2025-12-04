@@ -132,38 +132,45 @@ class EmbeddingVisualization {
       .style("cursor", "pointer");
 
     // Tooltips on hover
-    const tooltip = d3
-      .select("body")
-      .append("div")
-      .attr("class", "embedding-tooltip")
-      .style("position", "absolute")
-      .style("visibility", "hidden")
-      .style("background", "rgba(0, 0, 0, 0.8)")
-      .style("color", "#fff")
-      .style("padding", "8px 12px")
-      .style("border-radius", "4px")
-      .style("font-size", "12px")
-      .style("max-width", "250px")
-      .style("pointer-events", "none")
-      .style("z-index", "1000");
+    let tooltip = null;
 
     nodeGroups
       .on("mouseenter", (event, d) => {
         d3.select(event.currentTarget)
           .select("circle")
           .attr("r", this.getNodeRadius(d.z) + 4);
-        tooltip.style("visibility", "visible").text(d.text);
+        tooltip = d3
+          .select("body")
+          .append("div")
+          .attr("class", "embedding-tooltip")
+          .style("position", "fixed")
+          .style("background", "rgba(0, 0, 0, 0.8)")
+          .style("color", "#fff")
+          .style("padding", "8px 12px")
+          .style("border-radius", "4px")
+          .style("font-size", "12px")
+          .style("max-width", "250px")
+          .style("pointer-events", "none")
+          .style("z-index", "1000")
+          .style("top", event.clientY - 10 + "px")
+          .style("left", event.clientX + 10 + "px")
+          .text(d.text);
       })
       .on("mousemove", (event) => {
-        tooltip
-          .style("top", event.pageY - 10 + "px")
-          .style("left", event.pageX + 10 + "px");
+        if (tooltip) {
+          tooltip
+            .style("top", event.clientY - 10 + "px")
+            .style("left", event.clientX + 10 + "px");
+        }
       })
       .on("mouseleave", (event, d) => {
         d3.select(event.currentTarget)
           .select("circle")
           .attr("r", this.getNodeRadius(d.z));
-        tooltip.style("visibility", "hidden");
+        if (tooltip) {
+          tooltip.remove();
+          tooltip = null;
+        }
       });
 
     // Animate nodes fading in
