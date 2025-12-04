@@ -23,7 +23,6 @@ class EmbeddingVisualization {
     }
     this.createSvg();
     this.render();
-    this.setupResize();
   }
 
   async fetchData() {
@@ -171,23 +170,11 @@ class EmbeddingVisualization {
     nodeGroups.style("opacity", 0).transition().duration(500).style("opacity", 1);
   }
 
-  setupResize() {
-    const resizeObserver = new ResizeObserver(() => {
-      requestAnimationFrame(() => {
-        const rect = this.container.getBoundingClientRect();
-        this.width = rect.width;
-        this.height = rect.height;
-        this.svg.attr("viewBox", `0 0 ${this.width} ${this.height}`);
-        this.render();
-      });
-    });
-    resizeObserver.observe(this.container);
-  }
 }
 
 // Initialize on DOM ready
 document.addEventListener("DOMContentLoaded", () => {
-  const container = document.querySelector(".embedding-viz");
+  const container = document.querySelector(".visualization");
   if (!container) return;
 
   const pageId = container.dataset.pageId;
