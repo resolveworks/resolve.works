@@ -415,7 +415,7 @@ class Command(BaseCommand):
                 hostname="localhost",
                 root_page=home_page,
                 is_default_site=True,
-                site_name="Resolve",
+                site_name="Resolve.",
             )
         self.stdout.write(self.style.SUCCESS("Updated site to use HomePage as root"))
         self.stdout.write(self.style.SUCCESS("Successfully seeded homepage content!"))
@@ -463,7 +463,6 @@ class Command(BaseCommand):
 
         # Create footer settings
         footer_settings = FooterSettings(site=site)
-        footer_settings.heading = "Resolve"
 
         # Tagline
         footer_settings.tagline = (
@@ -493,7 +492,7 @@ class Command(BaseCommand):
 
         # Create business settings
         business_settings = BusinessSettings(site=site)
-        business_settings.name = "Resolve"
+        business_settings.name = "Resolve."
         business_settings.description = (
             "Expert AI consulting services for ethical SMBs. "
             "We implement large language models (LLMs) to automate workflows, "

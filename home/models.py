@@ -52,7 +52,7 @@ class SeoMixin(models.Model):
 class BusinessSettings(BaseSiteSetting):
     """Business information for structured data and site-wide use."""
 
-    name = models.CharField(max_length=100, default="Resolve")
+    name = models.CharField(max_length=100, default="Resolve.")
     description = models.TextField(blank=True)
     phone = PhoneField()
     email = models.EmailField(blank=True)
@@ -149,10 +149,6 @@ class ContactSettings(BaseSiteSetting):
 class FooterSettings(BaseSiteSetting):
     """Global footer settings."""
 
-    heading = models.CharField(
-        max_length=100, default="Resolve", help_text="Footer heading"
-    )
-
     tagline = RichTextField(
         features=["bold", "italic", "link"],
         blank=True,
@@ -166,7 +162,6 @@ class FooterSettings(BaseSiteSetting):
     )
 
     panels = [
-        FieldPanel("heading"),
         FieldPanel("tagline"),
         FieldPanel("registration_note"),
     ]
