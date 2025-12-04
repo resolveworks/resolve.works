@@ -10,10 +10,6 @@ class EmbeddingVisualization {
     this.svg = null;
     this.width = 0;
     this.height = 0;
-    this.isMini = container.classList.contains("visualization-mini");
-    this.padding = this.isMini ? 8 : 40;
-    this.minRadius = this.isMini ? 3 : 8;
-    this.maxRadius = this.isMini ? 6 : 20;
   }
 
   async init() {
@@ -38,9 +34,19 @@ class EmbeddingVisualization {
     }
   }
 
+  getBaseSize() {
+    return Math.min(this.width, this.height);
+  }
+
   getNodeRadius(z) {
-    // Map z (0-1) to radius range
-    return this.minRadius + z * (this.maxRadius - this.minRadius);
+    const baseSize = this.getBaseSize();
+    const minRadius = baseSize * 0.0075;
+    const maxRadius = baseSize * 0.025;
+    return minRadius + z * (maxRadius - minRadius);
+  }
+
+  getEdgeStrokeWidth() {
+    return this.getBaseSize() * 0.002;
   }
 
   createSvg() {
@@ -71,12 +77,12 @@ class EmbeddingVisualization {
     const xScale = d3
       .scaleLinear()
       .domain([0, 1])
-      .range([this.padding, this.width - this.padding]);
+      .range([0, this.width]);
 
     const yScale = d3
       .scaleLinear()
       .domain([0, 1])
-      .range([this.padding, this.height - this.padding]);
+      .range([0, this.height]);
 
     // Clear existing content
     this.svg.selectAll("g").remove();
@@ -95,7 +101,7 @@ class EmbeddingVisualization {
       .attr("y1", (d) => yScale(nodeById.get(d.source).y))
       .attr("x2", (d) => xScale(nodeById.get(d.target).x))
       .attr("y2", (d) => yScale(nodeById.get(d.target).y))
-      .attr("stroke-width", 1);
+      .attr("stroke-width", this.getEdgeStrokeWidth());
 
     // Draw nodes
     const nodeGroups = g
