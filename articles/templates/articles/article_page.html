@@ -4,7 +4,7 @@
 {% block content %}
 <main>
   <article>
-    <section class="section section-hero">
+    <section class="section section-hero section-light">
       <div class="visualization" data-page-id="{{ page.pk }}"></div>
       <header class="hero-block">
         <h1>{{ page.title }}</h1>
@@ -19,7 +19,7 @@
       </header>
     </section>
 
-    <section class="section">
+    <section class="section section-light">
       {{ page.body|markdown }}
     </section>
   </article>

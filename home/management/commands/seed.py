@@ -316,7 +316,7 @@ class Command(BaseCommand):
                                     },
                                     {
                                         "term": "Role",
-                                        "definition": "<p>Data Developer (2025–present)</p>",
+                                        "definition": "<p>Data Engineer (2025–present)</p>",
                                     },
                                 ]
                             },

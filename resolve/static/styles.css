@@ -1,6 +1,8 @@
 :root {
   --color-dark: #1a1a1a;
   --color-light: #fafafa;
+  --shadow-light: 0 0 1rem var(--color-light), 0 0 2rem var(--color-light);
+  --shadow-dark: 0 0 1rem var(--color-dark), 0 0 2rem var(--color-dark);
 
   --color-primary: #0077b2;
   --color-primary-lighter: #53afdc;
@@ -262,6 +264,10 @@ main > nav > p > span {
   margin-top: 1rem;
 }
 
+.hero-block > p.hero-cta {
+  text-shadow: none;
+}
+
 .hero-block > p > a:visited,
 .hero-block > p > a {
   color: var(--color-light);
@@ -271,6 +277,16 @@ main > nav > p > span {
   border-radius: 0.25rem;
   transition: background-color 0.05s ease;
   padding: 1rem 2rem 1rem 1.5rem;
+  position: relative;
+}
+
+.hero-block > p > a::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: var(--shadow-light);
+  z-index: -1;
 }
 
 .hero-block > p > a:hover {
@@ -292,9 +308,14 @@ main > nav > p > span {
   width: fit-content;
 }
 
+.section-light {
+  text-shadow: var(--shadow-light);
+}
+
 .section-dark {
   background: var(--color-dark);
   color: var(--color-light);
+  text-shadow: var(--shadow-dark);
 }
 
 /* Reduce spacing between consecutive sections with same color */
@@ -369,6 +390,7 @@ footer.section a:hover {
 
 body > nav > .site-name {
   color: #a5a5a5;
+  text-shadow: var(--shadow-light);
 }
 
 body > nav > .site-name:hover {
