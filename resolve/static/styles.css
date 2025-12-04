@@ -192,6 +192,12 @@ main > nav > p > span {
   justify-content: center;
 }
 
+.section.section-hero.section-hero-compact {
+  min-height: auto;
+  padding-top: 8rem;
+  padding-bottom: 4rem;
+}
+
 .section.section-hero > .visualization {
   position: absolute;
   top: 50%;
