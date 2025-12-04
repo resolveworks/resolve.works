@@ -7,6 +7,7 @@ class EmbeddingVisualization {
     this.pageId = pageId;
     this.nodes = [];
     this.edges = [];
+    this.hue = 200; // Default hue, will be overwritten by content-derived value
     this.svg = null;
     this.width = 0;
     this.height = 0;
@@ -29,6 +30,7 @@ class EmbeddingVisualization {
       const data = await response.json();
       this.nodes = data.nodes || [];
       this.edges = data.edges || [];
+      this.hue = data.hue ?? 200;
     } catch (e) {
       console.warn("Failed to load embedding data:", e);
     }
@@ -66,9 +68,10 @@ class EmbeddingVisualization {
 
   getNodeColor(position) {
     // Interpolate between colors based on position in article
-    const startColor = d3.rgb("#4A90A4"); // Muted blue
-    const endColor = d3.rgb("#E07A5F"); // Terra cotta
-    return d3.interpolateRgb(startColor, endColor)(position);
+    // Uses content-derived hue as centerpoint with a 90° spread
+    const hueSpread = 90;
+    const currentHue = this.hue - hueSpread / 2 + position * hueSpread;
+    return d3.hsl(currentHue, 0.5, 0.55).clamp().formatHex();
   }
 
   render() {

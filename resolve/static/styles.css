@@ -195,7 +195,7 @@ main > nav > p > span {
 .section.section-hero.section-hero-compact {
   min-height: auto;
   padding-top: 8rem;
-  padding-bottom: 4rem;
+  padding-bottom: 0;
 }
 
 .section.section-hero > .visualization {

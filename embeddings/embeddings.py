@@ -188,6 +188,36 @@ def compute_cosine_similarities(
     return edges
 
 
+def compute_content_hue(embeddings: np.ndarray) -> float:
+    """
+    Derive a unique hue (0-360) from article embeddings.
+
+    Uses a hash of the mean embedding to get a well-distributed
+    position on the color spectrum for each article.
+
+    Args:
+        embeddings: NumPy array of shape (n_sentences, embedding_dim)
+
+    Returns:
+        Hue value between 0 and 360
+    """
+    import hashlib
+
+    # Compute mean embedding for the article
+    mean_embedding = embeddings.mean(axis=0)
+
+    # Hash the embedding to get a well-distributed value
+    # Convert to bytes and hash
+    emb_bytes = mean_embedding.tobytes()
+    hash_digest = hashlib.sha256(emb_bytes).hexdigest()
+
+    # Use first 8 hex chars (32 bits) to derive hue
+    hash_int = int(hash_digest[:8], 16)
+    hue = hash_int % 360
+
+    return float(hue)
+
+
 def generate_visualization_data(html: str, similarity_threshold: float = 0.5) -> dict:
     """
     Generate complete visualization data from page HTML.
@@ -200,17 +230,19 @@ def generate_visualization_data(html: str, similarity_threshold: float = 0.5) ->
         Dict with:
         - nodes: array with id, x, y, z (for size), text, position
         - edges: array with source, target, similarity
+        - hue: content-derived hue (0-360) for color gradient
     """
     sentences = chunk_html_to_sentences(html)
 
     if not sentences:
-        return {"nodes": [], "edges": []}
+        return {"nodes": [], "edges": [], "hue": 0}
 
     embeddings = generate_embeddings(sentences)
     coords = reduce_to_3d(embeddings)
     edge_tuples = compute_cosine_similarities(
         embeddings, threshold=similarity_threshold
     )
+    hue = compute_content_hue(embeddings)
 
     nodes = []
     for i, (sentence, (x, y, z)) in enumerate(zip(sentences, coords)):
@@ -231,7 +263,7 @@ def generate_visualization_data(html: str, similarity_threshold: float = 0.5) ->
         for src, tgt, sim in edge_tuples
     ]
 
-    return {"nodes": nodes, "edges": edges}
+    return {"nodes": nodes, "edges": edges, "hue": hue}
 
 
 def render_page_to_html(page, block_name: str = "content") -> str:
