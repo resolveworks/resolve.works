@@ -74,15 +74,20 @@ class EmbeddingVisualization {
   render() {
     if (!this.svg || this.nodes.length === 0) return;
 
+    // Calculate padding to ensure nodes with strokes stay within bounds
+    const maxRadius = this.getNodeRadius(1); // z=1 gives max radius
+    const strokeWidth = this.getStrokeWidth();
+    const padding = maxRadius + strokeWidth / 2;
+
     const xScale = d3
       .scaleLinear()
       .domain([0, 1])
-      .range([0, this.width]);
+      .range([padding, this.width - padding]);
 
     const yScale = d3
       .scaleLinear()
       .domain([0, 1])
-      .range([0, this.height]);
+      .range([padding, this.height - padding]);
 
     // Clear existing content
     this.svg.selectAll("g").remove();
