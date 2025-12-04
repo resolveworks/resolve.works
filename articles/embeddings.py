@@ -6,7 +6,6 @@ Generates 2D coordinates from article text using sentence-transformers and UMAP.
 
 import json
 import logging
-import re
 
 import nltk
 import numpy as np
@@ -24,45 +23,43 @@ except LookupError:
 
 def chunk_to_sentences(text: str) -> list[str]:
     """
-    Split text into sentences using NLTK.
+    Split markdown text into sentences.
 
-    Strips markdown syntax and returns clean sentences.
+    Uses Python-Markdown to parse the document structure, then NLTK to split
+    block elements into sentences.
     """
-    # Remove markdown links but keep text: [text](url) -> text
-    text = re.sub(r"\[([^\]]+)\]\([^)]+\)", r"\1", text)
+    import markdown
+    from xml.etree import ElementTree as ET
 
-    # Remove markdown images: ![alt](url)
-    text = re.sub(r"!\[[^\]]*\]\([^)]+\)", "", text)
+    md = markdown.Markdown(extensions=["fenced_code"])
+    block_tags = set(md.block_level_elements) | {"root"}
 
-    # Remove inline code: `code`
-    text = re.sub(r"`[^`]+`", "", text)
+    def extract_chunks(elem) -> list[str]:
+        chunks = []
+        has_block_children = any(child.tag in block_tags for child in elem)
 
-    # Remove code blocks: ```...```
-    text = re.sub(r"```[\s\S]*?```", "", text)
+        if has_block_children:
+            for child in elem:
+                chunks.extend(extract_chunks(child))
+        else:
+            text = "".join(elem.itertext()).strip()
+            if text:
+                chunks.extend(nltk.sent_tokenize(text))
 
-    # Remove headers: # Header
-    text = re.sub(r"^#{1,6}\s+", "", text, flags=re.MULTILINE)
+        return chunks
 
-    # Remove bold/italic markers
-    text = re.sub(r"\*{1,2}([^*]+)\*{1,2}", r"\1", text)
-    text = re.sub(r"_{1,2}([^_]+)_{1,2}", r"\1", text)
+    html = md.convert(text)
 
-    # Remove blockquotes
-    text = re.sub(r"^>\s+", "", text, flags=re.MULTILINE)
+    try:
+        root = ET.fromstring(f"<root>{html}</root>")
+    except ET.ParseError:
+        logger.warning(
+            "Failed to parse markdown HTML, falling back to simple tokenization"
+        )
+        sentences = nltk.sent_tokenize(text)
+        return [s.strip() for s in sentences if len(s.strip()) >= 10]
 
-    # Remove list markers
-    text = re.sub(r"^[\-\*\+]\s+", "", text, flags=re.MULTILINE)
-    text = re.sub(r"^\d+\.\s+", "", text, flags=re.MULTILINE)
-
-    # Normalize whitespace
-    text = re.sub(r"\s+", " ", text).strip()
-
-    sentences = nltk.sent_tokenize(text)
-
-    # Filter out very short sentences (< 10 chars)
-    sentences = [s.strip() for s in sentences if len(s.strip()) >= 10]
-
-    return sentences
+    return extract_chunks(root)
 
 
 def generate_embeddings(
