@@ -10,9 +10,10 @@ class EmbeddingVisualization {
     this.svg = null;
     this.width = 0;
     this.height = 0;
-    this.padding = 40;
-    this.minRadius = 8;
-    this.maxRadius = 20;
+    this.isMini = container.classList.contains("visualization-mini");
+    this.padding = this.isMini ? 8 : 40;
+    this.minRadius = this.isMini ? 3 : 8;
+    this.maxRadius = this.isMini ? 6 : 20;
   }
 
   async init() {
@@ -152,12 +153,12 @@ class EmbeddingVisualization {
 
 // Initialize on DOM ready
 document.addEventListener("DOMContentLoaded", () => {
-  const container = document.querySelector(".visualization");
-  if (!container) return;
+  const containers = document.querySelectorAll(".visualization");
+  containers.forEach((container) => {
+    const pageId = container.dataset.pageId;
+    if (!pageId) return;
 
-  const pageId = container.dataset.pageId;
-  if (!pageId) return;
-
-  const viz = new EmbeddingVisualization(container, pageId);
-  viz.init();
+    const viz = new EmbeddingVisualization(container, pageId);
+    viz.init();
+  });
 });

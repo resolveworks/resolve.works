@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load wagtailcore_tags %}
+{% load wagtailcore_tags static %}
 
 {% block content %}
 <main>
@@ -17,15 +17,18 @@
     {% for article in articles %}
     <li>
       <article>
-        <h2><a href="{% pageurl article %}">{{ article.title }}</a></h2>
-        {% if article.intro %}
-        <p>{{ article.intro }}</p>
-        {% endif %}
-        {% if article.first_published_at %}
-        <time datetime="{{ article.first_published_at|date:'c' }}">
-          {{ article.first_published_at|date:"F j, Y" }}
-        </time>
-        {% endif %}
+        <div class="visualization visualization-mini" data-page-id="{{ article.pk }}"></div>
+        <div class="article-content">
+          <h2><a href="{% pageurl article %}">{{ article.title }}</a></h2>
+          {% if article.intro %}
+          <p>{{ article.intro }}</p>
+          {% endif %}
+          {% if article.first_published_at %}
+          <time datetime="{{ article.first_published_at|date:'c' }}">
+            {{ article.first_published_at|date:"F j, Y" }}
+          </time>
+          {% endif %}
+        </div>
       </article>
     </li>
     {% empty %}
@@ -34,4 +37,5 @@
     </ul>
   </section>
 </main>
+<script type="module" src="{% static 'visualization.js' %}"></script>
 {% endblock %}

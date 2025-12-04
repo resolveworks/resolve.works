@@ -465,3 +465,41 @@ footer.section > a.site-name:hover {
     grid-row: 4;
   }
 }
+
+/* Article List Styles */
+.article-list article {
+  display: flex;
+  flex-direction: column;
+}
+
+.article-content {
+  flex: 1;
+}
+
+/* Mini Visualization Styles */
+.visualization-mini {
+  width: 80px;
+  height: 80px;
+}
+
+.visualization-mini line {
+  stroke: #e0e0e0;
+}
+
+.visualization-mini circle {
+  stroke-width: 1;
+}
+
+@media (min-width: 600px) {
+  .article-list article {
+    flex-direction: row;
+    gap: 2rem;
+  }
+
+  .visualization-mini {
+    width: 25%;
+    aspect-ratio: 1;
+    height: auto;
+    flex-shrink: 0;
+  }
+}
