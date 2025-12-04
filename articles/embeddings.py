@@ -109,7 +109,8 @@ def reduce_to_3d(
         n_neighbors=adjusted_neighbors,
         min_dist=min_dist,
         metric="cosine",
-        random_state=42,  # Reproducible results
+        random_state=42,
+        n_jobs=1,
     )
 
     coords_3d = reducer.fit_transform(embeddings)
@@ -192,7 +193,7 @@ def generate_visualization_data(text: str, similarity_threshold: float = 0.5) ->
                 "x": float(x),
                 "y": float(y),
                 "z": float(z),
-                "text": sentence[:100] + "..." if len(sentence) > 100 else sentence,
+                "text": sentence,
                 "position": float(position),
             }
         )

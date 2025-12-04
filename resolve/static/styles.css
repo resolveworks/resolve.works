@@ -219,14 +219,14 @@ main > nav > p > span {
   opacity: 0;
 }
 
-/* Embedding Tooltip */
-.embedding-tooltip {
+/* Tooltip */
+.tooltip {
   position: fixed;
-  background: rgba(0, 0, 0, 0.8);
-  color: #fff;
-  padding: 8px 12px;
-  border-radius: 4px;
-  font-size: 12px;
+  background: var(--color-dark);
+  color: var(--color-light);
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  font-size: var(--text-size-base);
   max-width: 250px;
   pointer-events: none;
   z-index: 1000;
@@ -242,6 +242,7 @@ main > nav > p > span {
 
 .hero-block > * {
   pointer-events: auto;
+  width: fit-content;
 }
 
 .hero-block > h1 {

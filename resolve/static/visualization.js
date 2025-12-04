@@ -55,21 +55,6 @@ class EmbeddingVisualization {
       .attr("viewBox", `0 0 ${this.width} ${this.height}`)
       .attr("preserveAspectRatio", "xMidYMid meet");
 
-    // Add gradient definitions for node colors
-    const defs = this.svg.append("defs");
-
-    // Gradient from start (blue) to end (orange)
-    const gradient = defs
-      .append("linearGradient")
-      .attr("id", "nodeGradient")
-      .attr("x1", "0%")
-      .attr("y1", "0%")
-      .attr("x2", "100%")
-      .attr("y2", "0%");
-
-    gradient.append("stop").attr("offset", "0%").attr("stop-color", "#4A90A4");
-
-    gradient.append("stop").attr("offset", "100%").attr("stop-color", "#E07A5F");
   }
 
   getNodeColor(position) {
@@ -109,7 +94,7 @@ class EmbeddingVisualization {
       .attr("y1", (d) => yScale(nodeById.get(d.source).y))
       .attr("x2", (d) => xScale(nodeById.get(d.target).x))
       .attr("y2", (d) => yScale(nodeById.get(d.target).y))
-      .attr("stroke-width", (d) => d.similarity * 2);
+      .attr("stroke-width", 1);
 
     // Draw nodes
     const nodeGroups = g
@@ -137,7 +122,7 @@ class EmbeddingVisualization {
         tooltip = d3
           .select("body")
           .append("div")
-          .attr("class", "embedding-tooltip")
+          .attr("class", "tooltip")
           .style("top", event.clientY - 10 + "px")
           .style("left", event.clientX + 10 + "px")
           .text(d.text);
