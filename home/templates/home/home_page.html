@@ -4,10 +4,12 @@
 {% block body_class %}template-homepage{% endblock %}
 
 {% block content %}
-    <div class="visualization" data-page-id="{{ page.pk }}"></div>
+<div class="visualization" data-page-id="{{ page.pk }}"></div>
+<main>
     {% for block in page.body %}
         {% include_block block %}
     {% endfor %}
+</main>
 {% endblock content %}
 
 {% block extra_js %}
