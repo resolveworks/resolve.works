@@ -1,4 +1,4 @@
-# Django project
+# Django project - exclude collected output dirs, not source files
 /media/
 /static/
 *.sqlite3

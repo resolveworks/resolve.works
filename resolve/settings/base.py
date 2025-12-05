@@ -252,3 +252,10 @@ WAGTAIL_USER_CUSTOM_FIELDS = [
 
 # CSRF trusted origins (needed for Docker/reverse proxy setups)
 CSRF_TRUSTED_ORIGINS = env_list("CSRF_TRUSTED_ORIGINS", [])
+
+# Security settings (enable in production)
+SECURE_PROXY_SSL_HEADER = (
+    ("HTTP_X_FORWARDED_PROTO", "https") if env_bool("SECURE_SSL_HEADER") else None
+)
+SESSION_COOKIE_SECURE = env_bool("SESSION_COOKIE_SECURE")
+CSRF_COOKIE_SECURE = env_bool("CSRF_COOKIE_SECURE")
