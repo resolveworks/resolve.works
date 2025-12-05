@@ -4,10 +4,8 @@
   --color-gray: #a5a5a5;
   --text-color-dark: #000000;
   --text-color-light: #ffffff;
-  --shadow-light: 0 0 1em var(--color-light), 0 0 2em var(--color-light),
-    0 0 4em var(--color-light);
-  --shadow-dark: 0 0 1em var(--color-dark), 0 0 2em var(--color-dark),
-    0 0 4em var(--color-dark);
+  --shadow-light: 0 0 1em var(--color-light), 0 0 2em var(--color-light);
+  --shadow-dark: 0 0 1em var(--color-dark), 0 0 2em var(--color-dark);
 
   --color-primary: #0077b2;
   --color-primary-lighter: #53afdc;
@@ -31,8 +29,8 @@ body {
   background: var(--color-light);
   color: var(--text-color-dark);
   margin: 0;
-
   font-size: var(--text-size-base);
+  overflow-x: clip;
 }
 
 h1,
@@ -248,6 +246,7 @@ body > .visualization > svg {
 
 .hero-block > p {
   font-size: var(--text-size-h5);
+  font-weight: 500;
   margin-top: 1rem;
 }
 
@@ -301,11 +300,12 @@ body > .visualization > svg {
 .section-light {
   text-shadow: var(--shadow-light);
 }
-
 .section-dark {
   background: var(--color-dark);
   color: var(--text-color-light);
   text-shadow: var(--shadow-dark);
+  position: relative;
+  z-index: 1;
 }
 
 /* Reduce spacing between consecutive sections with same color */
@@ -397,6 +397,22 @@ footer.section > a.site-name:hover {
   flex: 1;
 }
 
+.home-page .section:nth-child(2) > *:nth-child(1)::before,
+.article-page .section:nth-child(1) > *:nth-child(1)::before {
+  content: "";
+  position: absolute;
+  inset: -30rem;
+  bottom: min(-60vw, -60vh);
+  backdrop-filter: brightness(1.2) blur(0.35rem);
+  mask-image: radial-gradient(
+    ellipse closest-side at center,
+    #fff 50%,
+    transparent 100%
+  );
+  z-index: -1;
+  pointer-events: none;
+}
+
 .author-block {
   display: flex;
   flex-direction: column;
@@ -421,6 +437,12 @@ footer.section > a.site-name:hover {
    Tablet (768px)
    ========================================================================== */
 @media (min-width: 768px) {
+  .article-page article .section > * {
+    max-width: 50rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
   .hero-block > p.hero-cta {
     flex-direction: row;
     gap: 0.5rem;
@@ -501,10 +523,6 @@ footer.section > a.site-name:hover {
     max-width: 80rem;
     margin-left: auto;
     margin-right: auto;
-  }
-
-  article > .section > * {
-    max-width: 50rem;
   }
 
   .features-block-3 {

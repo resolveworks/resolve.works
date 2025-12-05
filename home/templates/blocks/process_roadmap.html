@@ -1,8 +1,8 @@
 <ol>
   {% for step in self.steps %}
-    <li>
-      <h3>{{ step.title }}</h3>
-      {{ step.description }}
-    </li>
+  <li>
+    <h3>{{ step.title }}</h3>
+    <p>{{ step.description }}</p>
+  </li>
   {% endfor %}
 </ol>
