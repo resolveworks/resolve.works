@@ -1,8 +1,8 @@
 :root {
   --color-dark: #1a1a1a;
   --color-light: #fafafa;
-  --shadow-light: 0 0 2em var(--color-light), 0 0 4em var(--color-light);
-  --shadow-dark: 0 0 2em var(--color-dark), 0 0 4em var(--color-dark);
+  --shadow-light: 0 0 1em var(--color-light), 0 0 2em var(--color-light), 0 0 4em var(--color-light);
+  --shadow-dark: 0 0 1em var(--color-dark), 0 0 2em var(--color-dark), 0 0 4em var(--color-dark);
 
   --color-primary: #0077b2;
   --color-primary-lighter: #53afdc;
@@ -176,7 +176,6 @@ body > footer > * {
   position: relative;
   display: flex;
   align-items: center;
-  justify-content: center;
   overflow-x: clip;
 }
 
@@ -304,41 +303,9 @@ body > footer > * {
   padding-bottom: 4rem;
 }
 
-@media (min-width: 1024px) {
-  .section > *,
-  body > nav {
-    width: 100%;
-    max-width: 70rem;
-    margin-left: auto;
-    margin-right: auto;
-  }
-}
-
 /* Features Block Styles */
 .features-block + p {
   margin-top: 4rem;
-}
-
-@media (min-width: 1024px) {
-  .features-block-3 {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
-  }
-}
-
-@media (min-width: 768px) {
-  .features-block-4 {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 2rem;
-  }
-}
-
-@media (min-width: 1024px) {
-  .features-block-4 {
-    grid-template-columns: repeat(4, 1fr);
-  }
 }
 
 /* Two Column Block Styles */
@@ -386,7 +353,56 @@ footer.section > a.site-name:hover {
   color: #a5a5a5;
 }
 
+/* Process Roadmap Block Styles */
+.section > ol {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+}
+
+.section > ol > li {
+  position: relative;
+}
+
+.section > ol > li > svg {
+  position: absolute;
+  left: 0;
+  top: 20%;
+  width: 80%;
+  height: 180%;
+}
+
+/* Article List Styles */
+.article-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+}
+
+.article-list article {
+  display: flex;
+  flex-direction: column;
+}
+
+.article-list .visualization {
+  width: 100%;
+  aspect-ratio: 1;
+}
+
+.article-content {
+  flex: 1;
+}
+
+/* ==========================================================================
+   Tablet (768px)
+   ========================================================================== */
 @media (min-width: 768px) {
+  .features-block-4 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+
   img.two-column-right {
     float: right;
     width: 50%;
@@ -412,9 +428,40 @@ footer.section > a.site-name:hover {
     flex-direction: column;
     justify-content: space-between;
   }
+
+  .article-list article {
+    flex-direction: row;
+    gap: 4rem;
+  }
+
+  .article-list .visualization {
+    width: 25%;
+    flex-shrink: 0;
+  }
 }
 
+/* ==========================================================================
+   Desktop (1024px)
+   ========================================================================== */
 @media (min-width: 1024px) {
+  .section > *,
+  body > nav {
+    width: 100%;
+    max-width: 70rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .features-block-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+
+  .features-block-4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
   footer.section > section > div {
     grid-column: span 1;
   }
@@ -422,28 +469,7 @@ footer.section > a.site-name:hover {
   footer.section > section {
     grid-template-columns: repeat(3, 1fr);
   }
-}
 
-/* Process Roadmap Block Styles */
-.section > ol {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 2rem;
-}
-
-.section > ol > li {
-  position: relative;
-}
-
-.section > ol > li > svg {
-  position: absolute;
-  left: 0;
-  top: 20%;
-  width: 80%;
-  height: 180%;
-}
-
-@media (min-width: 1024px) {
   .section > ol {
     grid-template-columns: repeat(4, 1fr);
   }
@@ -466,38 +492,5 @@ footer.section > a.site-name:hover {
   .section > ol > li:nth-child(4) {
     grid-column: 4;
     grid-row: 4;
-  }
-}
-
-/* Article List Styles */
-.article-list {
-  display: flex;
-  flex-direction: column;
-  gap: 4rem;
-}
-
-.article-list article {
-  display: flex;
-  flex-direction: column;
-}
-
-.article-list .visualization {
-  width: 100%;
-  aspect-ratio: 1;
-}
-
-.article-content {
-  flex: 1;
-}
-
-@media (min-width: 600px) {
-  .article-list article {
-    flex-direction: row;
-    gap: 2rem;
-  }
-
-  .article-list .visualization {
-    width: 25%;
-    flex-shrink: 0;
   }
 }
