@@ -364,13 +364,6 @@ footer.section > a.site-name:hover {
   color: var(--color-gray);
 }
 
-/* Process Roadmap Block Styles */
-.section > ol {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 2rem;
-}
-
 .section > ol > li {
   position: relative;
 }
@@ -452,6 +445,13 @@ footer.section > a.site-name:hover {
   img.two-column-left,
   img.two-column-right {
     margin-top: 0rem;
+  }
+
+  /* Process Roadmap Block Styles */
+  .section > ol {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
   }
 
   footer.section > section > div {
