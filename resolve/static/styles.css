@@ -8,9 +8,6 @@
   --color-primary-lighter: #53afdc;
   --color-primary-darker: #005179;
 
-  --color-accept: #348037;
-  --color-reject: #b85143;
-
   --text-size-base: 1rem;
   --text-size-h6: 1.2rem;
   --text-size-h5: 1.44rem;
@@ -492,5 +489,10 @@ footer.section > a.site-name:hover {
   .section > ol > li:nth-child(4) {
     grid-column: 4;
     grid-row: 4;
+  }
+
+  /* Narrower width for article body content */
+  article > .section:not(.section-hero) > * {
+    max-width: 50rem;
   }
 }

@@ -2,38 +2,23 @@
 import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
 
 class EmbeddingVisualization {
-  constructor(container, pageId) {
+  constructor(container, data) {
     this.container = container;
-    this.pageId = pageId;
-    this.nodes = [];
-    this.edges = [];
-    this.hue = 200; // Default hue, will be overwritten by content-derived value
+    this.nodes = data.nodes || [];
+    this.edges = data.edges || [];
+    this.hue = data.hue ?? 200;
     this.svg = null;
     this.width = 0;
     this.height = 0;
   }
 
-  async init() {
-    await this.fetchData();
+  init() {
     if (this.nodes.length === 0) {
       this.container.remove();
       return;
     }
     this.createSvg();
     this.render();
-  }
-
-  async fetchData() {
-    try {
-      const response = await fetch(`/api/pages/${this.pageId}/embeddings/`);
-      if (!response.ok) return;
-      const data = await response.json();
-      this.nodes = data.nodes || [];
-      this.edges = data.edges || [];
-      this.hue = data.hue ?? 200;
-    } catch (e) {
-      console.warn("Failed to load embedding data:", e);
-    }
   }
 
   getBaseSize() {
@@ -173,13 +158,32 @@ class EmbeddingVisualization {
 }
 
 // Initialize on DOM ready
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
   const containers = document.querySelectorAll(".visualization");
+  const containersByPageId = new Map();
+
   containers.forEach((container) => {
     const pageId = container.dataset.pageId;
-    if (!pageId) return;
-
-    const viz = new EmbeddingVisualization(container, pageId);
-    viz.init();
+    if (pageId) {
+      containersByPageId.set(pageId, container);
+    }
   });
+
+  if (containersByPageId.size === 0) return;
+
+  try {
+    const ids = Array.from(containersByPageId.keys()).join(",");
+    const response = await fetch(`/api/pages/embeddings/?ids=${ids}`);
+    if (!response.ok) return;
+
+    const dataByPageId = await response.json();
+
+    for (const [pageId, container] of containersByPageId) {
+      const data = dataByPageId[pageId] || { nodes: [], edges: [] };
+      const viz = new EmbeddingVisualization(container, data);
+      viz.init();
+    }
+  } catch (e) {
+    console.warn("Failed to load embedding data:", e);
+  }
 });

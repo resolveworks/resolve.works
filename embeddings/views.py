@@ -11,25 +11,38 @@ from embeddings.models import EmbeddingMixin
 
 
 @require_GET
-def page_embeddings(request, page_id):
+def page_embeddings(request):
     """
-    API endpoint to fetch embedding visualization data for any page.
+    API endpoint to fetch embedding visualization data for pages.
 
-    Returns JSON with nodes and edges arrays for visualization.
+    Accepts comma-separated page IDs via the 'ids' query parameter.
+    Returns JSON with embedding data keyed by page ID.
+
+    Example: /api/pages/embeddings/?ids=1,2,3
+    Returns: {"1": {"nodes": [...], "edges": [...], "hue": 200}, "2": {...}}
     """
+    ids_param = request.GET.get("ids", "")
+    if not ids_param:
+        return JsonResponse({"error": "Missing 'ids' parameter"}, status=400)
+
     try:
-        page = Page.objects.get(pk=page_id).specific
-    except Page.DoesNotExist:
-        return JsonResponse({"error": "Page not found"}, status=404)
+        page_ids = [int(pid.strip()) for pid in ids_param.split(",") if pid.strip()]
+    except ValueError:
+        return JsonResponse({"error": "Invalid page ID format"}, status=400)
 
-    if not isinstance(page, EmbeddingMixin):
-        return JsonResponse({"error": "Page does not support embeddings"}, status=400)
+    if not page_ids:
+        return JsonResponse({"error": "No valid page IDs provided"}, status=400)
 
-    if not page.live:
-        return JsonResponse({"error": "Page not published"}, status=404)
+    pages = Page.objects.filter(pk__in=page_ids).specific()
 
-    data = page.embedding_visualization or {"nodes": [], "edges": []}
+    result = {}
+    for page in pages:
+        if isinstance(page, EmbeddingMixin) and page.live:
+            result[str(page.pk)] = page.embedding_visualization or {
+                "nodes": [],
+                "edges": [],
+            }
 
-    response = JsonResponse(data)
+    response = JsonResponse(result)
     response["Cache-Control"] = "public, max-age=3600"
     return response
