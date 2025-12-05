@@ -10,7 +10,7 @@
   --color-primary-lighter: #53afdc;
   --color-primary-darker: #005179;
 
-  --text-size-base: 1rem;
+  --text-size-base: 1.1rem;
   --text-size-h6: 1.2rem;
   --text-size-h5: 1.44rem;
   --text-size-h4: 1.728rem;
@@ -451,6 +451,10 @@ footer.section > a.site-name:hover {
     width: 25%;
     flex-shrink: 0;
   }
+
+  .section.section-hero.section-hero-medium {
+    padding-top: 24rem;
+  }
 }
 
 /* ==========================================================================
@@ -460,9 +464,13 @@ footer.section > a.site-name:hover {
   .section > *,
   body > nav {
     width: 100%;
-    max-width: 70rem;
+    max-width: 80rem;
     margin-left: auto;
     margin-right: auto;
+  }
+
+  article > .section > * {
+    max-width: 50rem;
   }
 
   .features-block-3 {
