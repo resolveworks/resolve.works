@@ -22,6 +22,36 @@
     <section class="section section-light">
       {{ page.body|markdown }}
     </section>
+
+    {% with author=page.owner %}
+    {% if author %}
+    <section class="section section-light">
+      <aside class="author-block">
+        {% if author.wagtail_userprofile.avatar %}
+        <img src="{{ author.wagtail_userprofile.avatar.url }}" alt="{{ author.get_full_name }}" class="author-avatar">
+        {% endif %}
+        <div class="author-info">
+          <p class="author-name">{{ author.get_full_name }}</p>
+          {% if author.bio %}
+          <div class="author-bio">{{ author.bio|linebreaks }}</div>
+          {% endif %}
+          {% if author.github_url or author.linkedin_url %}
+          <dl class="author-links">
+            {% if author.linkedin_url %}
+            <dt>LinkedIn</dt>
+            <dd><a href="{{ author.linkedin_url }}" target="_blank" rel="noopener noreferrer">{{ author.linkedin_url }}</a></dd>
+            {% endif %}
+            {% if author.github_url %}
+            <dt>GitHub</dt>
+            <dd><a href="{{ author.github_url }}" target="_blank" rel="noopener noreferrer">{{ author.github_url }}</a></dd>
+            {% endif %}
+          </dl>
+          {% endif %}
+        </div>
+      </aside>
+    </section>
+    {% endif %}
+    {% endwith %}
   </article>
 </main>
 {% endblock %}

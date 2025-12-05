@@ -1,6 +1,7 @@
 :root {
   --color-dark: #1a1a1a;
   --color-light: #fafafa;
+  --color-gray: #a5a5a5;
   --shadow-light: 0 0 1em var(--color-light), 0 0 2em var(--color-light),
     0 0 4em var(--color-light);
   --shadow-dark: 0 0 1em var(--color-dark), 0 0 2em var(--color-dark),
@@ -331,7 +332,7 @@ footer.section {
 
 footer.section a,
 footer.section a:visited {
-  color: #a5a5a5;
+  color: var(--color-gray);
 }
 
 footer.section a:hover {
@@ -344,7 +345,7 @@ footer.section a:hover {
 }
 
 body > nav > .site-name {
-  color: #a5a5a5;
+  color: var(--color-gray);
   text-shadow: var(--shadow-light);
 }
 
@@ -358,7 +359,7 @@ footer.section > a.site-name {
 }
 
 footer.section > a.site-name:hover {
-  color: #a5a5a5;
+  color: var(--color-gray);
 }
 
 /* Process Roadmap Block Styles */
@@ -399,6 +400,26 @@ footer.section > a.site-name:hover {
 
 .article-content {
   flex: 1;
+}
+
+.author-block {
+  display: flex;
+  flex-direction: column;
+}
+.author-avatar {
+  max-width: 24rem;
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.author-info {
+  grid-column: span 2;
+}
+
+.author-name {
+  font-weight: 700;
 }
 
 /* ==========================================================================
@@ -454,6 +475,12 @@ footer.section > a.site-name:hover {
 
   .section.section-hero.section-hero-medium {
     padding-top: 24rem;
+  }
+
+  .author-block {
+    display: grid;
+    grid-template-columns: 1fr calc((min(80rem, 100vw) - 6rem) / 3) 1fr;
+    gap: 2rem;
   }
 }
 
