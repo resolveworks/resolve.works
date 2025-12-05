@@ -10,3 +10,8 @@ wheels/
 .venv
 db.sqlite3
 /media
+/static
+
+# Environment variables
+.env
+.env.local

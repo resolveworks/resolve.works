@@ -10,16 +10,37 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 
 PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = os.path.dirname(PROJECT_DIR)
 
 
+# Environment variable helpers
+def env(key, default=None):
+    """Get environment variable with optional default."""
+    return os.environ.get(key, default)
+
+
+def env_bool(key, default=False):
+    """Get boolean environment variable."""
+    return os.environ.get(key, str(default)).lower() in ("true", "1", "yes")
+
+
+def env_list(key, default=None, separator=","):
+    """Get list from environment variable."""
+    value = os.environ.get(key)
+    if value is None:
+        return default or []
+    return [item.strip() for item in value.split(separator) if item.strip()]
+
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
+SECRET_KEY = env("SECRET_KEY", "django-insecure-change-me-in-production")
+DEBUG = env_bool("DEBUG", False)
+ALLOWED_HOSTS = env_list("ALLOWED_HOSTS", ["localhost", "127.0.0.1"])
 
 # Application definition
 
@@ -90,12 +111,31 @@ WSGI_APPLICATION = "resolve.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
+DATABASE_URL = env("DATABASE_URL")
+
+if DATABASE_URL:
+    # Parse DATABASE_URL for postgres
+    import urllib.parse
+
+    url = urllib.parse.urlparse(DATABASE_URL)
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": url.path[1:],
+            "USER": url.username,
+            "PASSWORD": url.password,
+            "HOST": url.hostname,
+            "PORT": url.port or 5432,
+        }
     }
-}
+else:
+    # Default to SQLite for local development
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
+        }
+    }
 
 
 # Password validation
@@ -180,7 +220,7 @@ WAGTAILSEARCH_BACKENDS = {
 
 # Base URL to use when referring to full URLs within the Wagtail admin backend -
 # e.g. in notification emails. Don't include '/admin' or a trailing slash
-WAGTAILADMIN_BASE_URL = "http://example.com"
+WAGTAILADMIN_BASE_URL = env("WAGTAILADMIN_BASE_URL", "http://localhost:8000")
 
 # Allowed file extensions for documents in the document library.
 # This can be omitted to allow all files, but note that this may present a security risk
@@ -209,3 +249,6 @@ WAGTAIL_USER_CUSTOM_FIELDS = [
     "github_url",
     "phone",
 ]
+
+# CSRF trusted origins (needed for Docker/reverse proxy setups)
+CSRF_TRUSTED_ORIGINS = env_list("CSRF_TRUSTED_ORIGINS", [])

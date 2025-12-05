@@ -1,29 +1,26 @@
-from .base import *
+from .base import (
+    INSTALLED_APPS as BASE_INSTALLED_APPS,
+    MIDDLEWARE as BASE_MIDDLEWARE,
+)
 
-# SECURITY WARNING: don't run with debug turned on in production!
+# Development settings
 DEBUG = True
 
 # Add django-browser-reload for development
-INSTALLED_APPS = INSTALLED_APPS + [
+INSTALLED_APPS = BASE_INSTALLED_APPS + [
     "django_browser_reload",
 ]
 
-MIDDLEWARE = MIDDLEWARE + [
+MIDDLEWARE = BASE_MIDDLEWARE + [
     "django_browser_reload.middleware.BrowserReloadMiddleware",
 ]
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-qtfk6mvo0m_-^uz=+u=_$(&%y-dwtccjz3a6(8fsdt-c#mjj6s"
-
-# SECURITY WARNING: define the correct hosts in production!
+# Allow all hosts in development
 ALLOWED_HOSTS = ["*"]
 
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
-WAGTAILADMIN_BASE_URL = "http://localhost:8000"
-
-
 try:
-    from .local import *
+    from .local import *  # noqa: F401, F403
 except ImportError:
     pass
