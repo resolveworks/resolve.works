@@ -1,8 +1,10 @@
 :root {
   --color-dark: #1a1a1a;
   --color-light: #fafafa;
-  --shadow-light: 0 0 1em var(--color-light), 0 0 2em var(--color-light), 0 0 4em var(--color-light);
-  --shadow-dark: 0 0 1em var(--color-dark), 0 0 2em var(--color-dark), 0 0 4em var(--color-dark);
+  --shadow-light: 0 0 1em var(--color-light), 0 0 2em var(--color-light),
+    0 0 4em var(--color-light);
+  --shadow-dark: 0 0 1em var(--color-dark), 0 0 2em var(--color-dark),
+    0 0 4em var(--color-dark);
 
   --color-primary: #0077b2;
   --color-primary-lighter: #53afdc;
@@ -170,10 +172,8 @@ body > footer > * {
 /* Hero Section Styles */
 .section.section-hero {
   min-height: 100vh;
-  position: relative;
   display: flex;
   align-items: center;
-  overflow-x: clip;
 }
 
 .section.section-hero.section-hero-compact {
@@ -182,7 +182,7 @@ body > footer > * {
   padding-bottom: 0;
 }
 
-.section.section-hero > .visualization {
+body > .visualization {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -190,11 +190,10 @@ body > footer > * {
   z-index: 0;
   width: max(105vw, 105vh);
   height: max(105vw, 105vh);
-  max-width: none;
   padding: 0;
 }
 
-.section-hero > .visualization > svg {
+body > .visualization > svg {
   width: 100%;
   height: 100%;
 }
@@ -489,10 +488,5 @@ footer.section > a.site-name:hover {
   .section > ol > li:nth-child(4) {
     grid-column: 4;
     grid-row: 4;
-  }
-
-  /* Narrower width for article body content */
-  article > .section:not(.section-hero) > * {
-    max-width: 50rem;
   }
 }

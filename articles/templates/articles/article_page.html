@@ -2,10 +2,10 @@
 {% load static wagtailcore_tags wagtailmarkdown %}
 
 {% block content %}
+<div class="visualization" data-page-id="{{ page.pk }}"></div>
 <main>
   <article>
     <section class="section section-hero section-light">
-      <div class="visualization" data-page-id="{{ page.pk }}"></div>
       <header class="hero-block">
         <h1>{{ page.title }}</h1>
         {% if page.intro %}
