@@ -25,10 +25,6 @@
   box-sizing: border-box;
 }
 
-html {
-  overflow-x: hidden;
-}
-
 body {
   background: var(--color-light);
   color: var(--text-color-dark);
@@ -193,18 +189,26 @@ body > footer > * {
   padding-bottom: 0;
 }
 
-body > .visualization {
+.visualization-container {
+  position: absolute;
+  inset: 0;
+  overflow-x: clip;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.visualization-container > .visualization {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 0;
   width: max(105vw, 105vh);
   height: max(105vw, 105vh);
   padding: 0;
+  pointer-events: auto;
 }
 
-body > .visualization > svg {
+.visualization-container > .visualization > svg {
   width: 100%;
   height: 100%;
 }
@@ -293,6 +297,7 @@ body > .visualization > svg {
 /* Section Block Styles */
 .section {
   padding: 4rem 0 8rem;
+  overflow-x: clip;
 }
 
 .section > * {

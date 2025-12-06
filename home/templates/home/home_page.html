@@ -4,7 +4,9 @@
 {% block body_class %}home-page{% endblock %}
 
 {% block content %}
-<div class="visualization" data-page-id="{{ page.pk }}"></div>
+<div class="visualization-container">
+    <div class="visualization" data-page-id="{{ page.pk }}"></div>
+</div>
 <main>
     {% for block in page.body %}
         {% include_block block %}
