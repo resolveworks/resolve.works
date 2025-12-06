@@ -12,8 +12,12 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 import os
 
+from dotenv import load_dotenv
+
 PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = os.path.dirname(PROJECT_DIR)
+
+load_dotenv(os.path.join(BASE_DIR, ".env"))
 
 
 # Environment variable helpers

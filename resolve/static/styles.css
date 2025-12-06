@@ -25,6 +25,10 @@
   box-sizing: border-box;
 }
 
+html {
+  overflow-x: hidden;
+}
+
 body {
   background: var(--color-light);
   color: var(--text-color-dark);
