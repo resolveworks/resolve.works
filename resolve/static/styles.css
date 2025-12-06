@@ -434,7 +434,6 @@ footer.section > a.site-name:hover {
 
 .home-page .section:nth-child(2) > *:nth-child(1)::before,
 .article-page .section:nth-child(1) > *:nth-child(1)::before {
-  inset: -30rem;
   bottom: min(-75vw, -75vh);
 }
 
@@ -462,6 +461,11 @@ footer.section > a.site-name:hover {
    Tablet (768px)
    ========================================================================== */
 @media (min-width: 768px) {
+  .home-page .section:nth-child(2) > *:nth-child(1)::before,
+  .article-page .section:nth-child(1) > *:nth-child(1)::before {
+    inset: -30rem;
+  }
+
   .article-page article .section > * {
     max-width: 50rem;
     margin-left: auto;

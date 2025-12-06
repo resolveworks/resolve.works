@@ -4,7 +4,9 @@
 {% block body_class %}article-page{% endblock %}
 
 {% block content %}
-<div class="visualization" data-page-id="{{ page.pk }}"></div>
+<div class="visualization-container">
+  <div class="visualization" data-page-id="{{ page.pk }}"></div>
+</div>
 <main>
   <article>
     <section class="section section-hero section-hero-medium section-light">
