@@ -430,6 +430,7 @@ footer.section > a.site-name:hover {
   );
   z-index: -1;
   pointer-events: none;
+  will-change: transform;
 }
 
 .home-page .section:nth-child(2) > *:nth-child(1)::before,
