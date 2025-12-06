@@ -112,3 +112,12 @@ jobs:
       - name: Inspect image
         run: |
           docker buildx imagetools inspect ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+
+      - name: Trigger Dokploy deployment
+        run: |
+          curl -fsSL -X POST "${{ secrets.DOKPLOY_WEBHOOK_URL }}" \
+            -H "Content-Type: application/json" \
+            -d '{
+              "repository": {"repo_name": "${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}"},
+              "push_data": {"tag": "latest"}
+            }'
