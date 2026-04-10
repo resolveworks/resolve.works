@@ -1,55 +1,24 @@
-# Resolve.works
+# Resolve.
 
-A consulting website built with Wagtail CMS.
+Source code of [resolve.works](https://resolve.works) — the site for **Resolve.**, an IT consulting practice helping ethical SMBs build modern software that saves time without replacing people.
 
-## Setup
+Run by [Johan Schuijt](https://www.linkedin.com/in/johanschuijt/). Remote, Europe-focused, global clients welcome. If you have a data problem worth solving, [get in touch](https://resolve.works).
 
-1. **Install dependencies** (requires [uv](https://docs.astral.sh/uv/)):
-   ```bash
-   uv sync
-   ```
+## Tech stack
 
-2. **Run migrations**:
-   ```bash
-   uv run python manage.py migrate
-   ```
+- Python 3.12, Django 5.2, Wagtail 7.2
+- [uv](https://docs.astral.sh/uv/) for dependency management
+- sentence-transformers + UMAP for article visualizations
+- ruff for linting
 
-3. **Create a superuser**:
-   ```bash
-   uv run python manage.py createsuperuser
-   ```
-
-## Seeding
-
-Populate the site with initial content:
+## Local development
 
 ```bash
-# Seed homepage content
-uv run python manage.py seed_homepage
-
-# Seed footer settings
-uv run python manage.py seed_footer
+uv sync
+uv run manage.py migrate
+uv run manage.py seed
+uv run manage.py createsuperuser
+uv run manage.py runserver
 ```
 
-## Usage
-
-**Development server**:
-```bash
-uv run python manage.py runserver
-```
-
-Visit:
-- Frontend: http://localhost:8000
-- Admin: http://localhost:8000/admin
-
-**Docker** (production):
-```bash
-docker build -t resolve-works .
-docker run -p 8000:8000 resolve-works
-```
-
-## Project Structure
-
-- `home/` - Homepage app with StreamField blocks
-- `resolve/` - Django project settings
-- `index.html`, `styles.css`, `scripts.js` - Original static files (reference)
+Frontend at http://localhost:8000, admin at http://localhost:8000/admin.
