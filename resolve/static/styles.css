@@ -418,6 +418,7 @@ footer.section > a.site-name:hover {
 
 .home-page .section.section-hero > .hero-block > p.tagline::before,
 .home-page .section:nth-child(2) > *:nth-child(1)::before,
+.article-page .section.section-hero > .hero-block > p.tagline::before,
 .article-page .section:nth-child(1) > *:nth-child(1)::before {
   content: "";
   position: absolute;
@@ -435,7 +436,7 @@ footer.section > a.site-name:hover {
 
 .home-page .section:nth-child(2) > *:nth-child(1)::before,
 .article-page .section:nth-child(1) > *:nth-child(1)::before {
-  bottom: min(-75vw, -75vh);
+  bottom: min(-75vw, -75vh) !important;
 }
 
 .author-block {
