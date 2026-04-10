@@ -45,8 +45,7 @@ RUN chown -R wagtail:wagtail /app && mkdir -p /app/media && chown wagtail:wagtai
 # Use user "wagtail" to run the build commands below and the server itself.
 USER wagtail
 
-# Collect static files with production settings (for ManifestStaticFilesStorage).
-RUN DJANGO_SETTINGS_MODULE=resolve.settings.production uv run --no-dev manage.py collectstatic --noinput --clear
-
 # Runtime command that executes when "docker run" is called.
-CMD ["uv", "run", "--no-dev", "gunicorn", "resolve.wsgi:application", "--bind", "0.0.0.0:8000"]
+COPY --chown=wagtail:wagtail entrypoint.sh /app/entrypoint.sh
+RUN chmod +x /app/entrypoint.sh
+ENTRYPOINT ["/app/entrypoint.sh"]
