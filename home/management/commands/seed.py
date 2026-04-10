@@ -152,10 +152,10 @@ class Command(BaseCommand):
 
         # Create new HomePage
         home_page = HomePage(
-            title="Resolve - AI Consulting for ethical SMBs",
+            title="IT Consulting for ethical SMBs",
             slug="home",
-            seo_title="Resolve - AI Consulting for ethical SMBs | LLM Implementation & Automation",
-            search_description="Expert AI consulting services for ethical SMBs. We implement large language models (LLMs) to automate workflows, reduce costs, and amplify human capabilities. Free consultation.",
+            seo_title="IT Consulting for ethical SMBs",
+            search_description="We help ethical business build modern software to save time without replacing people.",
             owner=user,
         )
         root_page.add_child(instance=home_page)
@@ -167,7 +167,7 @@ class Command(BaseCommand):
                 "type": "hero",
                 "value": {
                     "heading": "Change your trajectory",
-                    "body_text": "We help ethical SMBs use large language models (LLMs) to save time without replacing people.",
+                    "body_text": "We help ethical business build modern software to save time without replacing people.",
                 },
             },
             {
@@ -178,7 +178,7 @@ class Command(BaseCommand):
                     "content": [
                         {
                             "type": "paragraph",
-                            "value": "<p>We partner from roadmap to rollout, prototype rapidly and build production systems with your team. Our approach is:</p>",
+                            "value": "<p>From roadmap to rollout, we prototype rapidly and build production systems with your team. Our approach is:</p>",
                         },
                         {
                             "type": "features",
@@ -191,11 +191,11 @@ class Command(BaseCommand):
                                     },
                                     {
                                         "heading": "Flexible",
-                                        "description": "<p>We meet you where you are, using the <b>tools you already use</b>.</p>",
+                                        "description": "<p>We meet you where you are, hooking into <b>what you already know.</b></p>",
                                     },
                                     {
                                         "heading": "Transparent",
-                                        "description": "<p>You are involved, <b>understand the process, and give direction.</b></p>",
+                                        "description": "<p><b>You are involved</b>, understand the process, and give direction.</p>",
                                     },
                                 ],
                             },
@@ -308,11 +308,11 @@ class Command(BaseCommand):
                                 "items": [
                                     {
                                         "term": "Project",
-                                        "definition": '<p><a href="https://loom.everypolitician.org" target="_blank">PoliLoom</a>: Structuring politicians\' data for investigators and the accountability sector.</p>',
+                                        "definition": '<p><a href="https://loom.everypolitician.org">PoliLoom</a>: Structuring politicians\' data for investigators and the accountability sector.</p>',
                                     },
                                     {
                                         "term": "Client",
-                                        "definition": '<p><a href="https://www.opensanctions.org/" target="_blank">OpenSanctions</a></p>',
+                                        "definition": '<p><a href="https://www.opensanctions.org/">OpenSanctions</a></p>',
                                     },
                                     {
                                         "term": "Role",
@@ -332,18 +332,18 @@ class Command(BaseCommand):
                                     },
                                     {
                                         "heading": "Solution highlights",
-                                        "description": "<p><b>Two-stage extraction pipeline</b>: LLM extracts free-text positions → vector search maps to exact Wikidata entities → LLM reconciles.</p><p><b>Fast similarity search</b>: Embeddings with SentenceTransformers; pgvector in Postgres.</p><p><b>Source verification</b>: FastAPI API and Next.js confirmation GUI for human verification.</p><p><b>Parallel dump processing</b>: near-linear speedup to 32+ cores; 1.8TB dump processed in passes.</p>",
+                                        "description": "<p><b>Two-stage extraction pipeline</b>: LLM extracts free-text positions → hybrid search maps to existing entities → LLM reconciles.</p><p><b>Fast hybrid search</b>: Meilisearch with OpenAI embeddings for combined semantic and lexical entity matching</p><p><b>Source verification</b>: web sources archived as MHTML via Playwright and reviewed through a FastAPI + Next.js confirmation UI</p>",
                                     },
                                     {
                                         "heading": "Impact",
-                                        "description": "<p><b>Trust</b>: Clear citations from archived pages in GUI for verification.</p><p><b>Scale</b>: Parallelized, test-backed pipeline; batched database operations.</p><p><b>Clarity</b>: From unstructured source documents to structured, linkable positions.</p>",
+                                        "description": "<p><b>Clarity</b>: From unstructured source documents to structured, linkable records.</p><p><b>Trust</b>: Every extracted fact links back to a specific passage in an archived snapshot of the source.</p><p><b>Scale</b>: Handles Wikidata-sized inputs through an incremental, parallelized pipeline.</p>",
                                     },
                                 ],
                             },
                         },
                         {
                             "type": "paragraph",
-                            "value": '<p>Vector search actually works, and with human-in-the-loop verification, it\'s both accurate and accountable. <a target="_blank" href="https://discuss.opensanctions.org/t/poliloom-loom-for-weaving-politicians-data/121">Read the devlog</a>.</p>',
+                            "value": '<p>LLM entity reconciliation actually works well, and with human-in-the-loop verification, it\'s both accurate and accountable. <a href="https://discuss.opensanctions.org/t/poliloom-loom-for-weaving-politicians-data/121">Read the devlog</a>.</p>',
                         },
                     ],
                 },
@@ -372,28 +372,28 @@ class Command(BaseCommand):
                             "value": {
                                 "items": [
                                     {
-                                        "question": "Which LLM APIs and tools do you work with?",
-                                        "answer": "<p>We implement practical solutions using OpenAI's GPT models, Anthropic's Claude, and other established APIs. We generally use proven, production-ready services rather than experimental models, except when these are the right tool for the job. For data privacy needs, we can work with self-hosted solutions using existing open-source tools and models.</p>",
+                                        "question": "What kinds of problems are you best at solving?",
+                                        "answer": "<p>Data problems where information is scattered, unstructured, or trapped in formats that don't talk to each other. Think: extracting structured facts from thousands of documents, connecting data across systems, or building pipelines that turn messy inputs into something reliable and searchable.</p><p>I use LLMs where they genuinely help—extraction, matching, classification—but they're usually one piece of a larger system. If your problem is better solved with a spreadsheet or a well-written SQL query, I'll tell you that.</p>",
                                     },
                                     {
-                                        "question": "What's the difference between using ChatGPT directly and a custom implementation?",
-                                        "answer": "<p>Custom implementations connect LLMs directly to your existing workflows and databases through API integration. This means automated processing without copy-pasting, consistent prompt engineering for reliable results, and the ability to handle bulk operations. We build practical bridges between AI capabilities and your daily operations.</p>",
+                                        "question": "How involved does our team need to be?",
+                                        "answer": "<p>More at the start, less over time. Early on I need access to the people who understand the problem—what's actually painful, what the data looks like, what \"good enough\" means. That might be a few hours in the first week or two.</p><p>During prototyping I'll share work frequently and need feedback. Once we're building for real, involvement drops to occasional check-ins and testing. By handover, the goal is that your team understands what's running and can operate it without me.</p>",
                                     },
                                     {
-                                        "question": "Can you integrate AI with our existing software like Slack, Notion, or our CRM?",
-                                        "answer": "<p>Yes, we connect LLMs to the tools you already use through their APIs. Whether it's automating Slack responses, processing documents in Notion, or enriching CRM data, we build custom integrations that fit your existing workflow. No need to learn new platforms, the AI works where you work.</p>",
+                                        "question": "What does a typical project timeline look like?",
+                                        "answer": "<p>It depends entirely on the problem. A small integration might take a few weeks; a complex data pipeline with verification workflows takes months and evolves as we learn what actually works.</p><p>Rather than give you made-up estimates, I'd point you to the <a href=\"https://discuss.opensanctions.org/t/poliloom-loom-for-weaving-politicians-data/121\">PoliLoom devlog</a>—it shows how a real project unfolded, including the dead ends and course corrections. That's more honest than a tidy timeline.</p><p>What I can promise: I ship early and often. You'll see working pieces within the first few weeks, not a big reveal after months of silence.</p>",
                                     },
                                     {
-                                        "question": "How do you handle GDPR and data privacy for European businesses?",
-                                        "answer": "<p>We clearly document which third-party services process what data, Use API providers that offer DPA agreements and are GDPR-compliant and implement local models (Ollama, vLLM) when clients need data to stay on-premise.</p>",
+                                        "question": "Who owns the code?",
+                                        "answer": "<p>You do. Everything I build for you is yours—code, configurations, documentation. I prefer to build things that could be open-sourced if you wanted, and I'll actively suggest it when it makes sense. No vendor lock-in, no proprietary dependencies that tie you to me.</p>",
                                     },
                                     {
-                                        "question": "What happens after the initial implementation?",
-                                        "answer": "<p>We ensure your team understands and can maintain what we've built. This includes clear documentation, training, and handover of all code and configurations. We're available for ongoing support, but our goal is to build systems your team can own and operate independently.</p>",
+                                        "question": "Do you also build the user interface, or just the backend?",
+                                        "answer": "<p>Both. I design and build the full system—data pipelines, APIs, and the interface people actually use. A clear UI isn't optional; it's what makes the difference between a tool that gets used and one that gets abandoned.</p>",
                                     },
                                     {
-                                        "question": "Do you only work with small businesses or also enterprise clients?",
-                                        "answer": "<p>We focus on SMBs - companies that need practical automation but don't have huge IT departments. Our sweet spot is businesses with 10-200 employees who have repetitive workflows eating up time. We've worked with investigative journalists, compliance teams, and data processors who need to do more with existing resources.</p>",
+                                        "question": "What do you need from us to figure out if we're a good fit?",
+                                        "answer": "<p>A conversation about the actual problem—not a polished pitch, just what's frustrating and why it matters. I work best with organizations doing something meaningful: journalism, accountability, public interest, open data, or businesses that genuinely care about doing good work rather than just scaling revenue.</p><p>If your goal is \"add AI to make investors happy,\" we're probably not a match. If you're trying to solve a real problem and want to understand what you're building, let's talk.</p>",
                                     },
                                 ]
                             },
