@@ -433,12 +433,11 @@ footer.section > a.site-name:hover {
   );
   z-index: -1;
   pointer-events: none;
-  will-change: transform;
 }
 
 .home-page .section:nth-child(2) > *:nth-child(1)::before,
 .article-page .section:nth-child(1) > *:nth-child(1)::before {
-  bottom: min(-100vw, -100vh) !important;
+  bottom: -200vh !important;
 }
 
 .author-block {
