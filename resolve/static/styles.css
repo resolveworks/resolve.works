@@ -202,12 +202,12 @@ body > footer > * {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: max(105vw, 105vh);
-  height: max(105vw, 105vh);
+  width: max(105svw, 105svh);
+  height: max(105svw, 105svh);
   min-width: 100rem;
   min-height: 100rem;
   padding: 0;
-  pointer-events: auto;
+  pointer-events: none;
 }
 
 .visualization-container > .visualization > svg {
@@ -414,30 +414,9 @@ footer.section > a.site-name:hover {
   align-items: start;
 }
 
-.home-page .section.section-hero > .hero-block > p:nth-child(2) {
-  position: relative;
-}
-
-.home-page .section.section-hero > .hero-block > p.tagline::before,
-.home-page .section:nth-child(2) > *:nth-child(1)::before,
-.article-page .section.section-hero > .hero-block > p.tagline::before,
-.article-page .section:nth-child(1) > *:nth-child(1)::before {
-  content: "";
-  position: absolute;
-  inset: -20rem;
-  backdrop-filter: brightness(1.2) blur(0.35rem);
-  mask-image: radial-gradient(
-    ellipse closest-side at center,
-    #fff 50%,
-    transparent 100%
-  );
-  z-index: -1;
-  pointer-events: none;
-}
-
-.home-page .section:nth-child(2) > *:nth-child(1)::before,
-.article-page .section:nth-child(1) > *:nth-child(1)::before {
-  bottom: -200vh !important;
+.home-page .visualization-container > .visualization,
+.article-page .visualization-container > .visualization {
+  filter: brightness(1.2) blur(0.35rem);
 }
 
 .author-block {
@@ -464,9 +443,38 @@ footer.section > a.site-name:hover {
    Tablet (768px)
    ========================================================================== */
 @media (min-width: 768px) {
+  .home-page .visualization-container > .visualization,
+  .article-page .visualization-container > .visualization {
+    filter: none;
+    pointer-events: auto;
+  }
+
+  .section.section-hero > .hero-block > p.tagline {
+    position: relative;
+  }
+
+  .home-page .section.section-hero > .hero-block > p.tagline::before,
   .home-page .section:nth-child(2) > *:nth-child(1)::before,
+  .article-page .section.section-hero > .hero-block > p.tagline::before,
   .article-page .section:nth-child(1) > *:nth-child(1)::before {
-    inset: -30rem;
+    content: "";
+    position: absolute;
+    inset: -25rem -32rem;
+    backdrop-filter: brightness(1.2) blur(0.35rem);
+    mask-image: radial-gradient(
+      ellipse closest-side at center,
+      #fff 40%,
+      transparent 100%
+    );
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  .home-page .section:nth-child(2) > *:nth-child(1)::before {
+    bottom: -100vh !important;
+  }
+  .article-page .section:nth-child(1) > *:nth-child(1)::before {
+    bottom: -200vh !important;
   }
 
   .article-page article .section > * {

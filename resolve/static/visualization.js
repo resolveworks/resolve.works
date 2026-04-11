@@ -33,17 +33,18 @@ class EmbeddingVisualization {
   }
 
   getStrokeWidth() {
-    return this.getBaseSize() * 0.002;
+    return this.getBaseSize() * 0.0012;
   }
 
   positionTooltip(tooltip, event) {
     const tooltipWidth = tooltip.node().offsetWidth;
     const offset = 10;
-    const wouldOverflow = event.clientX + offset + tooltipWidth > window.innerWidth;
-    const left = wouldOverflow ? event.clientX - offset - tooltipWidth : event.clientX + offset;
-    tooltip
-      .style("top", event.clientY - 10 + "px")
-      .style("left", left + "px");
+    const wouldOverflow =
+      event.clientX + offset + tooltipWidth > window.innerWidth;
+    const left = wouldOverflow
+      ? event.clientX - offset - tooltipWidth
+      : event.clientX + offset;
+    tooltip.style("top", event.clientY - 10 + "px").style("left", left + "px");
   }
 
   createSvg() {
@@ -58,7 +59,6 @@ class EmbeddingVisualization {
       .attr("height", "100%")
       .attr("viewBox", `0 0 ${this.width} ${this.height}`)
       .attr("preserveAspectRatio", "xMidYMid meet");
-
   }
 
   getNodeColor(position) {
@@ -152,9 +152,7 @@ class EmbeddingVisualization {
           tooltip = null;
         }
       });
-
   }
-
 }
 
 // Initialize on DOM ready
