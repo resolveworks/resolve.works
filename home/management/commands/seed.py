@@ -352,7 +352,7 @@ class Command(BaseCommand):
                     "content": [
                         {
                             "type": "about_founder",
-                            "value": {},
+                            "value": {"user": str(user.pk)},
                         },
                     ],
                 },

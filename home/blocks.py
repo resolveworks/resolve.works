@@ -1,5 +1,7 @@
 """Shared blocks for the Resolve.works site."""
 
+from django.contrib.auth import get_user_model
+
 from wagtail import blocks
 from wagtail.images.blocks import ImageChooserBlock
 
@@ -191,8 +193,24 @@ class ProcessRoadmapBlock(blocks.StructBlock):
         template = "blocks/process_roadmap.html"
 
 
+def _user_choices():
+    User = get_user_model()
+    return [
+        (str(u.pk), u.get_full_name() or u.username)
+        for u in User.objects.filter(is_active=True).order_by("first_name", "username")
+    ]
+
+
 class AboutFounderBlock(blocks.StructBlock):
-    """About section for the business founder. Uses founder from BusinessSettings."""
+    """About section featuring a selected user."""
+
+    user = blocks.ChoiceBlock(choices=_user_choices, required=True)
+
+    def get_context(self, value, parent_context=None):
+        context = super().get_context(value, parent_context)
+        User = get_user_model()
+        context["user"] = User.objects.get(pk=value["user"])
+        return context
 
     class Meta:
         icon = "user"

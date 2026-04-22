@@ -411,7 +411,7 @@ footer.section > a.site-name:hover {
 .article-list {
   display: flex;
   flex-direction: column;
-  gap: 4rem;
+  gap: 2rem;
 }
 
 .hero-block {

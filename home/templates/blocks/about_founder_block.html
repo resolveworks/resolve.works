@@ -1,7 +1,5 @@
-{% load wagtailcore_tags wagtailsettings_tags %}
+{% load wagtailcore_tags %}
 
-{% get_settings use_default_site=True %}
-{% with user=settings.home.BusinessSettings.founder %}
 {{ user.bio|linebreaks }}
 
 <div class="two-column-block">
@@ -37,4 +35,3 @@
         </address>
     </div>
 </div>
-{% endwith %}
