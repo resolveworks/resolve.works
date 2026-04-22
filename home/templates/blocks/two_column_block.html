@@ -1,12 +1,12 @@
 {% load wagtailcore_tags wagtailimages_tags %}
 
 <div class="two-column-block">
-    <p>
-        {% image value.image original as img %}
-        <img src="{{ img.url }}" alt="{{ value.image.title }}" class="two-column-{{ value.image_position }}">
-    </p>
+    {% image value.image original as img %}
+    <img src="{{ img.url }}" alt="{{ value.image.title }}" class="two-column-{{ value.image_position }}">
 
-    {% for block in value.content %}
-        {% include_block block %}
-    {% endfor %}
+    <div class="two-column-content">
+        {% for block in value.content %}
+            {% include_block block %}
+        {% endfor %}
+    </div>
 </div>

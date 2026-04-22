@@ -1,16 +1,6 @@
-from urllib.parse import quote
-
 from django import template
 
 register = template.Library()
-
-
-@register.filter
-def urlencode_newlines(text):
-    """URL-encode text, converting newlines to %0D%0A for mailto links."""
-    if not text:
-        return ""
-    return quote(str(text), safe="")
 
 
 @register.filter
