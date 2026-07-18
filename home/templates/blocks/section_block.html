@@ -1,9 +1,0 @@
-{% load wagtailcore_tags %}
-
-<section class="section section-{{ value.background }}">
-    <h2>{{ value.title }}</h2>
-
-    {% for block in value.content %}
-        {% include_block block %}
-    {% endfor %}
-</section>

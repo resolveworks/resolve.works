@@ -1,0 +1,12 @@
+{
+  "name": "Resolve.",
+  "email": "johan@resolve.works",
+  "phone": { "href": "+31651952461", "display": "+31 651 952 461" },
+  "linkedin": "https://www.linkedin.com/in/johanschuijt/",
+  "github": "https://github.com/monneyboi/",
+  "address": "Harju maakond, Tallinn, Lasnamäe linnaosa, Sepapaja tn 6, 15551",
+  "vat": "EE102834268",
+  "register": { "url": "https://ariregister.rik.ee/eng/company/17154517/RESOLVE-SERVICES-OÜ", "display": "https://ariregister.rik.ee" },
+  "registrationNote": "Estonian e-residency program",
+  "taglines": ["Makes machines empower humans", "Made by 👨 and 🤖 in Europe"]
+}
