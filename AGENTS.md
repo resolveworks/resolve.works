@@ -38,5 +38,7 @@ docker build -t resolve.works . && docker run --rm -p 8080:80 resolve.works
 - Use the `Seo` component for head meta. Every page must keep full SEO
   coverage: meta description, OG/Twitter, canonical `https` URL, JSON-LD, and
   a `static/sitemap.xml` entry.
-- After adding/editing an article, run `pnpm build` and `pnpm generate-embeddings`,
-  then update `static/sitemap.xml` lastmod.
+- Embeddings are content-derived: the generator embeds the prerendered HTML
+  of every page, so after editing any page content (article or page copy) run
+  `pnpm build` and `pnpm generate-embeddings`, and update lastmod for the
+  changed pages in `static/sitemap.xml`.

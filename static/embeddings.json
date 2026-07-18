@@ -2168,721 +2168,785 @@
     "nodes": [
       {
         "id": 0,
-        "x": 0.14238161021415957,
-        "y": 0.46736960467884403,
-        "z": 0.3328541337272879,
-        "text": "Understandable process",
+        "x": 0.6100611710502097,
+        "y": 0.45662067383661437,
+        "z": 0.4680987378936241,
+        "text": "Something resembling a plan.",
         "position": 0
       },
       {
         "id": 1,
-        "x": 0.4665237426464677,
-        "y": 0.5844091477664234,
-        "z": 0.664378526359123,
-        "text": "From roadmap to rollout, I prototype rapidly and build production systems with your team.",
-        "position": 0.011235955056179775
+        "x": 0.3113696534369577,
+        "y": 0.39142150759345395,
+        "z": 0.40881831117572154,
+        "text": "Every engagement starts with the best plan we can make — and the near-certainty that real data will punch holes in it.",
+        "position": 0.010309278350515464
       },
       {
         "id": 2,
-        "x": 0.02452261619655013,
-        "y": 0.37993887887628325,
-        "z": 0.538083021437457,
-        "text": "My approach is:",
-        "position": 0.02247191011235955
+        "x": 0.5981164670013664,
+        "y": 0.7892775363060792,
+        "z": 0.0715856799661873,
+        "text": "What stays fixed is how I work: in the open, in small pieces, with you close enough to steer.",
+        "position": 0.020618556701030927
       },
       {
         "id": 3,
-        "x": 0.1682096311966809,
-        "y": 1,
-        "z": 0.6278864988813248,
-        "text": "Human-centered",
-        "position": 0.033707865168539325
+        "x": 0.8148929644568352,
+        "y": 0.5978505409412153,
+        "z": 0.6813424521828002,
+        "text": "Demos, not decks.",
+        "position": 0.030927835051546393
       },
       {
         "id": 4,
-        "x": 0.41895800131228655,
-        "y": 0.26895289225373625,
-        "z": 0.13975568602764452,
-        "text": "I don't aim to replace people, but amplify their capabilities.",
-        "position": 0.0449438202247191
+        "x": 0.08942618816552726,
+        "y": 0.527762369171294,
+        "z": 0.4992278385720811,
+        "text": "You judge working software running against your data, early enough that changing course is still cheap.",
+        "position": 0.041237113402061855
       },
       {
         "id": 5,
-        "x": 0.08239575292011674,
-        "y": 0.2897859348007887,
-        "z": 0.47531828084972183,
-        "text": "I meet you where you are, hooking into what you already know.",
-        "position": 0.056179775280898875
+        "x": 1,
+        "y": 0.4703794729421997,
+        "z": 0.46418616265066504,
+        "text": "Dead ends included.",
+        "position": 0.05154639175257732
       },
       {
         "id": 6,
-        "x": 0.03292163182453898,
-        "y": 0.9041765884885513,
-        "z": 0.4013605479111912,
-        "text": "Transparent",
-        "position": 0.06741573033707865
+        "x": 0.34836727582194743,
+        "y": 0.8484988892569031,
+        "z": 0.1663217704560789,
+        "text": "I write down what didn't work and why.",
+        "position": 0.061855670103092786
       },
       {
         "id": 7,
-        "x": 0.12763387516267788,
-        "y": 0.34248884563181103,
-        "z": 0.608277089437571,
-        "text": "You are involved, understand the process, and give direction.",
-        "position": 0.07865168539325842
+        "x": 0.834147903190905,
+        "y": 0.4623850422937552,
+        "z": 0.7252957114344456,
+        "text": "The PoliLoom devlog is what working with me actually looks like.",
+        "position": 0.07216494845360824
       },
       {
         "id": 8,
-        "x": 0.510516087792165,
-        "y": 0.6115779511761055,
-        "z": 0.8559546090854061,
-        "text": "Fifteen years of production work keeps circling back to the same set of capabilities:",
-        "position": 0.0898876404494382
+        "x": 0.7776570492523089,
+        "y": 0.8696745850419698,
+        "z": 0.18152871758777503,
+        "text": "You keep the keys.",
+        "position": 0.08247422680412371
       },
       {
         "id": 9,
-        "x": 0.8565541603755351,
-        "y": 0.3299025221236013,
-        "z": 0,
-        "text": "LLM extraction & agents",
-        "position": 0.10112359550561797
+        "x": 0.5322105866439344,
+        "y": 0.9264378596191364,
+        "z": 0.7702630195003795,
+        "text": "Code, documentation, and a team that understands what's running.",
+        "position": 0.09278350515463918
       },
       {
         "id": 10,
-        "x": 0.9235831487742734,
-        "y": 0.04946503044186647,
-        "z": 0.2863453783887999,
-        "text": "Structured facts from unstructured documents, and agents that do the research.",
-        "position": 0.11235955056179775
+        "x": 0.5620068729891098,
+        "y": 0.938072250833904,
+        "z": 0.5804007349043143,
+        "text": "Built to hand over, not to be needed.",
+        "position": 0.10309278350515463
       },
       {
         "id": 11,
-        "x": 0.9336639131034561,
-        "y": 0.09279209905206813,
-        "z": 0.01983649791793765,
-        "text": "Search & entity resolution",
-        "position": 0.12359550561797752
+        "x": 0.9007214998232498,
+        "y": 0.3465449700646058,
+        "z": 0.43646542951332135,
+        "text": "Fifteen years of production work keeps circling back to the same set of capabilities:",
+        "position": 0.1134020618556701
       },
       {
         "id": 12,
-        "x": 0.9403468269865565,
-        "y": 0.08316576516382047,
-        "z": 0.13419582118452553,
-        "text": "Hybrid keyword and semantic matching, reconciling records across sources and languages.",
-        "position": 0.1348314606741573
+        "x": 0,
+        "y": 0.22394436890574174,
+        "z": 0.7468315609390492,
+        "text": "LLM extraction & agents",
+        "position": 0.12371134020618557
       },
       {
         "id": 13,
-        "x": 0.4379835327867271,
-        "y": 0.704598390711034,
-        "z": 0.09629087830587174,
-        "text": "Verification interfaces",
-        "position": 0.14606741573033707
+        "x": 0.1251155031564183,
+        "y": 0.014009938346397483,
+        "z": 0.6160232409087515,
+        "text": "Structured facts from unstructured documents, and agents that do the research.",
+        "position": 0.13402061855670103
       },
       {
         "id": 14,
-        "x": 0.9572072494765241,
-        "y": 0.1723803453896897,
-        "z": 0.3889294212805071,
-        "text": "Human review as part of the pipeline: archived sources, highlighted evidence, citations.",
-        "position": 0.15730337078651685
+        "x": 0.022135544511757237,
+        "y": 0.07402732400005395,
+        "z": 0.7550746849727699,
+        "text": "Search & entity resolution",
+        "position": 0.14432989690721648
       },
       {
         "id": 15,
-        "x": 0.4843024143382499,
-        "y": 0.28367533874847023,
-        "z": 0.7762454005506022,
-        "text": "Stay up to date",
-        "position": 0.16853932584269662
+        "x": 0.05885051422901129,
+        "y": 0,
+        "z": 0.6804212651455122,
+        "text": "Hybrid keyword and semantic matching, reconciling records across sources and languages.",
+        "position": 0.15463917525773196
       },
       {
         "id": 16,
-        "x": 0.1478060055045099,
-        "y": 0.21263522748207864,
-        "z": 0.21506694692948403,
-        "text": "New models, tools and techniques, evaluated against real problems, adopted when they earn it.",
-        "position": 0.1797752808988764
+        "x": 0.30827583572283546,
+        "y": 0.5049855356765653,
+        "z": 0.7909147689833699,
+        "text": "Verification interfaces",
+        "position": 0.16494845360824742
       },
       {
         "id": 17,
-        "x": 0.7808761428280404,
-        "y": 0.8784598635942193,
-        "z": 0.5040522593099066,
-        "text": "Linux infrastructure",
-        "position": 0.19101123595505617
+        "x": 0.3639642325801743,
+        "y": 0.09673759568069587,
+        "z": 0.6941169670603269,
+        "text": "Human review as part of the pipeline: archived sources, highlighted evidence, citations.",
+        "position": 0.17525773195876287
       },
       {
         "id": 18,
-        "x": 0.6879178209341542,
-        "y": 0.8611387292931786,
-        "z": 0.3896288793722238,
-        "text": "Servers are home turf: containers, deploy pipelines, backups, terabyte-scale processing.",
-        "position": 0.20224719101123595
+        "x": 0.610148518620427,
+        "y": 0.3606843354646637,
+        "z": 0.23703773241992898,
+        "text": "Stay up to date",
+        "position": 0.18556701030927836
       },
       {
         "id": 19,
-        "x": 0.046376741190374667,
-        "y": 0.8372174262110506,
-        "z": 0.6113004664498998,
-        "text": "The full product",
-        "position": 0.21348314606741572
+        "x": 0.2899596386165071,
+        "y": 0.7036214594133424,
+        "z": 0.25308957185118286,
+        "text": "New models, tools and techniques, evaluated against real problems, adopted when they earn it.",
+        "position": 0.1958762886597938
       },
       {
         "id": 20,
-        "x": 0.48329117441500297,
-        "y": 0.9492200743188968,
-        "z": 0.4383815344557112,
-        "text": "Auth, frontend, ops and everything in between: working software, running in production.",
-        "position": 0.2247191011235955
+        "x": 0.5375885948091048,
+        "y": 0.7044367557996092,
+        "z": 0.9869786116066112,
+        "text": "Linux infrastructure",
+        "position": 0.20618556701030927
       },
       {
         "id": 21,
-        "x": 0.3525542482300212,
-        "y": 0.33348342946561116,
-        "z": 0.5521570200653557,
-        "text": "From roadmap to rollout",
-        "position": 0.23595505617977527
+        "x": 0.46164180012495604,
+        "y": 0.7617336055277204,
+        "z": 0.9267669428137123,
+        "text": "Servers are home turf: containers, deploy pipelines, backups, terabyte-scale processing.",
+        "position": 0.21649484536082475
       },
       {
         "id": 22,
-        "x": 0.29193843856283036,
-        "y": 0.041092484646383466,
-        "z": 0.25808881355826113,
-        "text": "Goals, data, constraints, and risks",
-        "position": 0.24719101123595505
+        "x": 0.9101929250977996,
+        "y": 0.7737499179873953,
+        "z": 0.25843667035893286,
+        "text": "The full product",
+        "position": 0.2268041237113402
       },
       {
         "id": 23,
-        "x": 0.25264279165097275,
-        "y": 0.5653690885532585,
-        "z": 0.22138516402934139,
-        "text": "Rapid iterations with real user flows",
-        "position": 0.25842696629213485
+        "x": 0.5122114425244053,
+        "y": 0.8558471768580243,
+        "z": 0.8691515817810659,
+        "text": "Auth, frontend, ops and everything in between: working software, running in production.",
+        "position": 0.23711340206185566
       },
       {
         "id": 24,
-        "x": 0.26038898447987496,
-        "y": 0.19387939338222485,
-        "z": 0.6752105357551641,
-        "text": "Roll out to a small group",
-        "position": 0.2696629213483146
+        "x": 0.4776949718407483,
+        "y": 0.4360929073687389,
+        "z": 0.380220837589895,
+        "text": "From roadmap to rollout",
+        "position": 0.24742268041237114
       },
       {
         "id": 25,
-        "x": 0.15615850781098412,
-        "y": 0.08344981377282296,
-        "z": 0.6481445357998374,
-        "text": "Adapt, monitor, and train the team",
-        "position": 0.2808988764044944
+        "x": 0.7404597952030049,
+        "y": 0.6603828665182323,
+        "z": 0.05682682817979366,
+        "text": "Find the hard part",
+        "position": 0.25773195876288657
       },
       {
         "id": 26,
-        "x": 0.2799052231648314,
-        "y": 0.704549587033755,
-        "z": 0.7921152023325554,
-        "text": "Current work",
-        "position": 0.29213483146067415
+        "x": 0.8257550964448557,
+        "y": 0.4001817858670561,
+        "z": 0.6407661611305673,
+        "text": "Every project has one.",
+        "position": 0.26804123711340205
       },
       {
         "id": 27,
-        "x": 0.9689189949635493,
-        "y": 0.47557059970274335,
-        "z": 0.7861063554751114,
-        "text": "PoliLoom, part of EveryPolitician: structuring politicians' data for investigators and the accountability sector.",
-        "position": 0.30337078651685395
+        "x": 0.23498594235732587,
+        "y": 0.3945985755921905,
+        "z": 0.39700509980175575,
+        "text": "We go there first, with real data.",
+        "position": 0.27835051546391754
       },
       {
         "id": 28,
-        "x": 0.9733366580852882,
-        "y": 0.734712832048913,
-        "z": 0.6955043781591904,
-        "text": "OpenSanctions",
-        "position": 0.3146067415730337
+        "x": 0.5493246009412583,
+        "y": 0.6391250333511804,
+        "z": 0,
+        "text": "Try the smallest useful thing",
+        "position": 0.28865979381443296
       },
       {
         "id": 29,
-        "x": 0.9014406994307569,
-        "y": 0.5222369411047793,
-        "z": 0.913889583776161,
-        "text": "Project lead, EveryPolitician (2025–present)",
-        "position": 0.3258426966292135
+        "x": 0.7245116065591325,
+        "y": 0.5637601086890576,
+        "z": 0.5469927591981052,
+        "text": "A prototype that does something real, within weeks.",
+        "position": 0.29896907216494845
       },
       {
         "id": 30,
-        "x": 0,
-        "y": 0.5863137155220485,
-        "z": 0.49708931332960166,
-        "text": "The problem",
-        "position": 0.33707865168539325
+        "x": 0.6221172106424414,
+        "y": 0.7228626544082132,
+        "z": 0.05074550479711589,
+        "text": "Learn where it breaks",
+        "position": 0.30927835051546393
       },
       {
         "id": 31,
-        "x": 0.9392995797400151,
-        "y": 0.3108536260363717,
-        "z": 0.4680026940965065,
-        "text": "Assemble and verify structured politician data from Wikipedia/Wikidata and the wider web, across languages, ensuring provenance, correctness, and scale.",
-        "position": 0.34831460674157305
+        "x": 0.20770026998219113,
+        "y": 0.7850040401324715,
+        "z": 0.28113930374891316,
+        "text": "Real users, real edge cases, honest notes.",
+        "position": 0.31958762886597936
       },
       {
         "id": 32,
-        "x": 0.005780017177341861,
-        "y": 0.858325442341578,
-        "z": 0.3922462070089028,
-        "text": "Solution highlights",
-        "position": 0.3595505617977528
+        "x": 0.6356369662787433,
+        "y": 0.5551895440645667,
+        "z": 0.03962674377816768,
+        "text": "Make it boring",
+        "position": 0.32989690721649484
       },
       {
         "id": 33,
-        "x": 0.9354057310742203,
-        "y": 0.1956918673358715,
-        "z": 0.031130435613922695,
-        "text": "Two-stage extraction pipeline: LLM extracts free-text positions → hybrid search maps to existing entities → LLM reconciles.",
-        "position": 0.3707865168539326
+        "x": 0.39327518268988837,
+        "y": 0.8911844984488251,
+        "z": 0.7698478850547034,
+        "text": "Tested, monitored, documented: software your team can run without me.",
+        "position": 0.3402061855670103
       },
       {
         "id": 34,
-        "x": 1,
-        "y": 0.11130547429432036,
-        "z": 0.1066131799160784,
-        "text": "Fast hybrid search: Meilisearch with OpenAI embeddings for combined semantic and lexical entity matching",
-        "position": 0.38202247191011235
+        "x": 0.995031815425036,
+        "y": 0.6654250210172533,
+        "z": 0.33043459071592624,
+        "text": "Current work",
+        "position": 0.35051546391752575
       },
       {
         "id": 35,
-        "x": 0.3285230967798534,
-        "y": 0.7862613238150233,
-        "z": 0.17550732916218836,
-        "text": "js confirmation UI",
-        "position": 0.39325842696629215
+        "x": 0.7418650615472733,
+        "y": 0.24744885905544003,
+        "z": 0.8123069281140272,
+        "text": "PoliLoom, part of EveryPolitician: structuring politicians' data for investigators and the accountability sector.",
+        "position": 0.36082474226804123
       },
       {
         "id": 36,
-        "x": 0.883360529283488,
-        "y": 0.03643505569844718,
-        "z": 0.23260626396856846,
-        "text": "Clarity: From unstructured source documents to structured, linkable records.",
-        "position": 0.4044943820224719
+        "x": 0.622589379574058,
+        "y": 0.4940179190710952,
+        "z": 1,
+        "text": "OpenSanctions",
+        "position": 0.3711340206185567
       },
       {
         "id": 37,
-        "x": 0.9639717624771421,
-        "y": 0.15648789964986903,
-        "z": 0.35971206485207124,
-        "text": "Trust: Every extracted fact links back to a specific passage in an archived snapshot of the source.",
-        "position": 0.4157303370786517
+        "x": 0.906071249265888,
+        "y": 0.2877556778291175,
+        "z": 0.8042414584760498,
+        "text": "Project lead, EveryPolitician (2025–present)",
+        "position": 0.38144329896907214
       },
       {
         "id": 38,
-        "x": 0.8974018447521627,
-        "y": 0.22477773479262786,
-        "z": 0.24502655515939764,
-        "text": "Scale: Handles Wikidata-sized inputs through an incremental, parallelized pipeline.",
-        "position": 0.42696629213483145
+        "x": 0.6390541581361697,
+        "y": 0.8078348453721663,
+        "z": 0.19762311902120164,
+        "text": "The problem",
+        "position": 0.3917525773195876
       },
       {
         "id": 39,
-        "x": 0.7837592699447422,
-        "y": 0.3747911429456834,
-        "z": 0.08131081754711286,
-        "text": "LLM entity reconciliation actually works well, and with human-in-the-loop verification, it's both accurate and accountable.",
-        "position": 0.43820224719101125
+        "x": 0.37581926371897084,
+        "y": 0.1646731853035,
+        "z": 0.7366585185232412,
+        "text": "Assemble and verify structured politician data from Wikipedia/Wikidata and the wider web, across languages, ensuring provenance, correctness, and scale.",
+        "position": 0.4020618556701031
       },
       {
         "id": 40,
-        "x": 0.8146159707582278,
-        "y": 0.6207616665210274,
-        "z": 0.7791765496608172,
-        "text": "Read the devlog, or the Wikimedia Deutschland interview about the project.",
-        "position": 0.449438202247191
+        "x": 0.8575879649467034,
+        "y": 0.7043745515219012,
+        "z": 0.2929841700923745,
+        "text": "Solution highlights",
+        "position": 0.41237113402061853
       },
       {
         "id": 41,
-        "x": 0.9763288282111663,
-        "y": 0.6330649523893067,
-        "z": 0.7198324161666515,
-        "text": "Where this goes next: the same machinery pointed at the long tail of public institutions—regional water boards, municipal councils, specialised agencies—in the Kolkhoz & Pravda experiments.",
-        "position": 0.4606741573033708
+        "x": 0.0018406756383752179,
+        "y": 0.13968461463110762,
+        "z": 0.7358419897840432,
+        "text": "Two-stage extraction pipeline: LLM extracts free-text positions → hybrid search maps to existing entities → LLM reconciles.",
+        "position": 0.422680412371134
       },
       {
         "id": 42,
-        "x": 0.20733866685338495,
-        "y": 0.9408206625921218,
-        "z": 0.8441411647152912,
-        "text": "About Johan",
-        "position": 0.47191011235955055
+        "x": 0.10181240733837811,
+        "y": 0.01903310861265493,
+        "z": 0.7338526320356928,
+        "text": "Fast hybrid search: Meilisearch with OpenAI embeddings for combined semantic and lexical entity matching",
+        "position": 0.4329896907216495
       },
       {
         "id": 43,
-        "x": 0.5408465768405862,
-        "y": 0.5320021776885656,
-        "z": 0.23519320060945736,
-        "text": "I am an autodidact software and data engineer with fifteen-plus years of experience, most of it for organizations doing public-interest work.",
-        "position": 0.48314606741573035
+        "x": 0.5032453453027438,
+        "y": 0.7100665240952575,
+        "z": 0.6135908219811275,
+        "text": "js confirmation UI",
+        "position": 0.44329896907216493
       },
       {
         "id": 44,
-        "x": 0.5556501229597914,
-        "y": 0.34682467031818115,
-        "z": 0.10351056415040691,
-        "text": "I use LLMs to accelerate development, but never at the expense of clarity, reliability, or ethics.",
-        "position": 0.4943820224719101
+        "x": 0.15396399021618903,
+        "y": 0.03798702002829877,
+        "z": 0.6403890671394641,
+        "text": "Clarity: From unstructured source documents to structured, linkable records.",
+        "position": 0.4536082474226804
       },
       {
         "id": 45,
-        "x": 0.5100769379758199,
-        "y": 0.5626792757714962,
-        "z": 0.38462336746432335,
-        "text": "I work remotely, Europe-focused but global clients welcome.",
-        "position": 0.5056179775280899
+        "x": 0.30568637754870825,
+        "y": 0.06200299420330541,
+        "z": 0.66855925945316,
+        "text": "Trust: Every extracted fact links back to a specific passage in an archived snapshot of the source.",
+        "position": 0.4639175257731959
       },
       {
         "id": 46,
-        "x": 0.056317239118524084,
-        "y": 0.8875704324188765,
-        "z": 0.4723083830941981,
-        "text": "Selected experience",
-        "position": 0.5168539325842697
+        "x": 0.1951202071474675,
+        "y": 0.18298029242970873,
+        "z": 0.6864670894711148,
+        "text": "Scale: Handles Wikidata-sized inputs through an incremental, parallelized pipeline.",
+        "position": 0.4742268041237113
       },
       {
         "id": 47,
-        "x": 0.9287525996938792,
-        "y": 0.7864650766995434,
-        "z": 0.637381208306462,
-        "text": "OpenSanctions",
-        "position": 0.5280898876404494
+        "x": 0.14458255772377301,
+        "y": 0.23872616396434293,
+        "z": 0.7646794215693615,
+        "text": "LLM entity reconciliation actually works well, and with human-in-the-loop verification, it's both accurate and accountable.",
+        "position": 0.4845360824742268
       },
       {
         "id": 48,
-        "x": 0.914989645455899,
-        "y": 0.478715778542283,
-        "z": 0.8802867515385719,
-        "text": "Project lead, EveryPolitician (2025–present)",
-        "position": 0.5393258426966292
+        "x": 0.9152368303544801,
+        "y": 0.3351895581189275,
+        "z": 0.6552206598409431,
+        "text": "Read the devlog, or the Wikimedia Deutschland interview about the project.",
+        "position": 0.4948453608247423
       },
       {
         "id": 49,
-        "x": 0.2724419036250565,
-        "y": 0.35456912698522147,
-        "z": 0.7493733399289567,
-        "text": "Follow the Money",
-        "position": 0.550561797752809
+        "x": 0.6921012399952606,
+        "y": 0.34870816546037986,
+        "z": 0.9113346528422663,
+        "text": "Where this goes next: the same machinery pointed at the long tail of public institutions—regional water boards, municipal councils, specialised agencies—in the Kolkhoz & Pravda experiments.",
+        "position": 0.5051546391752577
       },
       {
         "id": 50,
-        "x": 0.4807831896206345,
-        "y": 0.8688910894816667,
-        "z": 0.7146084455304689,
-        "text": "Full Stack Developer (2021–2025)",
-        "position": 0.5617977528089888
+        "x": 0.9953428216020215,
+        "y": 0.8344948996299251,
+        "z": 0.62266305779477,
+        "text": "About Johan",
+        "position": 0.5154639175257731
       },
       {
         "id": 51,
-        "x": 0.31896211992411727,
-        "y": 0.9525202868718815,
-        "z": 0.7619824674103296,
-        "text": "Founder (2017–2021)",
-        "position": 0.5730337078651685
+        "x": 0.19844328505454617,
+        "y": 0.6900223134660549,
+        "z": 0.6537791159104593,
+        "text": "I am an autodidact software and data engineer with fifteen-plus years of experience, most of it for organizations doing public-interest work.",
+        "position": 0.5257731958762887
       },
       {
         "id": 52,
-        "x": 0.08102403666475105,
-        "y": 0.5733234536386225,
-        "z": 0.6711336722996047,
-        "text": "Let's get in touch",
-        "position": 0.5842696629213483
+        "x": 0.08820411219342153,
+        "y": 0.5572447152721645,
+        "z": 0.5921720198718545,
+        "text": "I use LLMs to accelerate development, but never at the expense of clarity, reliability, or ethics.",
+        "position": 0.5360824742268041
       },
       {
         "id": 53,
-        "x": 0.14107051719346758,
-        "y": 0.844744626839498,
-        "z": 0.8061177739314646,
-        "text": "com/in/johanschuijt/",
-        "position": 0.5955056179775281
+        "x": 0.28958859345190063,
+        "y": 0.7209645456734491,
+        "z": 0.6910503329840775,
+        "text": "I work remotely, Europe-focused but global clients welcome.",
+        "position": 0.5463917525773195
       },
       {
         "id": 54,
-        "x": 0.04282847717119635,
-        "y": 0.6806645688414581,
-        "z": 0.7191323017692585,
-        "text": "com/monneyboi/",
-        "position": 0.6067415730337079
+        "x": 0.7791877658111083,
+        "y": 0.7420008981728535,
+        "z": 0.3368511649275679,
+        "text": "Selected experience",
+        "position": 0.5567010309278351
       },
       {
         "id": 55,
-        "x": 0.30195974068879267,
-        "y": 0.7220163516430664,
-        "z": 0.409188184276271,
-        "text": "+31 651 952 461",
-        "position": 0.6179775280898876
+        "x": 0.6167586888170369,
+        "y": 0.5110959141561288,
+        "z": 0.9889023259413755,
+        "text": "OpenSanctions",
+        "position": 0.5670103092783505
       },
       {
         "id": 56,
-        "x": 0.6435942639146326,
-        "y": 0.13305247355015676,
-        "z": 0.4651543099915575,
-        "text": "Frequently asked questions",
-        "position": 0.6292134831460674
+        "x": 0.848229803914139,
+        "y": 0.27985657459445906,
+        "z": 0.7481156018734355,
+        "text": "Project lead, EveryPolitician (2025–present)",
+        "position": 0.5773195876288659
       },
       {
         "id": 57,
-        "x": 0.17476365155713208,
-        "y": 0.14838874131554425,
-        "z": 0.12051780139827546,
-        "text": "What kinds of problems are you best at solving?",
-        "position": 0.6404494382022472
+        "x": 0.5186873765391056,
+        "y": 0.49378417717700507,
+        "z": 0.22349403997692,
+        "text": "Follow the Money",
+        "position": 0.5876288659793815
       },
       {
         "id": 58,
-        "x": 0.6791113209075784,
-        "y": 0,
-        "z": 0.23017197072380657,
-        "text": "Data problems where information is scattered, unstructured, or trapped in formats that don't talk to each other.",
-        "position": 0.651685393258427
+        "x": 0.7896449549569154,
+        "y": 0.83952533730233,
+        "z": 0.871120545594578,
+        "text": "Full Stack Developer (2021–2025)",
+        "position": 0.5979381443298969
       },
       {
         "id": 59,
-        "x": 0.7980035973320124,
-        "y": 0.15913447697366898,
-        "z": 0.28142746347090514,
-        "text": "Think: extracting structured facts from thousands of documents, connecting data across systems, or building pipelines that turn messy inputs into something reliable and searchable.",
-        "position": 0.6629213483146067
+        "x": 0.9063759076052191,
+        "y": 0.8681588834482639,
+        "z": 0.7637634117029597,
+        "text": "Founder (2017–2021)",
+        "position": 0.6082474226804123
       },
       {
         "id": 60,
-        "x": 0.7946823738048859,
-        "y": 0.29534389727352467,
-        "z": 0.05801965062549697,
-        "text": "I use LLMs where they genuinely help—extraction, matching, classification—but they're usually one piece of a larger system.",
-        "position": 0.6741573033707865
+        "x": 0.7946249064150989,
+        "y": 0.8032028981162233,
+        "z": 0.4665223145158542,
+        "text": "Let's get in touch",
+        "position": 0.6185567010309279
       },
       {
         "id": 61,
-        "x": 0.7062645468766052,
-        "y": 0.024404610938197128,
-        "z": 0.15042900151036664,
-        "text": "If your problem is better solved with a spreadsheet or a well-written SQL query, I'll tell you that.",
-        "position": 0.6853932584269663
+        "x": 0.9131920379912519,
+        "y": 0.8625128696922016,
+        "z": 0.5325206720087259,
+        "text": "com/in/johanschuijt/",
+        "position": 0.6288659793814433
       },
       {
         "id": 62,
-        "x": 0.13358169922807742,
-        "y": 0.14270855910544528,
-        "z": 0.634359339106842,
-        "text": "How involved does our team need to be?",
-        "position": 0.6966292134831461
+        "x": 0.8819375151525161,
+        "y": 0.8494885288436,
+        "z": 0.4172011444429073,
+        "text": "com/monneyboi/",
+        "position": 0.6391752577319587
       },
       {
         "id": 63,
-        "x": 0.6942925588614781,
-        "y": 0.427479795748507,
-        "z": 1,
-        "text": "More at the start, less over time.",
-        "position": 0.7078651685393258
+        "x": 0.7747684763942487,
+        "y": 1,
+        "z": 0.7116667787063456,
+        "text": "+31 651 952 461",
+        "position": 0.6494845360824743
       },
       {
         "id": 64,
-        "x": 0.5813968966958365,
-        "y": 0.0744443177660063,
-        "z": 0.2155893046806148,
-        "text": "Early on I need access to the people who understand the problem—what's actually painful, what the data looks like, what \"good enough\" means.",
-        "position": 0.7191011235955056
+        "x": 0.5729233604343208,
+        "y": 0.3176891301409931,
+        "z": 0.20530630161275076,
+        "text": "Frequently asked questions",
+        "position": 0.6597938144329897
       },
       {
         "id": 65,
-        "x": 0.49732605333560426,
-        "y": 0.44837845183994496,
-        "z": 0.9256465444320593,
-        "text": "That might be a few hours in the first week or two.",
-        "position": 0.7303370786516854
+        "x": 0.4278930488922391,
+        "y": 0.7247384718416309,
+        "z": 0.07758240543936373,
+        "text": "What kinds of problems are you best at solving?",
+        "position": 0.6701030927835051
       },
       {
         "id": 66,
-        "x": 0.4878557927471051,
-        "y": 0.6738174832944966,
-        "z": 0.5635077239594103,
-        "text": "During prototyping I'll share work frequently and need feedback.",
-        "position": 0.7415730337078652
+        "x": 0.17642563522600363,
+        "y": 0.0984801389091891,
+        "z": 0.4974766645879645,
+        "text": "Data problems where information is scattered, unstructured, or trapped in formats that don't talk to each other.",
+        "position": 0.6804123711340206
       },
       {
         "id": 67,
-        "x": 0.26710978202504687,
-        "y": 0.25156987129707664,
-        "z": 0.6028993142629437,
-        "text": "Once we're building for real, involvement drops to occasional check-ins and testing.",
-        "position": 0.7528089887640449
+        "x": 0.20456437650564654,
+        "y": 0.19035028811882254,
+        "z": 0.586981536521985,
+        "text": "Think: extracting structured facts from thousands of documents, connecting data across systems, or building pipelines that turn messy inputs into something reliable and searchable.",
+        "position": 0.6907216494845361
       },
       {
         "id": 68,
-        "x": 0.1960767253030663,
-        "y": 0.1754649094247441,
-        "z": 0.7353890606306958,
-        "text": "By handover, the goal is that your team understands what's running and can operate it without me.",
-        "position": 0.7640449438202247
+        "x": 0.04423209841579025,
+        "y": 0.2666298920358464,
+        "z": 0.7020200115563767,
+        "text": "I use LLMs where they genuinely help—extraction, matching, classification—but they're usually one piece of a larger system.",
+        "position": 0.7010309278350515
       },
       {
         "id": 69,
-        "x": 0.7370285763302145,
-        "y": 0.5416436294246281,
-        "z": 0.9449430499007918,
-        "text": "What does a typical project timeline look like?",
-        "position": 0.7752808988764045
+        "x": 0.09958021012720929,
+        "y": 0.10232630971762537,
+        "z": 0.46673593990277795,
+        "text": "If your problem is better solved with a spreadsheet or a well-written SQL query, I'll tell you that.",
+        "position": 0.711340206185567
       },
       {
         "id": 70,
-        "x": 0.21020736190466874,
-        "y": 0.21715578847762598,
-        "z": 0.0592717091957791,
-        "text": "It depends entirely on the problem.",
-        "position": 0.7865168539325843
+        "x": 0.3092781942178567,
+        "y": 0.8798939417459279,
+        "z": 0.5742840468201734,
+        "text": "How involved does our team need to be?",
+        "position": 0.7216494845360825
       },
       {
         "id": 71,
-        "x": 0.6727465474980288,
-        "y": 0.5566724611553361,
-        "z": 0.18673022709370612,
-        "text": "A small integration might take a few weeks; a complex data pipeline with verification workflows takes months and evolves as we learn what actually works.",
-        "position": 0.797752808988764
+        "x": 0.8529449637592486,
+        "y": 0.2547474367836661,
+        "z": 0.4400568295936764,
+        "text": "More at the start, less over time.",
+        "position": 0.7319587628865979
       },
       {
         "id": 72,
-        "x": 0.8199017077446905,
-        "y": 0.493388584660265,
-        "z": 0.9788169296334357,
-        "text": "Rather than give you made-up estimates, I'd point you to the PoliLoom devlog—it shows how a real project unfolded, including the dead ends and course corrections.",
-        "position": 0.8089887640449438
+        "x": 0.18026183643758845,
+        "y": 0.29849841676509786,
+        "z": 0.39296846677024727,
+        "text": "Early on I need access to the people who understand the problem—what's actually painful, what the data looks like, what \"good enough\" means.",
+        "position": 0.7422680412371134
       },
       {
         "id": 73,
-        "x": 0.7050255131986093,
-        "y": 0.38454835201239496,
-        "z": 0.8964299147201797,
-        "text": "That's more honest than a tidy timeline.",
-        "position": 0.8202247191011236
+        "x": 0.7606051774280247,
+        "y": 0.3865080915715981,
+        "z": 0.3389202545662103,
+        "text": "That might be a few hours in the first week or two.",
+        "position": 0.7525773195876289
       },
       {
         "id": 74,
-        "x": 0.4009458240282068,
-        "y": 0.37252045520984384,
-        "z": 0.7988638482397505,
-        "text": "What I can promise: I ship early and often.",
-        "position": 0.8314606741573034
+        "x": 0.6883883324681619,
+        "y": 0.6729532515189994,
+        "z": 0.6391822886348402,
+        "text": "During prototyping I'll share work frequently and need feedback.",
+        "position": 0.7628865979381443
       },
       {
         "id": 75,
-        "x": 0.5858202856960216,
-        "y": 0.5671308382244202,
-        "z": 0.9644296511861427,
-        "text": "You'll see working pieces within the first few weeks, not a big reveal after months of silence.",
-        "position": 0.8426966292134831
+        "x": 0.3623094874038019,
+        "y": 0.5530343910700073,
+        "z": 0.5033078076616571,
+        "text": "Once we're building for real, involvement drops to occasional check-ins and testing.",
+        "position": 0.7731958762886598
       },
       {
         "id": 76,
-        "x": 0.3577379475547918,
-        "y": 0.9358618009383415,
-        "z": 0.6400960519437265,
-        "text": "Who owns the code?",
-        "position": 0.8539325842696629
+        "x": 0.4170576425150088,
+        "y": 0.9402196785598854,
+        "z": 0.6481536620408063,
+        "text": "By handover, the goal is that your team understands what's running and can operate it without me.",
+        "position": 0.7835051546391752
       },
       {
         "id": 77,
-        "x": 0.5948216815153867,
-        "y": 0.8126241686326513,
-        "z": 0.4874816875471414,
-        "text": "Everything I build for you is yours—code, configurations, documentation.",
-        "position": 0.8651685393258427
+        "x": 0.876365007500478,
+        "y": 0.28129809041007475,
+        "z": 0.5185394912512348,
+        "text": "What does a typical project timeline look like?",
+        "position": 0.7938144329896907
       },
       {
         "id": 78,
-        "x": 0.6911917663067918,
-        "y": 0.7275582559947992,
-        "z": 0.48657456073761113,
-        "text": "I prefer to build things that could be open-sourced if you wanted, and I'll actively suggest it when it makes sense.",
-        "position": 0.8764044943820225
+        "x": 0.451519528083423,
+        "y": 0.7366862787939777,
+        "z": 0.14728692827887216,
+        "text": "It depends entirely on the problem.",
+        "position": 0.8041237113402062
       },
       {
         "id": 79,
-        "x": 0.5879716986333334,
-        "y": 0.9162247815378973,
-        "z": 0.5343902830790485,
-        "text": "No vendor lock-in, no proprietary dependencies that tie you to me.",
-        "position": 0.8876404494382022
+        "x": 0.26307539072090763,
+        "y": 0.4346316284423548,
+        "z": 0.7012059254646318,
+        "text": "A small integration might take a few weeks; a complex data pipeline with verification workflows takes months and evolves as we learn what actually works.",
+        "position": 0.8144329896907216
       },
       {
         "id": 80,
-        "x": 0.5220595662306862,
-        "y": 0.8852899385877887,
-        "z": 0.3772421412140754,
-        "text": "Do you also build the user interface, or just the backend?",
-        "position": 0.898876404494382
+        "x": 0.9287779119475655,
+        "y": 0.28658212999065313,
+        "z": 0.6302079150105097,
+        "text": "Rather than give you made-up estimates, I'd point you to the PoliLoom devlog—it shows how a real project unfolded, including the dead ends and course corrections.",
+        "position": 0.8247422680412371
       },
       {
         "id": 81,
-        "x": 0.6123162726635839,
-        "y": 0.7379696973423757,
-        "z": 0.30025824456566547,
-        "text": "I design and build the full system—data pipelines, APIs, and the interface people actually use.",
-        "position": 0.9101123595505618
+        "x": 0.7394050081996222,
+        "y": 0.21899086156603945,
+        "z": 0.4430923903810844,
+        "text": "That's more honest than a tidy timeline.",
+        "position": 0.8350515463917526
       },
       {
         "id": 82,
-        "x": 0.38403546439232933,
-        "y": 0.8671821095319575,
-        "z": 0.2180253422776296,
-        "text": "A clear UI isn't optional; it's what makes the difference between a tool that gets used and one that gets abandoned.",
-        "position": 0.9213483146067416
+        "x": 0.5963610532132919,
+        "y": 0.46149045581309417,
+        "z": 0.3007968731125235,
+        "text": "What I can promise: I ship early and often.",
+        "position": 0.845360824742268
       },
       {
         "id": 83,
-        "x": 0.12573944067398532,
-        "y": 0.8169862896954557,
-        "z": 0.6411622770742114,
-        "text": "What do you charge?",
-        "position": 0.9325842696629213
+        "x": 0.8426910639264458,
+        "y": 0.41238440472940324,
+        "z": 0.4198762587934195,
+        "text": "You'll see working pieces within the first few weeks, not a big reveal after months of silence.",
+        "position": 0.8556701030927835
       },
       {
         "id": 84,
-        "x": 0.29648069940788485,
-        "y": 0.21193093497585802,
-        "z": 0.11158564205109232,
-        "text": "People hire me when the problem matters and the result has to hold up—if the deciding factor is price, I'm probably not the right hire.",
-        "position": 0.9438202247191011
+        "x": 0.7566666158054206,
+        "y": 0.9565401267414103,
+        "z": 0.7600471907229222,
+        "text": "Who owns the code?",
+        "position": 0.865979381443299
       },
       {
         "id": 85,
-        "x": 0.10741954484120302,
-        "y": 0.14722943689240836,
-        "z": 0.5400457064371743,
-        "text": "What do you need from us to figure out if we're a good fit?",
-        "position": 0.9550561797752809
+        "x": 0.6849217842502754,
+        "y": 0.7320454280828604,
+        "z": 0.7923872808745762,
+        "text": "Everything I build for you is yours—code, configurations, documentation.",
+        "position": 0.8762886597938144
       },
       {
         "id": 86,
-        "x": 0.16517346593343862,
-        "y": 0.2833879436700749,
-        "z": 0.11352707292184,
-        "text": "A conversation about the actual problem—not a polished pitch, just what's frustrating and why it matters.",
-        "position": 0.9662921348314607
+        "x": 0.6109791352015786,
+        "y": 0.6137581407587656,
+        "z": 0.8308688319128366,
+        "text": "I prefer to build things that could be open-sourced if you wanted, and I'll actively suggest it when it makes sense.",
+        "position": 0.8865979381443299
       },
       {
         "id": 87,
-        "x": 0.4869535232699188,
-        "y": 0.3694491098871493,
-        "z": 0.23331350000745055,
-        "text": "I work best with organizations doing something meaningful: journalism, accountability, public interest, open data, or businesses that genuinely care about doing good work rather than just scaling revenue.",
-        "position": 0.9775280898876404
+        "x": 0.6629091738972442,
+        "y": 0.7391708172180713,
+        "z": 0.8835518816664512,
+        "text": "No vendor lock-in, no proprietary dependencies that tie you to me.",
+        "position": 0.8969072164948454
       },
       {
         "id": 88,
-        "x": 0.22518681604448812,
-        "y": 0.1175266134397539,
-        "z": 0.3469275544301592,
-        "text": "If your goal is \"add AI to make investors happy,\" we're probably not a match.",
-        "position": 0.9887640449438202
+        "x": 0.560133891893161,
+        "y": 0.7541283406805497,
+        "z": 0.814439168548312,
+        "text": "Do you also build the user interface, or just the backend?",
+        "position": 0.9072164948453608
       },
       {
         "id": 89,
-        "x": 0.15616275287637904,
-        "y": 0.27865718734521366,
-        "z": 0.30499436950528913,
+        "x": 0.4241337858317684,
+        "y": 0.6441181760208062,
+        "z": 0.8143572186253485,
+        "text": "I design and build the full system—data pipelines, APIs, and the interface people actually use.",
+        "position": 0.9175257731958762
+      },
+      {
+        "id": 90,
+        "x": 0.509736791844417,
+        "y": 0.7793301565601787,
+        "z": 0.6575160855212651,
+        "text": "A clear UI isn't optional; it's what makes the difference between a tool that gets used and one that gets abandoned.",
+        "position": 0.9278350515463918
+      },
+      {
+        "id": 91,
+        "x": 0.9477755993855336,
+        "y": 0.7993127537748965,
+        "z": 0.2789528320263969,
+        "text": "What do you charge?",
+        "position": 0.9381443298969072
+      },
+      {
+        "id": 92,
+        "x": 0.2554738995835488,
+        "y": 0.6456974449122839,
+        "z": 0.2568881029588708,
+        "text": "People hire me when the problem matters and the result has to hold up—if the deciding factor is price, I'm probably not the right hire.",
+        "position": 0.9484536082474226
+      },
+      {
+        "id": 93,
+        "x": 0.26320182725542896,
+        "y": 0.8161412020494188,
+        "z": 0.49505875881984535,
+        "text": "What do you need from us to figure out if we're a good fit?",
+        "position": 0.9587628865979382
+      },
+      {
+        "id": 94,
+        "x": 0.46386959006235556,
+        "y": 0.7937284595631329,
+        "z": 0.17707490303913773,
+        "text": "A conversation about the actual problem—not a polished pitch, just what's frustrating and why it matters.",
+        "position": 0.9690721649484536
+      },
+      {
+        "id": 95,
+        "x": 0.20515872139359506,
+        "y": 0.619903201573129,
+        "z": 0.46346003296818405,
+        "text": "I work best with organizations doing something meaningful: journalism, accountability, public interest, open data, or businesses that genuinely care about doing good work rather than just scaling revenue.",
+        "position": 0.979381443298969
+      },
+      {
+        "id": 96,
+        "x": 0.3260343195101889,
+        "y": 0.5910043020248041,
+        "z": 0.3575415127667954,
+        "text": "If your goal is \"add AI to make investors happy,\" we're probably not a match.",
+        "position": 0.9896907216494846
+      },
+      {
+        "id": 97,
+        "x": 0.3564605346220767,
+        "y": 0.7467750323332464,
+        "z": 0.2687309550685744,
         "text": "If you're trying to solve a real problem and want to understand what you're building, let's talk.",
         "position": 1
       }
@@ -2890,176 +2954,176 @@
     "edges": [
       {
         "source": 1,
-        "target": 21,
-        "similarity": 0.6759073989558472
+        "target": 27,
+        "similarity": 0.5813313181939728
       },
       {
-        "source": 1,
-        "target": 66,
-        "similarity": 0.5512055601501719
-      },
-      {
-        "source": 1,
-        "target": 77,
-        "similarity": 0.5158614449640339
-      },
-      {
-        "source": 1,
-        "target": 81,
-        "similarity": 0.5279211848244831
+        "source": 9,
+        "target": 23,
+        "similarity": 0.5643601109216302
       },
       {
         "source": 9,
         "target": 33,
+        "similarity": 0.5106588575946703
+      },
+      {
+        "source": 9,
+        "target": 85,
+        "similarity": 0.5227537880170029
+      },
+      {
+        "source": 10,
+        "target": 76,
+        "similarity": 0.5004403443385151
+      },
+      {
+        "source": 12,
+        "target": 41,
         "similarity": 0.5362819677037615
       },
       {
-        "source": 9,
-        "target": 60,
+        "source": 12,
+        "target": 68,
         "similarity": 0.5381300902260701
       },
       {
-        "source": 10,
-        "target": 36,
+        "source": 13,
+        "target": 44,
         "similarity": 0.7460434154327241
       },
       {
-        "source": 10,
-        "target": 58,
+        "source": 13,
+        "target": 66,
         "similarity": 0.5286109718456408
       },
       {
-        "source": 10,
-        "target": 59,
+        "source": 13,
+        "target": 67,
         "similarity": 0.680487540641991
       },
       {
-        "source": 11,
-        "target": 33,
+        "source": 14,
+        "target": 41,
         "similarity": 0.5210343232849022
       },
       {
-        "source": 11,
-        "target": 34,
+        "source": 14,
+        "target": 42,
         "similarity": 0.554702567882793
       },
       {
-        "source": 12,
-        "target": 34,
+        "source": 15,
+        "target": 42,
         "similarity": 0.5349842177351265
       },
       {
-        "source": 12,
-        "target": 36,
+        "source": 15,
+        "target": 44,
         "similarity": 0.6034660313995772
       },
       {
-        "source": 17,
-        "target": 18,
+        "source": 20,
+        "target": 21,
         "similarity": 0.5533072977686507
       },
       {
-        "source": 20,
-        "target": 80,
+        "source": 23,
+        "target": 88,
         "similarity": 0.5292427309052365
       },
       {
-        "source": 25,
-        "target": 62,
-        "similarity": 0.5329153102100697
-      },
-      {
-        "source": 27,
-        "target": 31,
+        "source": 35,
+        "target": 39,
         "similarity": 0.5671158982328262
       },
       {
-        "source": 28,
-        "target": 47,
+        "source": 36,
+        "target": 55,
         "similarity": 1.0000002379282855
       },
       {
-        "source": 29,
-        "target": 48,
+        "source": 37,
+        "target": 56,
         "similarity": 0.999999600731672
       },
       {
-        "source": 31,
-        "target": 59,
+        "source": 39,
+        "target": 67,
         "similarity": 0.5130228150412036
       },
       {
-        "source": 33,
-        "target": 60,
+        "source": 41,
+        "target": 68,
         "similarity": 0.5445538245347977
       },
       {
-        "source": 36,
-        "target": 58,
+        "source": 44,
+        "target": 66,
         "similarity": 0.5196653719988814
       },
       {
-        "source": 36,
-        "target": 59,
+        "source": 44,
+        "target": 67,
         "similarity": 0.6368697405963113
       },
       {
-        "source": 38,
-        "target": 59,
+        "source": 46,
+        "target": 67,
         "similarity": 0.6088993352966383
       },
       {
-        "source": 39,
-        "target": 60,
+        "source": 47,
+        "target": 68,
         "similarity": 0.5380236461874689
       },
       {
-        "source": 42,
-        "target": 53,
+        "source": 50,
+        "target": 61,
         "similarity": 0.5795229951980827
       },
       {
-        "source": 44,
-        "target": 60,
+        "source": 52,
+        "target": 68,
         "similarity": 0.5894053497126004
       },
       {
-        "source": 58,
-        "target": 59,
+        "source": 66,
+        "target": 67,
         "similarity": 0.5529875056830512
       },
       {
-        "source": 59,
-        "target": 81,
+        "source": 67,
+        "target": 89,
         "similarity": 0.520758879967669
       },
       {
-        "source": 69,
-        "target": 73,
+        "source": 77,
+        "target": 81,
         "similarity": 0.519397705353307
       },
       {
-        "source": 71,
-        "target": 81,
+        "source": 79,
+        "target": 89,
         "similarity": 0.5168492866498758
       },
       {
-        "source": 77,
-        "target": 78,
+        "source": 85,
+        "target": 86,
         "similarity": 0.5031198096870904
       },
       {
-        "source": 77,
-        "target": 81,
+        "source": 85,
+        "target": 89,
         "similarity": 0.5690373181186817
       },
       {
-        "source": 80,
-        "target": 81,
+        "source": 88,
+        "target": 89,
         "similarity": 0.5724060418175698
       }
     ],
-    "hue": 253
+    "hue": 319
   },
   "articles": {
     "nodes": [

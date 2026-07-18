@@ -17,16 +17,19 @@
 
   const approachItems = [
     {
-      heading: 'Human-centered',
-      description: "<p>I don't aim to replace people, but <b>amplify their capabilities</b>.</p>"
+      heading: 'Demos, not decks.',
+      description:
+        '<p>You judge <b>working software</b> running against your data, early enough that changing course is still cheap.</p>'
     },
     {
-      heading: 'Flexible',
-      description: "<p>I meet you where you are, hooking into <b>what you already know.</b></p>"
+      heading: 'Dead ends included.',
+      description:
+        '<p>I write down <b>what didn\'t work</b> and why. The <a href="https://discuss.opensanctions.org/t/poliloom-loom-for-weaving-politicians-data/121">PoliLoom devlog</a> is what working with me actually looks like.</p>'
     },
     {
-      heading: 'Transparent',
-      description: '<p><b>You are involved</b>, understand the process, and give direction.</p>'
+      heading: 'You keep the keys.',
+      description:
+        '<p><b>Code, documentation, and a team</b> that understands what\'s running. Built to hand over, not to be needed.</p>'
     }
   ];
 
@@ -64,10 +67,16 @@
   ];
 
   const roadmapSteps = [
-    { heading: 'Diagnose', description: 'Goals, data, constraints, and risks' },
-    { heading: 'Prototype', description: 'Rapid iterations with real user flows' },
-    { heading: 'Pilot', description: 'Roll out to a small group' },
-    { heading: 'Scale', description: 'Adapt, monitor, and train the team' }
+    { heading: 'Find the hard part', description: 'Every project has one. We go there first, with real data.' },
+    {
+      heading: 'Try the smallest useful thing',
+      description: 'A prototype that does something real, within weeks.'
+    },
+    { heading: 'Learn where it breaks', description: 'Real users, real edge cases, honest notes.' },
+    {
+      heading: 'Make it boring',
+      description: 'Tested, monitored, documented: software your team can run without me.'
+    }
   ];
 
   const showcaseDefinitionItems = [
@@ -212,8 +221,11 @@
     />
 
     <section class="section section-light">
-      <h2>Understandable process</h2>
-      <p>From roadmap to rollout, I prototype rapidly and build production systems with your team. My approach is:</p>
+      <h2>Something resembling a plan.</h2>
+      <p>
+        Every engagement starts with the best plan we can make — and the near-certainty that real data will punch holes in
+        it. What stays fixed is how I work: in the open, in small pieces, with you close enough to steer.
+      </p>
       <Features columns={3} items={approachItems} />
     </section>
 
