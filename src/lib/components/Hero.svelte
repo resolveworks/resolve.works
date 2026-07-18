@@ -21,7 +21,10 @@
     {#if cta.length}
       <p class="hero-cta">
         {#each cta as link}
-          <a href={link.href}>{link.text}</a>
+          <a href={link.href} class:secondary={link.variant === 'secondary'}>
+            {#if link.icon}<span aria-hidden="true">{link.icon}</span>{/if}
+            {link.text}
+          </a>
         {/each}
       </p>
     {/if}

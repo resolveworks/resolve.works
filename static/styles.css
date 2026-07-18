@@ -269,7 +269,9 @@ body > footer > * {
   color: var(--text-color-light);
   background: var(--color-dark);
   text-decoration: none;
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
   border-radius: 0.25rem;
   transition: background-color 0.05s ease;
   padding: 1rem 2rem 1rem 1.5rem;
@@ -285,9 +287,17 @@ body > footer > * {
   z-index: -1;
 }
 
-.hero-block > p > a:hover {
-  background: var(--color-primary);
+.hero-block > p > a:hover,
+.hero-block > p > a.secondary {
+  background: var(--color-light);
+  color: var(--text-color-dark);
+  box-shadow: inset 0 0 0 0.125rem var(--color-dark);
+}
+
+.hero-block > p > a.secondary:hover {
+  background: var(--color-dark);
   color: var(--text-color-light);
+  box-shadow: none;
 }
 
 .hero-block > p.hero-cta {

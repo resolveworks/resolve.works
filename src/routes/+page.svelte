@@ -204,9 +204,10 @@
       cta={[
         {
           href: mailtoHref(business.contact.subject, business.contact.body),
-          text: '✉️ Book a free call'
+          text: 'Contact me',
+          icon: '→'
         },
-        { href: `tel:${business.phone.href}`, text: `💬 ${business.phone.display}` }
+        { href: '#work', text: 'See my work', icon: '↓', variant: 'secondary' }
       ]}
     />
 
@@ -227,7 +228,7 @@
       <Roadmap steps={roadmapSteps} />
     </section>
 
-    <section class="section section-light">
+    <section id="work" class="section section-light">
       <h2>Current work</h2>
       <DefinitionList items={showcaseDefinitionItems} />
       <Features columns={3} items={showcaseItems} />
