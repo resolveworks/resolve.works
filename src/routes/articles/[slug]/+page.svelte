@@ -4,23 +4,21 @@
   import Visualization from '$lib/components/Visualization.svelte';
   import author from '$lib/data/author.json';
   import business from '$lib/data/business.json';
-  import { getArticle } from '$lib/articles.js';
 
   let { data } = $props();
-  const article = getArticle(data.slug);
-  const Article = article.component;
+  const Article = $derived(data.content);
 </script>
 
-<Seo title={`${article.title} - Resolve.`} socialTitle={article.title} ogType="article" />
+<Seo title={`${data.title} - Resolve.`} socialTitle={data.title} ogType="article" />
 
 <div class="article-page">
   <div class="visualization-container">
-    <Visualization embeddingsKey={`articles/${article.slug}`} />
+    <Visualization embeddingsKey={`articles/${data.slug}`} />
   </div>
 
   <main>
     <article>
-      <Hero title={article.title} size="medium" tagline={article.intro} date={article.date} />
+      <Hero title={data.title} size="medium" tagline={data.intro} date={data.date} />
 
       <section class="section section-light">
         <Article />

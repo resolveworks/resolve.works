@@ -1,19 +1,16 @@
-// Loads every article markdown file as an mdsvex component and exposes the
-// collection sorted newest-first, plus a slug lookup for the [slug] route.
-//
-// Each `.md` module exposes `metadata` (parsed frontmatter) and `default`
-// (the rendered Svelte component).
+// Loads frontmatter metadata for every article markdown file, sorted
+// newest-first. Used by the articles index and the [slug] route's prerender
+// entries; the rendered article component is imported by the [slug] route
+// itself, so listings never pull article bodies into their bundle.
 
-const modules = import.meta.glob('/src/content/articles/*.md', { eager: true });
+const modules = import.meta.glob('/src/content/articles/*.md', {
+  eager: true,
+  import: 'metadata'
+});
 
 export const articles = Object.entries(modules)
-  .map(([path, module]) => {
-    const slug = path.split('/').pop().replace(/\.md$/, '');
-    const { title, intro, date } = module.metadata;
-    return { slug, title, intro, date, component: module.default };
-  })
+  .map(([path, metadata]) => ({
+    slug: path.split('/').pop().replace(/\.md$/, ''),
+    ...metadata
+  }))
   .sort((a, b) => new Date(b.date) - new Date(a.date));
-
-export function getArticle(slug) {
-  return articles.find((article) => article.slug === slug);
-}

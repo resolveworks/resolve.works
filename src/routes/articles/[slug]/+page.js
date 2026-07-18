@@ -1,16 +1,20 @@
 import { error } from '@sveltejs/kit';
-import { articles, getArticle } from '$lib/articles.js';
+import { articles } from '$lib/articles.js';
 
 // Prerender every article slug.
 export function entries() {
   return articles.map((article) => ({ slug: article.slug }));
 }
 
-export function load({ params }) {
-  if (!getArticle(params.slug)) {
-    throw error(404, 'Article not found');
+export async function load({ params }) {
+  // mdsvex compiles each markdown file into a Svelte component (`default`)
+  // with its frontmatter in `metadata`. The dynamic import keeps every
+  // article in its own chunk; a universal load may return the component
+  // directly because its data is never serialized.
+  try {
+    const post = await import(`../../../content/articles/${params.slug}.md`);
+    return { content: post.default, slug: params.slug, ...post.metadata };
+  } catch {
+    error(404, 'Article not found');
   }
-  // Only the slug crosses the load-data boundary; the page component resolves
-  // the article (including its non-serializable mdsvex component) itself.
-  return { slug: params.slug };
 }
