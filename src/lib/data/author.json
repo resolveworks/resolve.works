@@ -1,0 +1,15 @@
+{
+  "name": "Johan Schuijt",
+  "firstName": "Johan",
+  "jobTitle": "Founder",
+  "avatar": "/avatar.webp",
+  "bio": [
+    "I am an autodidact software and data engineer who loves turning ambiguous problems into practical, human-centered systems. With 15+ years of experience I spot inefficiencies in processes very quickly. I use LLMs to accelerate development, but never at the expense of clarity, reliability, or ethics.",
+    "I work remotely, Europe-focused but global clients welcome."
+  ],
+  "experience": [
+    { "company": "OpenSanctions", "role": "Data Engineer", "range": "2025–present" },
+    { "company": "Follow the Money", "role": "Full Stack Developer", "range": "2021–2025" },
+    { "company": "Forest.host", "role": "Founder", "range": "2017–2021" }
+  ]
+}

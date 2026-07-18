@@ -4,6 +4,10 @@
   let { children } = $props();
 </script>
 
+<svelte:head>
+  <script type="module" src="/roadmap.js"></script>
+</svelte:head>
+
 <nav>
   <a class="site-name" href="/">Resolve.</a>
 </nav>
