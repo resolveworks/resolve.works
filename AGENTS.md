@@ -8,11 +8,11 @@ database, no CMS. Homepage is section-based; articles are markdown.
 ## Structure
 
 - `src/routes/` — pages (`+page.svelte` homepage, `articles/`, `404/`)
-- `src/lib/components/` — sections: `Hero`, `Features`, `DefinitionList`, `Roadmap`, `Faq`, `About`, `Seo`, `JsonLd`, `Visualization`
+- `src/lib/components/` — homepage sections (`Features`, `DefinitionList`, `Roadmap`, `Faq`, `About`) and shared (`Hero`, `Seo`, `JsonLd`, `Visualization`)
 - `src/lib/data/` — `business.json` (incl. contact email template), `author.json`
 - `src/lib/site.js` — site URL, `mailtoHref`, `formatDate` helpers
-- `src/content/articles/*.md` — mdsvex articles (frontmatter: `title`, `intro`, `date`)
-- `static/` — `styles.css` (global stylesheet, kept verbatim from the live site), `embeddings.json`, `avatar.webp`, `robots.txt`, `sitemap.xml`
+- `src/content/articles/*.md` — mdsvex articles (frontmatter: `title`, `intro`, `date`); `articles/[slug]/+page.js` imports each post dynamically, `src/lib/articles.js` globs metadata only for listings/entries
+- `static/` — `styles.css` (global stylesheet), `embeddings.json`, `avatar.webp`, `robots.txt`, `sitemap.xml`
 - `src/lib/visualization.js`, `src/lib/roadmap.js` — D3 rendering for the embedding scatter plots and roadmap arrows (initialized by components on mount)
 - `scripts/generate_embeddings.py` — uv script for the visualization data
 
@@ -30,10 +30,12 @@ uv run scripts/generate_embeddings.py --output static/embeddings.json
 docker build -t resolve.works . && docker run --rm -p 8080:80 resolve.works
 ```
 
-## Conventions & SEO
+## Conventions
 
-Reuse existing `styles.css` classes; pages wrap content in a classed div
-(`home-page`/`article-page`) instead of body classes; use the `Seo` component for
-head meta. Preserve all SEO features (meta, OG/Twitter, canonical `https` URLs,
-JSON-LD, sitemap). After adding/editing an article, rerun the embeddings script
-and update `static/sitemap.xml` lastmod.
+- Reuse existing `styles.css` classes; scope page-specific CSS by wrapping the
+  page in a classed div (`home-page`, `article-page`), not body classes.
+- Use the `Seo` component for head meta. Every page must keep full SEO
+  coverage: meta description, OG/Twitter, canonical `https` URL, JSON-LD, and
+  a `static/sitemap.xml` entry.
+- After adding/editing an article, rerun the embeddings script and update
+  `static/sitemap.xml` lastmod.
