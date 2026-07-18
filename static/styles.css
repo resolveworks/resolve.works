@@ -46,16 +46,6 @@ h6,
   font-style: normal;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  margin-top: 1em;
-  margin-bottom: 0.5em;
-}
-
 h1 {
   font-size: var(--text-size-h1);
 }
@@ -80,14 +70,14 @@ h6 {
 .section > ol > li > h3,
 .two-column-block h3 {
   font-size: var(--text-size-h4);
-}
-
-.article-list h2 {
-  font-size: var(--text-size-h3);
+  margin-top: 1.5em;
+  margin-bottom: 1em;
 }
 
 .features-block-4 h3 {
   font-size: var(--text-size-h6);
+  margin-top: 1.5em;
+  margin-bottom: 1em;
 }
 
 button {
@@ -341,21 +331,11 @@ body > footer > * {
 }
 
 /* Two Column Block Styles */
-.two-column-block {
-  display: flex;
-  flex-direction: column;
-}
-
-.two-column-content {
-  display: flex;
-  flex-direction: column;
-}
-
 img.two-column-left,
 img.two-column-right {
   width: 100%;
   border-radius: 50%;
-  margin: 2rem 0;
+  margin-top: 2rem;
 }
 
 footer.section {
@@ -411,7 +391,21 @@ footer.section > a.site-name:hover {
 .article-list {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 4rem;
+}
+
+.article-list article {
+  display: flex;
+  flex-direction: column;
+}
+
+.article-list .visualization {
+  width: 100%;
+  aspect-ratio: 1;
+}
+
+.article-content {
+  flex: 1;
 }
 
 .hero-block {
@@ -500,23 +494,19 @@ footer.section > a.site-name:hover {
     gap: 2rem;
   }
 
-  .two-column-block {
-    flex-direction: row;
-    align-items: start;
+  img.two-column-right {
+    float: right;
+    width: 50%;
   }
 
-  .two-column-block > * {
-    flex: 1;
-    min-width: 0;
-  }
-
-  .two-column-block:has(img.two-column-right) {
-    flex-direction: row-reverse;
+  img.two-column-left {
+    float: left;
+    width: 50%;
   }
 
   img.two-column-left,
   img.two-column-right {
-    margin: 0;
+    margin-top: 0rem;
   }
 
   /* Process Roadmap Block Styles */
@@ -540,6 +530,16 @@ footer.section > a.site-name:hover {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+  }
+
+  .article-list article {
+    flex-direction: row;
+    gap: 4rem;
+  }
+
+  .article-list .visualization {
+    width: 25%;
+    flex-shrink: 0;
   }
 
   .section.section-hero.section-hero-medium {
@@ -581,16 +581,6 @@ footer.section > a.site-name:hover {
 
   footer.section > section {
     grid-template-columns: repeat(3, 1fr);
-  }
-
-  .article-list {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    column-gap: 2rem;
-  }
-
-  .article-list > li {
-    grid-column: 1 / span 2;
   }
 
   .section > ol {

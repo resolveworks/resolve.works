@@ -1,5 +1,7 @@
-// Embedding Visualization for Article Headers
-import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
+// Embedding visualization, ported from the original static script. Renders
+// precomputed sentence-embedding scatter plots (data: static/embeddings.json).
+import * as d3 from 'd3';
+
 
 class EmbeddingVisualization {
   constructor(container, data) {
@@ -155,35 +157,19 @@ class EmbeddingVisualization {
   }
 }
 
-// Initialize on DOM ready
-document.addEventListener("DOMContentLoaded", async () => {
-  const containers = document.querySelectorAll(
-    ".visualization[data-embeddings]"
+// Fetch /embeddings.json once per session and share it between all
+// visualizations on the page (articles index renders one per article).
+let embeddingsPromise;
+
+function loadEmbeddings() {
+  embeddingsPromise ??= fetch("/embeddings.json").then((response) =>
+    response.ok ? response.json() : {},
   );
-  const containersByKey = new Map();
+  return embeddingsPromise;
+}
 
-  containers.forEach((container) => {
-    const key = container.dataset.embeddings;
-    if (key) {
-      containersByKey.set(key, container);
-    }
-  });
-
-  if (containersByKey.size === 0) return;
-
-  try {
-    // Fetch the precomputed embeddings bundle once and look each key up.
-    const response = await fetch("/embeddings.json");
-    if (!response.ok) return;
-
-    const dataByKey = await response.json();
-
-    for (const [key, container] of containersByKey) {
-      const data = dataByKey[key] || { nodes: [], edges: [] };
-      const viz = new EmbeddingVisualization(container, data);
-      viz.init();
-    }
-  } catch (e) {
-    console.warn("Failed to load embedding data:", e);
-  }
-});
+export async function initVisualization(container, key) {
+  const dataByKey = await loadEmbeddings();
+  const data = dataByKey[key] || { nodes: [], edges: [] };
+  new EmbeddingVisualization(container, data).init();
+}

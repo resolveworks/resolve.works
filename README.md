@@ -40,4 +40,5 @@ docker run --rm -p 8080:80 resolve.works   # http://localhost:8080
 - Homepage: `src/routes/+page.svelte` (composed from `src/lib/components/`)
 - Articles: `src/content/articles/*.md` (mdsvex, frontmatter: `title`, `intro`, `date`)
 - Site data: `src/lib/data/business.json`, `src/lib/data/author.json`
-- Static assets (served as-is): `static/styles.css`, `static/visualization.js`, `static/roadmap.js`, `static/embeddings.json`, `static/avatar.webp`, `static/robots.txt`, `static/sitemap.xml`
+- Static assets (served as-is): `static/styles.css`, `static/embeddings.json`, `static/avatar.webp`, `static/robots.txt`, `static/sitemap.xml`
+- D3 visualizations (bundled): `src/lib/visualization.js`, `src/lib/roadmap.js`

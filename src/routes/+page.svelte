@@ -6,6 +6,7 @@
   import Features from '$lib/components/Features.svelte';
   import DefinitionList from '$lib/components/DefinitionList.svelte';
   import Roadmap from '$lib/components/Roadmap.svelte';
+  import Visualization from '$lib/components/Visualization.svelte';
   import About from '$lib/components/About.svelte';
   import Faq from '$lib/components/Faq.svelte';
 
@@ -198,13 +199,9 @@
   socialTitle="IT Consulting for ethical SMBs"
 />
 
-<svelte:head>
-  <script type="module" src="/visualization.js"></script>
-</svelte:head>
-
 <div class="home-page">
   <div class="visualization-container">
-    <div class="visualization" data-embeddings="home"></div>
+    <Visualization embeddingsKey="home" />
   </div>
 
   <main>

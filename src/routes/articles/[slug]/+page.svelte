@@ -1,5 +1,6 @@
 <script>
   import Seo from '$lib/components/Seo.svelte';
+  import Visualization from '$lib/components/Visualization.svelte';
   import author from '$lib/data/author.json';
   import business from '$lib/data/business.json';
   import { formatDate } from '$lib/articles.js';
@@ -16,13 +17,9 @@
   ogType="article"
 />
 
-<svelte:head>
-  <script type="module" src="/visualization.js"></script>
-</svelte:head>
-
 <div class="article-page">
   <div class="visualization-container">
-    <div class="visualization" data-embeddings={`articles/${article.slug}`}></div>
+    <Visualization embeddingsKey={`articles/${article.slug}`} />
   </div>
 
   <main>

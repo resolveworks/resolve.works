@@ -1,5 +1,6 @@
 <script>
   import Seo from '$lib/components/Seo.svelte';
+  import Visualization from '$lib/components/Visualization.svelte';
   import { articles, formatDate } from '$lib/articles.js';
 </script>
 
@@ -11,10 +12,6 @@
   author={null}
   robots={null}
 />
-
-<svelte:head>
-  <script type="module" src="/visualization.js"></script>
-</svelte:head>
 
 <main>
   <section class="section section-hero section-hero-small section-light">
@@ -29,7 +26,7 @@
       {#each articles as article (article.slug)}
         <li>
           <article>
-            <div class="visualization" data-embeddings={`articles/${article.slug}`}></div>
+            <Visualization embeddingsKey={`articles/${article.slug}`} />
             <div class="article-content">
               <h2><a href={`/articles/${article.slug}/`}>{article.title}</a></h2>
               <p>{article.intro}</p>

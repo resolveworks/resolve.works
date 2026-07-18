@@ -1,5 +1,6 @@
-// D3 Animated Arrow for Process Roadmap
-import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
+// D3 animated arrows for the process roadmap, ported from the original
+// static script. Initialized from the Roadmap component on mount.
+import * as d3 from "d3";
 
 const draw_arrow = function (container, index) {
   const svg = d3
@@ -59,39 +60,39 @@ const drawSVGs = (container, intersectionObserver) => {
   }
 };
 
-document.addEventListener("DOMContentLoaded", () => {
-  // Find all process roadmap sections (sections with ol elements)
-  const processRoadmapSections = document.querySelectorAll(".section > ol");
+export function initRoadmap(ol) {
+  const container = ol.parentElement;
 
-  processRoadmapSections.forEach((ol) => {
-    const container = ol.parentElement;
+  const intersectionObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const svg = entry.target;
 
-    const intersectionObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const svg = entry.target;
-
-            const path = d3.select(svg).select("path");
-            path.transition().duration(1000).attr("stroke-dashoffset", 0);
-            intersectionObserver.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 1 },
-    );
-
-    const resizeObserver = new ResizeObserver(() => {
-      requestAnimationFrame(() => {
-        d3.select(container).selectAll("ol > li > svg").remove();
-        drawSVGs(container, intersectionObserver);
+          const path = d3.select(svg).select("path");
+          path.transition().duration(1000).attr("stroke-dashoffset", 0);
+          intersectionObserver.unobserve(entry.target);
+        }
       });
+    },
+    { threshold: 1 },
+  );
+
+  const resizeObserver = new ResizeObserver(() => {
+    requestAnimationFrame(() => {
+      d3.select(container).selectAll("ol > li > svg").remove();
+      drawSVGs(container, intersectionObserver);
     });
-
-    // Initial draw
-    drawSVGs(container, intersectionObserver);
-
-    // Observe the container for resize
-    if (ol) resizeObserver.observe(ol);
   });
-});
+
+  // Initial draw
+  drawSVGs(container, intersectionObserver);
+
+  // Observe the container for resize
+  resizeObserver.observe(ol);
+
+  return () => {
+    intersectionObserver.disconnect();
+    resizeObserver.disconnect();
+  };
+}
