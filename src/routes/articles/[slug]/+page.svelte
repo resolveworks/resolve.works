@@ -2,14 +2,36 @@
   import Seo from '$lib/components/Seo.svelte';
   import Hero from '$lib/components/Hero.svelte';
   import Visualization from '$lib/components/Visualization.svelte';
+  import JsonLd from '$lib/components/JsonLd.svelte';
   import author from '$lib/data/author.json';
   import business from '$lib/data/business.json';
+  import { SITE_URL } from '$lib/site.js';
 
   let { data } = $props();
   const Article = $derived(data.content);
+
+  const articleLd = $derived({
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: data.title,
+    description: data.intro,
+    datePublished: data.date,
+    url: `${SITE_URL}/articles/${data.slug}/`,
+    author: {
+      '@type': 'Person',
+      name: author.name,
+      url: business.linkedin
+    }
+  });
 </script>
 
-<Seo title={`${data.title} - Resolve.`} socialTitle={data.title} ogType="article" />
+<Seo
+  title={`${data.title} - Resolve.`}
+  socialTitle={data.title}
+  description={data.intro}
+  ogType="article"
+  ogImage={`${SITE_URL}/og/articles/${data.slug}.png`}
+/>
 
 <div class="article-page">
   <div class="visualization-container">
@@ -49,4 +71,6 @@
       </section>
     </article>
   </main>
+
+  <JsonLd data={articleLd} />
 </div>

@@ -10,8 +10,3 @@ node_modules/
 # Environment
 .env
 .env.local
-
-# Python (scripts/ helpers added in a later chunk)
-__pycache__/
-.venv
-*.py[oc]

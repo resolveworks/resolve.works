@@ -1,2 +1,6 @@
+allowBuilds:
+  onnxruntime-node: true
+  protobufjs: false
+  sharp: false
 minimumReleaseAgeExclude:
   - '@sveltejs/kit@2.70.0'

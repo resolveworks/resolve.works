@@ -10,7 +10,7 @@ WORKDIR /app
 
 # Install deps first (cached layer) using the exact pnpm version pinned in
 # package.json via corepack.
-COPY package.json pnpm-lock.yaml ./
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 RUN pnpm install --frozen-lockfile
 
 # Build the static site into /app/build

@@ -3,10 +3,17 @@
   import Hero from '$lib/components/Hero.svelte';
   import Visualization from '$lib/components/Visualization.svelte';
   import { articles } from '$lib/articles.js';
-  import { formatDate } from '$lib/site.js';
+  import { SITE_URL, formatDate } from '$lib/site.js';
 </script>
 
-<Seo title="Articles - Resolve." socialTitle="Articles" author={null} robots={null} />
+<Seo
+  title="Articles - Resolve."
+  socialTitle="Articles"
+  description="Thoughts on AI, automation, and building practical systems."
+  author={null}
+  robots={null}
+  ogImage={`${SITE_URL}/og/articles.png`}
+/>
 
 <main>
   <Hero title="Articles" size="small" intro="Thoughts on AI, automation, and building practical systems." />

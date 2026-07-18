@@ -8,9 +8,9 @@ build
 .git
 .svelte-kit
 
-# Embeddings are regenerated from committed static/embeddings.json at build,
-# the generator script itself is not needed in the image.
-scripts
+# Generated assets under static/ are committed; the embeddings generator is
+# only needed to regenerate them, not to build the site.
+tools
 
 # Environment files
 .env*

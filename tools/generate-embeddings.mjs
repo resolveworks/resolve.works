@@ -1,0 +1,228 @@
+#!/usr/bin/env node
+/**
+ * Embedding pipeline for the page visualizations.
+ *
+ * Scans the prerendered HTML in build/, embeds each page's sentences with
+ * all-MiniLM-L6-v2 (transformers.js, ONNX — the model downloads once and is
+ * cached), reduces them to 3D with UMAP (seeded, deterministic), and writes
+ * static/embeddings.json: per page the node coordinates, similarity edges and
+ * a content hue, consumed by src/lib/visualization.js and the og card
+ * backgrounds.
+ *
+ * Run after `pnpm build` (the npm script also rebuilds, so build/ picks up
+ * the fresh JSON and cards):
+ *
+ *     pnpm build && pnpm generate-embeddings
+ */
+import { createHash } from 'node:crypto';
+import { mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { dirname, join, sep } from 'node:path';
+import { parseArgs } from 'node:util';
+import { parse } from 'node-html-parser';
+import { pipeline } from '@huggingface/transformers';
+import { UMAP } from 'umap-js';
+
+// Block-level HTML elements (text chunks split at these boundaries).
+const BLOCK_TAGS = new Set([
+  'address', 'article', 'aside', 'blockquote', 'details', 'div', 'dl', 'dd',
+  'fieldset', 'figcaption', 'figure', 'footer', 'form', 'h1', 'h2', 'h3', 'h4',
+  'h5', 'h6', 'header', 'hgroup', 'hr', 'li', 'main', 'nav', 'ol', 'p', 'pre',
+  'section', 'summary', 'table', 'ul'
+]);
+
+// Elements skipped entirely (non-content).
+const SKIP_TAGS = new Set(['script', 'style', 'nav', 'header', 'footer', 'aside', 'head', 'meta']);
+
+// Minimum sentence length (characters) to keep.
+const MIN_SENTENCE_LENGTH = 10;
+
+// Cosine similarity threshold for creating an edge.
+const SIMILARITY_THRESHOLD = 0.5;
+
+// Embedding model (384 dimensions).
+const MODEL_NAME = 'Xenova/all-MiniLM-L6-v2';
+
+// Extract text chunks from HTML, respecting block structure.
+function extractChunks(root) {
+  const chunks = [];
+  let current = '';
+  const flush = () => {
+    const text = current.trim();
+    if (text) chunks.push(text);
+    current = '';
+  };
+  const walk = (node) => {
+    if (node.nodeType === 3) {
+      // TextNode.text decodes HTML entities; doctype parses as a text node.
+      if (!node.rawText.trimStart().startsWith('<!')) current += node.text;
+      return;
+    }
+    if (node.nodeType !== 1) return;
+    const tag = node.tagName?.toLowerCase(); // parse() root has no tagName
+    if (tag && SKIP_TAGS.has(tag)) return;
+    const isBlock = tag != null && BLOCK_TAGS.has(tag);
+    if (isBlock) flush();
+    node.childNodes.forEach(walk);
+    if (isBlock) flush();
+  };
+  walk(root);
+  flush();
+  return chunks;
+}
+
+// Naive sentence split: terminal punctuation followed by whitespace. Chunks
+// without punctuation (headings, list items) stay whole.
+function splitSentences(text) {
+  return text.replace(/\s+/g, ' ').match(/[^.!?]+[.!?]+(?=\s|$)|[^.!?]+$/g) ?? [];
+}
+
+function htmlToSentences(html) {
+  return extractChunks(parse(html))
+    .flatMap(splitSentences)
+    .map((s) => s.trim())
+    .filter((s) => s.length >= MIN_SENTENCE_LENGTH);
+}
+
+// Embed sentences; vectors come out L2-normalized, so dot product == cosine
+// similarity and UMAP's euclidean metric is equivalent to cosine.
+async function embedSentences(extractor, sentences) {
+  const output = await extractor(sentences, { pooling: 'mean', normalize: true });
+  return output.tolist();
+}
+
+// Deterministic PRNG for UMAP's random initialization/sampling.
+function mulberry32(seed) {
+  let a = seed >>> 0;
+  return () => {
+    a = (a + 0x6d2b79f5) | 0;
+    let t = Math.imul(a ^ (a >>> 15), 1 | a);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+// Reduce embeddings to 3D with UMAP, normalized to 0-1 per dimension.
+function reduceTo3D(vectors, { nNeighbors = 15, minDist = 0.1 } = {}) {
+  if (vectors.length < 2) return [[0.5, 0.5, 0.5]];
+  const umap = new UMAP({
+    nComponents: 3,
+    nNeighbors: Math.min(nNeighbors, vectors.length - 1),
+    minDist,
+    random: mulberry32(42)
+  });
+  const coords = umap.fit(vectors);
+  const mins = [Infinity, Infinity, Infinity];
+  const maxs = [-Infinity, -Infinity, -Infinity];
+  for (const c of coords) {
+    for (let i = 0; i < 3; i++) {
+      mins[i] = Math.min(mins[i], c[i]);
+      maxs[i] = Math.max(maxs[i], c[i]);
+    }
+  }
+  return coords.map((c) => c.map((v, i) => (v - mins[i]) / (maxs[i] - mins[i] || 1)));
+}
+
+// Pairwise cosine similarities above the threshold -> edges.
+function computeEdges(vectors, threshold = SIMILARITY_THRESHOLD) {
+  const edges = [];
+  for (let i = 0; i < vectors.length; i++) {
+    for (let j = i + 1; j < vectors.length; j++) {
+      let similarity = 0;
+      for (let k = 0; k < vectors[i].length; k++) similarity += vectors[i][k] * vectors[j][k];
+      if (similarity >= threshold) edges.push({ source: i, target: j, similarity });
+    }
+  }
+  return edges;
+}
+
+// Derive a well-distributed hue (0-360) from the mean embedding.
+function contentHue(vectors) {
+  const dim = vectors[0].length;
+  const mean = new Float64Array(dim);
+  for (const v of vectors) {
+    for (let k = 0; k < dim; k++) mean[k] += v[k] / vectors.length;
+  }
+  const hex = createHash('sha256').update(Buffer.from(mean.buffer)).digest('hex');
+  return parseInt(hex.slice(0, 8), 16) % 360;
+}
+
+async function visualizationData(sentences, extractor) {
+  if (sentences.length === 0) return { nodes: [], edges: [], hue: 0 };
+  const vectors = await embedSentences(extractor, sentences);
+  const coords = reduceTo3D(vectors);
+  return {
+    nodes: sentences.map((text, i) => ({
+      id: i,
+      x: coords[i][0],
+      y: coords[i][1],
+      z: coords[i][2],
+      text,
+      position: i / Math.max(sentences.length - 1, 1)
+    })),
+    edges: computeEdges(vectors),
+    hue: contentHue(vectors)
+  };
+}
+
+// Find index.html files under the input dir and derive their keys:
+// index.html -> home, articles/<slug>/index.html -> articles/<slug>.
+// The articles index page is skipped: the `articles` key below holds the
+// combined scatter of all articles instead.
+function discoverPages(inputDir) {
+  return readdirSync(inputDir, { recursive: true })
+    .map((file) => file.split(sep).join('/'))
+    .filter((file) => file === 'index.html' || file.endsWith('/index.html'))
+    .sort()
+    .map((file) => ({
+      key: file === 'index.html' ? 'home' : file.slice(0, -'/index.html'.length),
+      path: join(inputDir, file)
+    }))
+    .filter(({ key }) => key !== 'articles');
+}
+
+async function main() {
+  const { values } = parseArgs({
+    options: {
+      input: { type: 'string', default: 'build' },
+      output: { type: 'string', default: 'static/embeddings.json' }
+    }
+  });
+
+  const pages = discoverPages(values.input);
+  if (pages.length === 0) {
+    console.error(`No index.html files found under ${values.input} — run \`pnpm build\` first.`);
+    process.exitCode = 1;
+    return;
+  }
+
+  const extractor = await pipeline('feature-extraction', MODEL_NAME);
+
+  const sentencesByKey = new Map();
+  const result = {};
+  for (const { key, path } of pages) {
+    const sentences = htmlToSentences(readFileSync(path, 'utf8'));
+    sentencesByKey.set(key, sentences);
+    result[key] = await visualizationData(sentences, extractor);
+    console.error(
+      `${key}: ${result[key].nodes.length} nodes, ${result[key].edges.length} edges, hue ${result[key].hue}`
+    );
+  }
+
+  // Combined scatter of all article sentences: background for /og/articles.png.
+  const articleSentences = [...sentencesByKey.entries()]
+    .filter(([key]) => key.startsWith('articles/'))
+    .sort()
+    .flatMap(([, sentences]) => sentences);
+  if (articleSentences.length > 0) {
+    result.articles = await visualizationData(articleSentences, extractor);
+    console.error(
+      `articles (combined): ${result.articles.nodes.length} nodes, ${result.articles.edges.length} edges, hue ${result.articles.hue}`
+    );
+  }
+
+  mkdirSync(dirname(values.output), { recursive: true });
+  writeFileSync(values.output, JSON.stringify(result, null, 2) + '\n');
+  console.error(`Wrote ${values.output}`);
+}
+
+await main();
