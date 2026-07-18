@@ -157,27 +157,29 @@ class EmbeddingVisualization {
 
 // Initialize on DOM ready
 document.addEventListener("DOMContentLoaded", async () => {
-  const containers = document.querySelectorAll(".visualization");
-  const containersByPageId = new Map();
+  const containers = document.querySelectorAll(
+    ".visualization[data-embeddings]"
+  );
+  const containersByKey = new Map();
 
   containers.forEach((container) => {
-    const pageId = container.dataset.pageId;
-    if (pageId) {
-      containersByPageId.set(pageId, container);
+    const key = container.dataset.embeddings;
+    if (key) {
+      containersByKey.set(key, container);
     }
   });
 
-  if (containersByPageId.size === 0) return;
+  if (containersByKey.size === 0) return;
 
   try {
-    const ids = Array.from(containersByPageId.keys()).join(",");
-    const response = await fetch(`/api/pages/embeddings/?ids=${ids}`);
+    // Fetch the precomputed embeddings bundle once and look each key up.
+    const response = await fetch("/embeddings.json");
     if (!response.ok) return;
 
-    const dataByPageId = await response.json();
+    const dataByKey = await response.json();
 
-    for (const [pageId, container] of containersByPageId) {
-      const data = dataByPageId[pageId] || { nodes: [], edges: [] };
+    for (const [key, container] of containersByKey) {
+      const data = dataByKey[key] || { nodes: [], edges: [] };
       const viz = new EmbeddingVisualization(container, data);
       viz.init();
     }
