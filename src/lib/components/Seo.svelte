@@ -17,16 +17,26 @@
 
 <svelte:head>
   <title>{title}</title>
-  <meta name="description" content={description} />
-  <meta name="author" content={author} />
-  <meta name="robots" content={robots} />
+  {#if description}
+    <meta name="description" content={description} />
+  {/if}
+  {#if author}
+    <meta name="author" content={author} />
+  {/if}
+  {#if robots}
+    <meta name="robots" content={robots} />
+  {/if}
   <link rel="canonical" href={canonical} />
   <meta property="og:type" content={ogType} />
   <meta property="og:url" content={canonical} />
   <meta property="og:title" content={resolvedSocialTitle} />
-  <meta property="og:description" content={resolvedSocialDescription} />
+  {#if resolvedSocialDescription}
+    <meta property="og:description" content={resolvedSocialDescription} />
+  {/if}
   <meta name="twitter:card" content={twitterCard} />
   <meta name="twitter:url" content={canonical} />
   <meta name="twitter:title" content={resolvedSocialTitle} />
-  <meta name="twitter:description" content={resolvedSocialDescription} />
+  {#if resolvedSocialDescription}
+    <meta name="twitter:description" content={resolvedSocialDescription} />
+  {/if}
 </svelte:head>
