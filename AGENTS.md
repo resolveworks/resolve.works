@@ -8,8 +8,9 @@ database, no CMS. Homepage is section-based; articles are markdown.
 ## Structure
 
 - `src/routes/` — pages (`+page.svelte` homepage, `articles/`, `404/`)
-- `src/lib/components/` — sections: `Hero`, `Features`, `DefinitionList`, `Roadmap`, `Faq`, `About`, `Seo`
-- `src/lib/data/` — `business.json`, `author.json`
+- `src/lib/components/` — sections: `Hero`, `Features`, `DefinitionList`, `Roadmap`, `Faq`, `About`, `Seo`, `JsonLd`, `Visualization`
+- `src/lib/data/` — `business.json` (incl. contact email template), `author.json`
+- `src/lib/site.js` — site URL, `mailtoHref`, `formatDate` helpers
 - `src/content/articles/*.md` — mdsvex articles (frontmatter: `title`, `intro`, `date`)
 - `static/` — `styles.css` (global stylesheet, kept verbatim from the live site), `embeddings.json`, `avatar.webp`, `robots.txt`, `sitemap.xml`
 - `src/lib/visualization.js`, `src/lib/roadmap.js` — D3 rendering for the embedding scatter plots and roadmap arrows (initialized by components on mount)

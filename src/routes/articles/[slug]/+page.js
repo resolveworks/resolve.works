@@ -7,9 +7,10 @@ export function entries() {
 }
 
 export function load({ params }) {
-  const article = getArticle(params.slug);
-  if (!article) {
+  if (!getArticle(params.slug)) {
     throw error(404, 'Article not found');
   }
-  return { article };
+  // Only the slug crosses the load-data boundary; the page component resolves
+  // the article (including its non-serializable mdsvex component) itself.
+  return { slug: params.slug };
 }

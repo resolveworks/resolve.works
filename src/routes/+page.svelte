@@ -1,6 +1,7 @@
 <script>
   import business from '$lib/data/business.json';
   import author from '$lib/data/author.json';
+  import { SITE_URL, mailtoHref } from '$lib/site.js';
   import Seo from '$lib/components/Seo.svelte';
   import Hero from '$lib/components/Hero.svelte';
   import Features from '$lib/components/Features.svelte';
@@ -9,15 +10,9 @@
   import Visualization from '$lib/components/Visualization.svelte';
   import About from '$lib/components/About.svelte';
   import Faq from '$lib/components/Faq.svelte';
+  import JsonLd from '$lib/components/JsonLd.svelte';
 
-  const siteName = 'Resolve.';
   const description = 'We help ethical business build modern software to save time without replacing people.';
-
-  // Hero mailto (LF-encoded body) and About mailto (CRLF-encoded body) copied verbatim from live.
-  const heroEmailHref =
-    "mailto:johan@resolve.works?subject=Free%20consultation%20request&body=Hi%2C%0A%0AWe%27re%20curious%20about%20how%20you%20could%20help%20us%20with%20our%20current%20challenge.%0A%0A...%0A%0ABest%20regards%2C%0A...";
-  const aboutEmailHref =
-    "mailto:johan@resolve.works?subject=Free consultation request&body=Hi Johan,%0D%0A%0D%0AWe're curious about how you could help us with our current challenge.%0D%0A%0D%0A...%0D%0A%0D%0ABest regards,%0D%0A...";
 
   const approachItems = [
     {
@@ -163,10 +158,10 @@
   const professionalService = {
     '@context': 'https://schema.org',
     '@type': 'ProfessionalService',
-    name: siteName,
+    name: business.name,
     description:
       'Expert AI consulting services for ethical SMBs. We implement large language models (LLMs) to automate workflows, reduce costs, and amplify human capabilities.',
-    url: 'https://resolve.works/',
+    url: `${SITE_URL}/`,
     telephone: business.phone.href,
     email: business.email,
     address: {
@@ -208,10 +203,13 @@
     <Hero
       title="Change your trajectory"
       tagline={description}
-      emailHref={heroEmailHref}
-      emailText="✉️ Book a free call"
-      phoneHref={`tel:${business.phone.href}`}
-      phoneText={`💬 ${business.phone.display}`}
+      cta={[
+        {
+          href: mailtoHref(business.contact.subject, business.contact.body),
+          text: '✉️ Book a free call'
+        },
+        { href: `tel:${business.phone.href}`, text: `💬 ${business.phone.display}` }
+      ]}
     />
 
     <section class="section section-light">
@@ -244,15 +242,7 @@
 
     <section class="section section-light">
       <h2>About Johan</h2>
-      <About
-        {author}
-        linkedinHref={business.linkedin}
-        githubHref={business.github}
-        emailHref={aboutEmailHref}
-        emailText={business.email}
-        phoneHref={`tel:${business.phone.href}`}
-        phoneText={business.phone.display}
-      />
+      <About />
     </section>
 
     <section class="section section-light">
@@ -261,5 +251,5 @@
     </section>
   </main>
 
-  {@html `<script type="application/ld+json">${JSON.stringify(professionalService, null, 4)}<\/script>`}
+  <JsonLd data={professionalService} />
 </div>

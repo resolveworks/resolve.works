@@ -1,25 +1,15 @@
 <script>
   import Seo from '$lib/components/Seo.svelte';
+  import Hero from '$lib/components/Hero.svelte';
   import Visualization from '$lib/components/Visualization.svelte';
-  import { articles, formatDate } from '$lib/articles.js';
+  import { articles } from '$lib/articles.js';
+  import { formatDate } from '$lib/site.js';
 </script>
 
-<Seo
-  title="Articles - Resolve."
-  canonical="https://resolve.works/articles/"
-  socialTitle="Articles"
-  ogType="website"
-  author={null}
-  robots={null}
-/>
+<Seo title="Articles - Resolve." socialTitle="Articles" author={null} robots={null} />
 
 <main>
-  <section class="section section-hero section-hero-small section-light">
-    <header class="hero-block">
-      <h1>Articles</h1>
-      <p>Thoughts on AI, automation, and building practical systems.</p>
-    </header>
-  </section>
+  <Hero title="Articles" size="small" intro="Thoughts on AI, automation, and building practical systems." />
 
   <section class="section section-light">
     <ul class="article-list">
