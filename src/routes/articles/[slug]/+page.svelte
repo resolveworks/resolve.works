@@ -10,19 +10,38 @@
   let { data } = $props();
   const Article = $derived(data.content);
 
+  const articleUrl = $derived(`${SITE_URL}/articles/${data.slug}/`);
+
+  // Stable @ids: the same Person and Organization are declared on the
+  // homepage; repeating the ids lets crawlers merge them into one node each.
   const articleLd = $derived({
     '@context': 'https://schema.org',
     '@type': 'BlogPosting',
+    '@id': `${articleUrl}#article`,
     headline: data.title,
-    description: data.intro,
+    description: data.description ?? data.intro,
     datePublished: data.date,
     dateModified: data.modified ?? data.date,
     image: `${SITE_URL}/og/articles/${data.slug}.png`,
-    url: `${SITE_URL}/articles/${data.slug}/`,
+    url: articleUrl,
+    mainEntityOfPage: { '@type': 'WebPage', '@id': articleUrl },
     author: {
       '@type': 'Person',
+      '@id': `${SITE_URL}/#person`,
       name: author.name,
-      url: business.linkedin
+      url: business.linkedin,
+      sameAs: [business.linkedin, business.github]
+    },
+    publisher: {
+      '@type': 'Organization',
+      '@id': `${SITE_URL}/#organization`,
+      name: business.name,
+      logo: {
+        '@type': 'ImageObject',
+        url: `${SITE_URL}/apple-touch-icon.png`,
+        width: 180,
+        height: 180
+      }
     }
   });
 </script>
@@ -30,9 +49,11 @@
 <Seo
   title={`${data.title} - Resolve.`}
   socialTitle={data.title}
-  description={data.intro}
+  description={data.description ?? data.intro}
   ogType="article"
   ogImage={`${SITE_URL}/og/articles/${data.slug}.png`}
+  publishedTime={data.date}
+  modifiedTime={data.modified ?? data.date}
 />
 
 <div class="article-page">

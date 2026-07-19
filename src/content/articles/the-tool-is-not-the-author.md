@@ -1,6 +1,7 @@
 ---
 title: "The tool is not the author"
 intro: "Authorship has always been about direction and selection, not manual execution of every detail."
+description: "Photography, auto-tune and machine translation settled this long ago: the human who directs the tool owns the output. LLMs are no different."
 date: "2026-04-10T15:42:11.774613+00:00"
 ---
 

@@ -16,7 +16,7 @@
   import { formatDate } from '$lib/site.js';
 
   const description =
-    'Software and data engineering for work that matters. I build LLM-assisted pipelines, verification interfaces and search infrastructure for journalism, accountability and open data.';
+    'Software and data engineering for journalism, accountability and open-data teams: LLM pipelines, verification interfaces and search infrastructure.';
 
   // The FAQ copy is repeated as plain text only because JSON-LD must be data rather
   // than rendered markup. The visible content below stays normal Svelte markup.
@@ -65,6 +65,7 @@
     description:
       'Software and data engineering for organizations doing public-interest work: LLM-assisted data pipelines with human verification, entity resolution, search infrastructure, and full product development.',
     url: `${SITE_URL}/`,
+    '@id': `${SITE_URL}/#organization`,
     telephone: business.phone.href,
     email: business.email,
     address: {
@@ -75,9 +76,11 @@
     openingHours: 'Mo-Fr 09:00-18:00',
     founder: {
       '@type': 'Person',
+      '@id': `${SITE_URL}/#person`,
       name: author.name,
       jobTitle: author.jobTitle,
-      url: business.linkedin
+      url: business.linkedin,
+      sameAs: [business.linkedin, business.github]
     },
     sameAs: [business.linkedin, business.github],
     knowsAbout: [

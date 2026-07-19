@@ -6,11 +6,15 @@
   import { articles } from '$lib/articles.js';
   import { SITE_URL, formatDate } from '$lib/site.js';
 
+  // Meta/JSON-LD snippet; the visible hero intro stays editorial.
+  const description =
+    'Essays on LLMs, data and the open web — notes from software engineering for journalism, accountability and open data.';
+
   const articlesLd = {
     '@context': 'https://schema.org',
     '@type': 'CollectionPage',
     name: 'Articles',
-    description: 'What I think about while the machines run.',
+    description,
     url: `${SITE_URL}/articles/`,
     mainEntity: {
       '@type': 'ItemList',
@@ -27,9 +31,8 @@
 <Seo
   title="Articles - Resolve."
   socialTitle="Articles"
-  description="What I think about while the machines run."
+  {description}
   author={null}
-  robots={null}
   ogImage={`${SITE_URL}/og/articles.png`}
 />
 

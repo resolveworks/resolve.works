@@ -11,6 +11,14 @@
     author = 'Johan Schuijt',
     ogType = 'website',
     ogImage = null,
+    // All og images are the generated cards from src/lib/server/og.js, which
+    // are always 1200x630 and contain only the wordmark over the embedding
+    // scatter — hence the shared alt default.
+    ogImageWidth = 1200,
+    ogImageHeight = 630,
+    ogImageAlt = "Resolve. wordmark over a scatter plot of the site's content embeddings",
+    publishedTime = null,
+    modifiedTime = null,
     twitterCard = null
   } = $props();
 
@@ -41,6 +49,15 @@
   <meta property="og:site_name" content="Resolve." />
   {#if ogImage}
     <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content={ogImageWidth} />
+    <meta property="og:image:height" content={ogImageHeight} />
+    <meta property="og:image:alt" content={ogImageAlt} />
+  {/if}
+  {#if publishedTime}
+    <meta property="article:published_time" content={publishedTime} />
+  {/if}
+  {#if modifiedTime}
+    <meta property="article:modified_time" content={modifiedTime} />
   {/if}
   {#if description}
     <meta property="og:description" content={description} />
@@ -50,6 +67,7 @@
   <meta name="twitter:title" content={social} />
   {#if ogImage}
     <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image:alt" content={ogImageAlt} />
   {/if}
   {#if description}
     <meta name="twitter:description" content={description} />
