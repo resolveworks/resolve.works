@@ -4,7 +4,10 @@
 # serve the `build/` output with nginx. No database, no Python, no runtime.
 
 # --- build stage: SvelteKit static export ------------------------------------
-FROM node:22-alpine AS build
+# Build on the host architecture: the output is architecture-independent
+# static files, so there's no reason to run the build under QEMU when
+# targeting arm64. Only the nginx runtime image is platform-specific.
+FROM --platform=$BUILDPLATFORM node:22-alpine AS build
 RUN corepack enable
 WORKDIR /app
 

@@ -11,9 +11,9 @@
     author = 'Johan Schuijt',
     ogType = 'website',
     ogImage = null,
-    // All og images are the generated cards from src/lib/server/og.js, which
-    // are always 1200x630 and contain only the wordmark over the embedding
-    // scatter — hence the shared alt default.
+    // All og images are the pre-generated cards in static/og/ (rendered by
+    // tools/generate-og.mjs), which are always 1200x630 and contain only the
+    // wordmark over the embedding scatter — hence the shared alt default.
     ogImageWidth = 1200,
     ogImageHeight = 630,
     ogImageAlt = "Resolve. wordmark over a scatter plot of the site's content embeddings",

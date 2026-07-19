@@ -1,17 +1,31 @@
-// Social-card renderer for the og:* endpoints. A card is a simplified take
-// on the page hero: the page's sentence-embedding scatter (static/embeddings.json,
-// the same data src/lib/visualization.js renders) zoomed in to a few large
-// nodes, the hero's radial backdrop blur at the center, and the "Resolve."
-// wordmark (pre-baked glyph paths, see wordmark.svg). The SVG is serialized by
-// hand and rasterized by resvg — no text layout or font handling at build
-// time.
-import { readFileSync } from 'node:fs';
-import { join } from 'node:path';
+#!/usr/bin/env node
+/**
+ * Social-card generator for the og:* images.
+ *
+ * Renders every page's Open Graph card to static/og/ (committed, served at
+ * /og/<key>.png): one card per key in static/embeddings.json (home,
+ * articles, articles/<slug>). A card is a simplified take on the page hero:
+ * the page's sentence-embedding scatter (the same data
+ * src/lib/visualization.js renders) zoomed in to a few large nodes, the
+ * hero's radial backdrop blur at the center, and the "Resolve." wordmark
+ * (pre-baked glyph paths, see wordmark.svg). The SVG is serialized by hand
+ * and rasterized by resvg — no text layout or font handling.
+ *
+ * Cards are content-derived (via the embeddings) and committed, so the site
+ * build itself rasterizes nothing. Run after `pnpm generate-embeddings`
+ * (its npm script chains this one, then rebuilds so build/ picks up the
+ * fresh PNGs):
+ *
+ *     pnpm generate-og
+ */
+import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { dirname, join, sep } from 'node:path';
+import { parseArgs } from 'node:util';
 import { Resvg } from '@resvg/resvg-js';
 
 // The wordmark's outer <svg> root is stripped: a nested <svg> would clip the
 // glow (filter region extends well past the wordmark's viewport).
-const WORDMARK = readFileSync(join(process.cwd(), 'src/lib/server/wordmark.svg'), 'utf8')
+const WORDMARK = readFileSync(join(import.meta.dirname, 'wordmark.svg'), 'utf8')
   .replace(/^<svg[^>]*>/, '')
   .replace(/<\/svg>\s*$/, '');
 
@@ -47,13 +61,6 @@ const SOFTEN_DEFS = `<defs>
 // Zoom of the scatter relative to the homepage hero's sizing: at 2.5 the
 // card shows a tight crop of the hero-scale scatter — few nodes, large.
 const ZOOM = 2.5;
-
-let embeddings = {};
-try {
-  embeddings = JSON.parse(readFileSync(join(process.cwd(), 'static/embeddings.json'), 'utf8'));
-} catch {
-  // Cards still render (wordmark only) when embeddings haven't been generated yet.
-}
 
 // hsl() -> hex; s and l in 0..1.
 function hslHex(h, s, l) {
@@ -93,10 +100,9 @@ function scatterShapes(data) {
   return shapes.join('');
 }
 
-/** Compose the card's SVG: scatter background, radial blur, wordmark. */
-export function cardSvg({ embeddingsKey } = {}) {
+/** Compose a card's SVG: scatter background, radial blur, wordmark. */
+function cardSvg(data) {
   const background = `<rect width="${WIDTH}" height="${HEIGHT}" fill="${LIGHT}"/>`;
-  const data = embeddings[embeddingsKey];
   const scatter =
     data && data.nodes.length > 0
       ? SOFTEN_DEFS +
@@ -108,11 +114,48 @@ export function cardSvg({ embeddingsKey } = {}) {
     background +
     scatter +
     `<g transform="translate(72 52) scale(2)">${WORDMARK}</g>` +
-    `</svg>`  );
+    `</svg>`
+  );
 }
 
-/** Render a social card to a PNG Response. */
-export function cardResponse(options = {}) {
-  const png = new Resvg(cardSvg(options)).render().asPng();
-  return new Response(png, { headers: { 'Content-Type': 'image/png' } });
+function main() {
+  const { values } = parseArgs({
+    options: {
+      input: { type: 'string', default: 'static/embeddings.json' },
+      output: { type: 'string', default: 'static/og' }
+    }
+  });
+
+  let embeddings;
+  try {
+    embeddings = JSON.parse(readFileSync(values.input, 'utf8'));
+  } catch {
+    console.error(`No ${values.input} — run \`pnpm generate-embeddings\` first.`);
+    process.exitCode = 1;
+    return;
+  }
+
+  // One card per embeddings key: home -> <output>/home.png,
+  // articles/<slug> -> <output>/articles/<slug>.png.
+  const expected = new Set();
+  for (const [key, data] of Object.entries(embeddings)) {
+    const file = join(values.output, ...key.split('/')) + '.png';
+    const t = performance.now();
+    const png = new Resvg(cardSvg(data)).render().asPng();
+    mkdirSync(dirname(file), { recursive: true });
+    writeFileSync(file, png);
+    expected.add(file);
+    console.error(`${key}: ${file} (${((performance.now() - t) / 1000).toFixed(1)}s)`);
+  }
+
+  // Drop cards of pages that no longer exist (e.g. a removed article).
+  if (!existsSync(values.output)) return;
+  for (const stale of readdirSync(values.output, { recursive: true })
+    .map((file) => join(values.output, ...file.split(sep)))
+    .filter((file) => file.endsWith('.png') && !expected.has(file))) {
+    console.error(`Removing stale ${stale}`);
+    rmSync(stale);
+  }
 }
+
+main();
