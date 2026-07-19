@@ -421,6 +421,19 @@ footer.section > a.site-name:hover {
   flex: 1;
 }
 
+/* Writing & speaking section (homepage) */
+.writing-speaking {
+  display: grid;
+  gap: 4rem;
+  /* One column per present block; a single block spans full width */
+  grid-template-columns: repeat(auto-fit, minmax(min(30rem, 100%), 1fr));
+}
+
+.writing-speaking dt {
+  font-weight: 400;
+}
+
+
 .hero-block {
   display: flex;
   flex-direction: column;

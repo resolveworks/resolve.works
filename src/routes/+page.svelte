@@ -11,6 +11,9 @@
   import About from '$lib/components/About.svelte';
   import Faq from '$lib/components/Faq.svelte';
   import JsonLd from '$lib/components/JsonLd.svelte';
+  import { articles } from '$lib/articles.js';
+  import talks from '$lib/data/talks.json';
+  import { formatDate } from '$lib/site.js';
 
   const description =
     'Software and data engineering for work that matters. I build LLM-assisted pipelines, verification interfaces and search infrastructure for journalism, accountability and open data.';
@@ -255,6 +258,41 @@
           href="https://discuss.opensanctions.org/t/kolkhoz-pravda/322">Kolkhoz &amp; Pravda experiments</a
         >.
       </p>
+    </section>
+
+    <section class="section section-light">
+      <h2>Writing &amp; speaking</h2>
+      <p>I think in public — essays on this site, talks at conferences and meetups.</p>
+      <div class="writing-speaking">
+        <div>
+          <h3>Latest articles</h3>
+          <dl>
+            {#each articles.slice(0, 3) as article (article.slug)}
+              <dt><a href={`/articles/${article.slug}/`}>{article.title}</a></dt>
+              <dd><time datetime={article.date}>{formatDate(article.date)}</time></dd>
+            {/each}
+          </dl>
+          <p><a href="/articles/">All articles <span aria-hidden="true">→</span></a></p>
+        </div>
+        {#if talks.length}
+          <div>
+            <h3>Latest talks</h3>
+            <dl>
+              {#each talks.slice(0, 5) as talk (talk.url)}
+                <dt>
+                  <a href={talk.url} target="_blank" rel="noopener"
+                    >{talk.title} <span aria-hidden="true">↗</span></a
+                  >
+                </dt>
+                <dd>
+                  {talk.event} ·
+                  <time datetime={talk.date}>{formatDate(talk.date)}</time>
+                </dd>
+              {/each}
+            </dl>
+          </div>
+        {/if}
+      </div>
     </section>
 
     <section class="section section-light">
