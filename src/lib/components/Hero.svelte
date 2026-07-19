@@ -3,7 +3,7 @@
 
   // Hero variants across the site: full (homepage, with CTA links),
   // "small" (articles index, plain intro) and "medium" (article, with date).
-  let { title, size = null, tagline = null, intro = null, date = null, cta = [] } = $props();
+  let { title, size = null, tagline = null, intro = null, date = null, children = null } = $props();
 </script>
 
 <section class="section section-hero{size ? ` section-hero-${size}` : ''} section-light">
@@ -18,14 +18,9 @@
     {#if date}
       <time datetime={date}>{formatDate(date)}</time>
     {/if}
-    {#if cta.length}
+    {#if children}
       <p class="hero-cta">
-        {#each cta as link}
-          <a href={link.href} class:secondary={link.variant === 'secondary'}>
-            {#if link.icon}<span aria-hidden="true">{link.icon}</span>{/if}
-            {link.text}
-          </a>
-        {/each}
+        {@render children()}
       </p>
     {/if}
   </header>

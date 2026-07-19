@@ -1,10 +1,7 @@
 <script>
-  let { items } = $props();
+  let { children } = $props();
 </script>
 
 <dl>
-  {#each items as item}
-    <dt>{item.term}</dt>
-    <dd>{@html item.definition}</dd>
-  {/each}
+  {@render children()}
 </dl>

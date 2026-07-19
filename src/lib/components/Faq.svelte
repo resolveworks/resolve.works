@@ -1,31 +1,22 @@
 <script>
   import JsonLd from '$lib/components/JsonLd.svelte';
 
-  let { items } = $props();
-
-  function stripHtml(html) {
-    return html.replace(/<[^>]*>/g, '');
-  }
+  let { questions, children } = $props();
 
   const jsonLd = $derived({
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
-    mainEntity: items.map((item) => ({
+    mainEntity: questions.map(({ question, answer }) => ({
       '@type': 'Question',
-      name: item.question,
+      name: question,
       acceptedAnswer: {
         '@type': 'Answer',
-        text: stripHtml(item.answer)
+        text: answer
       }
     }))
   });
 </script>
 
-{#each items as item}
-  <details>
-    <summary>{item.question}</summary>
-    {@html item.answer}
-  </details>
-{/each}
+{@render children()}
 
 <JsonLd data={jsonLd} />
