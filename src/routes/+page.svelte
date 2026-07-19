@@ -146,28 +146,32 @@
       <p>Fifteen years of production work keeps circling back to the same set of capabilities:</p>
       <Features columns={2}>
         <li>
-          <h3>LLM extraction &amp; agents</h3>
-          <p>Structured facts from unstructured documents, and agents that do the research.</p>
+          <h3>LLM extraction &amp; search</h3>
+          <p>
+            Structured facts from unstructured documents, and agents that do the research. Underneath both is hybrid
+            search, reconciling records across sources and languages over millions of entities.
+          </p>
         </li>
         <li>
-          <h3>Search &amp; entity resolution</h3>
-          <p>Hybrid keyword and semantic matching, reconciling records across sources and languages.</p>
+          <h3>Interfaces for working with data</h3>
+          <p>
+            Review screens, research tools, search frontends: interfaces where people judge, correct and explore. Built
+            for people whose work depends on the data being right.
+          </p>
         </li>
         <li>
-          <h3>Verification interfaces</h3>
-          <p>Human review as part of the pipeline: archived sources, highlighted evidence, citations.</p>
-        </li>
-        <li>
-          <h3>Linux infrastructure</h3>
-          <p>Servers are home turf: containers, deploy pipelines, backups, terabyte-scale processing.</p>
+          <h3>The full stack</h3>
+          <p>
+            Database, pipelines, API, the interface people work with, and the servers it runs on—auth, backups, deploys and
+            monitoring included. One person, end to end.
+          </p>
         </li>
         <li>
           <h3>Stay up to date</h3>
-          <p>New models, tools and techniques, evaluated against real problems, adopted when they earn it.</p>
-        </li>
-        <li>
-          <h3>The full product</h3>
-          <p>Auth, frontend, ops and everything in between: working software, running in production.</p>
+          <p>
+            New models, tools and techniques, evaluated against real problems and adopted when they earn it. Right now that
+            means coding agents and LLM tooling; next year it will mean something else.
+          </p>
         </li>
       </Features>
     </section>
