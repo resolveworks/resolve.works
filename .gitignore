@@ -7,6 +7,9 @@ node_modules/
 # SvelteKit
 .svelte-kit/
 
+# Embedding vector cache (tools/generate-embeddings.mjs)
+.cache/
+
 # Environment
 .env
 .env.local

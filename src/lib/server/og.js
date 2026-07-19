@@ -44,9 +44,9 @@ const SOFTEN_DEFS = `<defs>
   </filter>
 </defs>`;
 
-// Zoom of the scatter relative to the homepage hero's sizing: at 2 the card
-// shows a crop of the hero-scale scatter — few nodes, large.
-const ZOOM = 2;
+// Zoom of the scatter relative to the homepage hero's sizing: at 2.5 the
+// card shows a tight crop of the hero-scale scatter — few nodes, large.
+const ZOOM = 2.5;
 
 let embeddings = {};
 try {
@@ -83,7 +83,7 @@ function scatterShapes(data) {
   const shapes = data.edges.map((e) => {
     const s = byId.get(e.source);
     const t = byId.get(e.target);
-    return `<line x1="${num(scale(s.x) + offsetX)}" y1="${num(scale(s.y) + offsetY)}" x2="${num(scale(t.x) + offsetX)}" y2="${num(scale(t.y) + offsetY)}" stroke="${EDGE}" stroke-width="${num(stroke)}"/>`;
+    return `<line x1="${num(scale(s.x) + offsetX)}" y1="${num(scale(s.y) + offsetY)}" x2="${num(scale(t.x) + offsetX)}" y2="${num(scale(t.y) + offsetY)}" stroke="${EDGE}" stroke-opacity="${num(0.35 + 0.65 * (e.strength ?? 1))}" stroke-width="${num(stroke)}"/>`;
   });
   for (const n of [...data.nodes].sort((a, b) => a.z - b.z)) {
     shapes.push(

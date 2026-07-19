@@ -218,11 +218,13 @@ body > footer > * {
 /* Visualization Node and Edge Styles */
 .visualization line {
   stroke: #d5d5d5;
+  transition: stroke-opacity 0.2s ease;
 }
 
 .visualization circle {
   stroke: var(--color-light);
   cursor: pointer;
+  transition: fill-opacity 0.2s ease;
 }
 
 /* Tooltip */

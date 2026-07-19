@@ -97,8 +97,24 @@ class EmbeddingVisualization {
     // Build node lookup for edges
     const nodeById = new Map(this.nodes.map((n) => [n.id, n]));
 
-    // Draw edges using precomputed similarities
-    g.selectAll("line")
+    // Base edge opacity from connection strength (0-1, set by the generator)
+    const edgeOpacity = (d) => 0.35 + 0.65 * (d.strength ?? 1);
+
+    // Adjacency for hover highlighting: node id -> incident edges/neighbors
+    const adjacency = new Map(
+      this.nodes.map((n) => [n.id, { edges: new Set(), neighbors: new Set() }])
+    );
+    for (const e of this.edges) {
+      adjacency.get(e.source).edges.add(e);
+      adjacency.get(e.target).edges.add(e);
+      adjacency.get(e.source).neighbors.add(e.target);
+      adjacency.get(e.target).neighbors.add(e.source);
+    }
+
+    // Draw edges using precomputed strengths. Opacity via style (not attr)
+    // so the CSS transition applies on hover.
+    const lines = g
+      .selectAll("line")
       .data(this.edges)
       .enter()
       .append("line")
@@ -106,7 +122,8 @@ class EmbeddingVisualization {
       .attr("y1", (d) => yScale(nodeById.get(d.source).y))
       .attr("x2", (d) => xScale(nodeById.get(d.target).x))
       .attr("y2", (d) => yScale(nodeById.get(d.target).y))
-      .attr("stroke-width", this.getStrokeWidth());
+      .attr("stroke-width", this.getStrokeWidth())
+      .style("stroke-opacity", edgeOpacity);
 
     // Draw nodes (sorted by z so larger nodes appear in front)
     const sortedNodes = [...this.nodes].sort((a, b) => a.z - b.z);
@@ -119,7 +136,7 @@ class EmbeddingVisualization {
       .attr("transform", (d) => `translate(${xScale(d.x)}, ${yScale(d.y)})`);
 
     // Node circles with z-based radius
-    nodeGroups
+    const circles = nodeGroups
       .append("circle")
       .attr("r", (d) => this.getNodeRadius(d.z))
       .attr("fill", (d) => this.getNodeColor(d.position))
@@ -133,6 +150,16 @@ class EmbeddingVisualization {
         d3.select(event.currentTarget)
           .select("circle")
           .attr("r", this.getNodeRadius(d.z) + 4);
+        // Highlight the node's connections, dim everything else
+        const { edges, neighbors } = adjacency.get(d.id);
+        lines
+          .style("stroke-opacity", (e) => (edges.has(e) ? 1 : 0.04))
+          .attr("stroke-width", (e) =>
+            edges.has(e) ? this.getStrokeWidth() * 1.8 : this.getStrokeWidth()
+          );
+        circles.style("fill-opacity", (n) =>
+          n.id === d.id || neighbors.has(n.id) ? 1 : 0.5
+        );
         tooltip = d3
           .select("body")
           .append("div")
@@ -149,6 +176,10 @@ class EmbeddingVisualization {
         d3.select(event.currentTarget)
           .select("circle")
           .attr("r", this.getNodeRadius(d.z));
+        lines
+          .style("stroke-opacity", edgeOpacity)
+          .attr("stroke-width", this.getStrokeWidth());
+        circles.style("fill-opacity", 1);
         if (tooltip) {
           tooltip.remove();
           tooltip = null;

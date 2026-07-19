@@ -3,11 +3,17 @@
  * Embedding pipeline for the page visualizations.
  *
  * Scans the prerendered HTML in build/, embeds each page's sentences with
- * all-MiniLM-L6-v2 (transformers.js, ONNX — the model downloads once and is
- * cached), reduces them to 3D with UMAP (seeded, deterministic), and writes
+ * Qwen3-Embedding-0.6B (transformers.js, ONNX — the model downloads once and
+ * is cached), reduces them to 3D with UMAP (seeded, deterministic), and writes
  * static/embeddings.json: per page the node coordinates, similarity edges and
  * a content hue, consumed by src/lib/visualization.js and the og card
  * backgrounds.
+ *
+ * Edges are the strongest EDGE_FRACTION of sentence pairs — relative
+ * selection, so graph density survives embedding-model swaps (absolute
+ * cosine thresholds are not comparable between models). Raw sentence
+ * vectors are cached in .cache/embeddings.json (gitignored, keyed by
+ * model + sentence hash) so re-tuning UMAP/edges skips the model run.
  *
  * Run after `pnpm build` (the npm script also rebuilds, so build/ picks up
  * the fresh JSON and cards):
@@ -36,11 +42,20 @@ const SKIP_TAGS = new Set(['script', 'style', 'nav', 'header', 'footer', 'aside'
 // Minimum sentence length (characters) to keep.
 const MIN_SENTENCE_LENGTH = 10;
 
-// Cosine similarity threshold for creating an edge.
-const SIMILARITY_THRESHOLD = 0.5;
+// Fraction of strongest sentence pairs kept as edges. Relative selection
+// keeps graph density stable across embedding models; absolute cosine
+// thresholds are not comparable between models (MiniLM spreads similarities
+// over ~0-0.8, Qwen3 compresses them into ~0.2-0.75).
+const EDGE_FRACTION = 0.015;
 
-// Embedding model (384 dimensions).
-const MODEL_NAME = 'Xenova/all-MiniLM-L6-v2';
+// Raw sentence vectors cached here (keyed by model + sentence hash) so
+// re-tuning the layout or edges doesn't re-run the model.
+const CACHE_PATH = '.cache/embeddings.json';
+
+// Embedding model (1024 dimensions). Qwen3-Embedding-0.6B scores 64.3 on the
+// MTEB multilingual leaderboard vs ~59 for all-MiniLM-L6-v2, at a still-modest
+// size; q8 keeps the download ~600 MB and CPU inference fast.
+const MODEL_NAME = 'onnx-community/Qwen3-Embedding-0.6B-ONNX';
 
 // Extract text chunks from HTML, respecting block structure.
 function extractChunks(root) {
@@ -84,10 +99,46 @@ function htmlToSentences(html) {
 }
 
 // Embed sentences; vectors come out L2-normalized, so dot product == cosine
-// similarity and UMAP's euclidean metric is equivalent to cosine.
-async function embedSentences(extractor, sentences) {
-  const output = await extractor(sentences, { pooling: 'mean', normalize: true });
-  return output.tolist();
+// similarity and UMAP's euclidean metric is equivalent to cosine. Qwen3
+// embedding models pool at the final EOS token, not the mean. Vectors are
+// cached by model + sentence hash; only misses hit the model.
+async function embedSentences(extractor, sentences, cache) {
+  const vectors = new Array(sentences.length);
+  const missing = [];
+  for (let i = 0; i < sentences.length; i++) {
+    const hit = cache.get(cacheKey(sentences[i]));
+    if (hit) vectors[i] = hit;
+    else missing.push(i);
+  }
+  if (missing.length > 0) {
+    const output = await extractor(
+      missing.map((i) => sentences[i]),
+      { pooling: 'last_token', normalize: true }
+    );
+    const fresh = output.tolist();
+    missing.forEach((i, n) => {
+      vectors[i] = fresh[n];
+      cache.set(cacheKey(sentences[i]), fresh[n]);
+    });
+  }
+  return vectors;
+}
+
+function cacheKey(sentence) {
+  return createHash('sha256').update(MODEL_NAME + '\0' + sentence).digest('hex');
+}
+
+function loadCache() {
+  try {
+    return new Map(Object.entries(JSON.parse(readFileSync(CACHE_PATH, 'utf8'))));
+  } catch {
+    return new Map();
+  }
+}
+
+function saveCache(cache) {
+  mkdirSync(dirname(CACHE_PATH), { recursive: true });
+  writeFileSync(CACHE_PATH, JSON.stringify(Object.fromEntries(cache)));
 }
 
 // Deterministic PRNG for UMAP's random initialization/sampling.
@@ -122,17 +173,28 @@ function reduceTo3D(vectors, { nNeighbors = 15, minDist = 0.1 } = {}) {
   return coords.map((c) => c.map((v, i) => (v - mins[i]) / (maxs[i] - mins[i] || 1)));
 }
 
-// Pairwise cosine similarities above the threshold -> edges.
-function computeEdges(vectors, threshold = SIMILARITY_THRESHOLD) {
-  const edges = [];
+// Keep the strongest `fraction` of pairs as edges, normalized to a 0-1
+// strength for rendering. Deterministic: ties broken by node indices.
+function computeEdges(vectors, { fraction = EDGE_FRACTION } = {}) {
+  const pairs = [];
   for (let i = 0; i < vectors.length; i++) {
     for (let j = i + 1; j < vectors.length; j++) {
       let similarity = 0;
       for (let k = 0; k < vectors[i].length; k++) similarity += vectors[i][k] * vectors[j][k];
-      if (similarity >= threshold) edges.push({ source: i, target: j, similarity });
+      pairs.push({ source: i, target: j, similarity });
     }
   }
-  return edges;
+  pairs.sort(
+    (a, b) => b.similarity - a.similarity || a.source - b.source || a.target - b.target
+  );
+  const edges = pairs.slice(0, Math.round(pairs.length * fraction));
+  const max = edges[0]?.similarity ?? 0;
+  const min = edges[edges.length - 1]?.similarity ?? max;
+  return edges.map(({ source, target, similarity }) => ({
+    source,
+    target,
+    strength: max > min ? (similarity - min) / (max - min) : 1
+  }));
 }
 
 // Derive a well-distributed hue (0-360) from the mean embedding.
@@ -146,9 +208,9 @@ function contentHue(vectors) {
   return parseInt(hex.slice(0, 8), 16) % 360;
 }
 
-async function visualizationData(sentences, extractor) {
+async function visualizationData(sentences, extractor, cache) {
   if (sentences.length === 0) return { nodes: [], edges: [], hue: 0 };
-  const vectors = await embedSentences(extractor, sentences);
+  const vectors = await embedSentences(extractor, sentences, cache);
   const coords = reduceTo3D(vectors);
   return {
     nodes: sentences.map((text, i) => ({
@@ -195,14 +257,15 @@ async function main() {
     return;
   }
 
-  const extractor = await pipeline('feature-extraction', MODEL_NAME);
+  const extractor = await pipeline('feature-extraction', MODEL_NAME, { dtype: 'q8' });
+  const cache = loadCache();
 
   const sentencesByKey = new Map();
   const result = {};
   for (const { key, path } of pages) {
     const sentences = htmlToSentences(readFileSync(path, 'utf8'));
     sentencesByKey.set(key, sentences);
-    result[key] = await visualizationData(sentences, extractor);
+    result[key] = await visualizationData(sentences, extractor, cache);
     console.error(
       `${key}: ${result[key].nodes.length} nodes, ${result[key].edges.length} edges, hue ${result[key].hue}`
     );
@@ -214,11 +277,13 @@ async function main() {
     .sort()
     .flatMap(([, sentences]) => sentences);
   if (articleSentences.length > 0) {
-    result.articles = await visualizationData(articleSentences, extractor);
+    result.articles = await visualizationData(articleSentences, extractor, cache);
     console.error(
       `articles (combined): ${result.articles.nodes.length} nodes, ${result.articles.edges.length} edges, hue ${result.articles.hue}`
     );
   }
+
+  saveCache(cache);
 
   mkdirSync(dirname(values.output), { recursive: true });
   writeFileSync(values.output, JSON.stringify(result, null, 2) + '\n');
