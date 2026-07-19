@@ -250,8 +250,8 @@
         LLM entity reconciliation actually works well, and with human-in-the-loop verification, it's both accurate and accountable. <a
           href="https://discuss.opensanctions.org/t/poliloom-loom-for-weaving-politicians-data/121">Read the devlog</a
         >, or the <a href="https://blog.wikimedia.de/2026/07/08/everypolitician-mit-wikidata/">Wikimedia Deutschland interview</a> about the project. The <a
-          href="https://discuss.opensanctions.org/t/kolkhoz-pravda/322">Kolkhoz &amp; Pravda experiments</a
-        > ask the next question: can the same ideas work on any page — and how do you find the pages worth reading? The target is the long tail of public institutions: regional water boards, municipal councils, specialised agencies.
+          href="https://discuss.opensanctions.org/t/kolkhoz-pravda/322">Kolkhoz &amp; Pravda projects</a
+        > ask the next question: can the same ideas work on any page — and how do you find the pages worth reading?
       </p>
     </section>
 
