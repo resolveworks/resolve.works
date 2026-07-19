@@ -11,25 +11,15 @@ const draw_arrow = function (container, index) {
   const width = svg.node().getBoundingClientRect().width;
   const height = svg.node().getBoundingClientRect().height;
 
-  let startX, startY, endX, endY, controlX, controlY;
-
-  if (index === 2) {
-    // Top right to bottom left
-    startX = width * 0.4;
-    startY = height * 0.12;
-    controlY = startY;
-    endX = width * 0.75;
-    endY = height * 0.6;
-    controlX = startX + (endX - startX) * 0.75;
-  } else {
-    // Bottom left to top right
-    startX = width * 0.2;
-    startY = height * 0.55;
-    endX = width * 0.6;
-    endY = height * 0.8;
-    controlY = endY;
-    controlX = startX + (endX - startX) * 0.25;
-  }
+  // Keep each connector in the whitespace below its step. Starting the
+  // second connector near the top of its SVG made it cross the heading and
+  // body copy.
+  const startX = width * 0.2;
+  const startY = height * 0.55;
+  const endX = width * 0.6;
+  const endY = height * 0.8;
+  const controlX = startX + (endX - startX) * 0.25;
+  const controlY = endY;
 
   const path = svg
     .append("path")
