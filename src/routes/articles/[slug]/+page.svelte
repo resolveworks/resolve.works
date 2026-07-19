@@ -16,6 +16,8 @@
     headline: data.title,
     description: data.intro,
     datePublished: data.date,
+    dateModified: data.modified ?? data.date,
+    image: `${SITE_URL}/og/articles/${data.slug}.png`,
     url: `${SITE_URL}/articles/${data.slug}/`,
     author: {
       '@type': 'Person',

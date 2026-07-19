@@ -2,8 +2,26 @@
   import Seo from '$lib/components/Seo.svelte';
   import Hero from '$lib/components/Hero.svelte';
   import Visualization from '$lib/components/Visualization.svelte';
+  import JsonLd from '$lib/components/JsonLd.svelte';
   import { articles } from '$lib/articles.js';
   import { SITE_URL, formatDate } from '$lib/site.js';
+
+  const articlesLd = {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: 'Articles',
+    description: 'What I think about while the machines run.',
+    url: `${SITE_URL}/articles/`,
+    mainEntity: {
+      '@type': 'ItemList',
+      itemListElement: articles.map((article, index) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        url: `${SITE_URL}/articles/${article.slug}/`,
+        name: article.title
+      }))
+    }
+  };
 </script>
 
 <Seo
@@ -35,3 +53,5 @@
     </ul>
   </section>
 </main>
+
+<JsonLd data={articlesLd} />
