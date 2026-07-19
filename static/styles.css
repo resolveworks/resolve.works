@@ -129,18 +129,13 @@ dt {
 dd {
   margin-bottom: 1rem;
   margin-left: 0;
+  line-height: 1.6;
 }
 
 dd:before {
   content: "↪";
   margin-right: 0.4rem;
   margin-left: 0.25rem;
-}
-
-dd > p {
-  display: inline;
-  margin: 0;
-  line-height: 1;
 }
 
 body {

@@ -206,16 +206,14 @@
       <DefinitionList>
         <dt>Project</dt>
         <dd>
-          <p>
-            <a href="https://loom.everypolitician.org">PoliLoom</a>, part of <a href="https://everypolitician.org/"
-              >EveryPolitician</a
-            >: structuring politicians' data for investigators and the accountability sector.
-          </p>
+          <a href="https://loom.everypolitician.org">PoliLoom</a>, part of <a href="https://everypolitician.org/"
+            >EveryPolitician</a
+          >: structuring politicians' data for investigators and the accountability sector.
         </dd>
         <dt>Client</dt>
-        <dd><p><a href="https://www.opensanctions.org/">OpenSanctions</a></p></dd>
+        <dd><a href="https://www.opensanctions.org/">OpenSanctions</a></dd>
         <dt>Role</dt>
-        <dd><p>Project lead, EveryPolitician (2025–present)</p></dd>
+        <dd>Project lead, EveryPolitician (2025–present)</dd>
       </DefinitionList>
       <Features columns={3}>
         <li>
