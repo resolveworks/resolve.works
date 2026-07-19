@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+<!-- Fullcaps R from the Resolve. wordmark (Inter Bold, glyph paths from
+     src/lib/server/wordmark.svg), color-light on color-dark. -->
+<rect width="64" height="64" fill="#1a1a1a"/>
+<g fill="#fafafa" transform="translate(9.9125 -5.8375) scale(0.75)">
+<path d="M18.0 81L5.5 81L5.5 19.9L29.4 19.9Q36.3 19.9 41.2 22.3Q46.1 24.8 48.7 29.3Q51.2 33.8 51.2 39.8L51.2 39.8Q51.2 45.8 48.6 50.2Q46.0 54.5 41.1 56.9Q36.1 59.2 29.1 59.2L29.1 59.2L12.9 59.2L12.9 49.0L27.1 49.0Q30.9 49.0 33.4 48.0Q35.8 47.0 37.1 44.9Q38.3 42.8 38.3 39.8L38.3 39.8Q38.3 36.7 37.1 34.5Q35.8 32.4 33.4 31.3Q30.9 30.2 27.0 30.2L27.0 30.2L18.0 30.2L18.0 81Z"/>
+<path d="M53.4 81L39.5 81L24.7 53.2L38.2 53.2L53.4 81Z"/>
+</g>
+</svg>
