@@ -1,8 +1,9 @@
-<svelte:head>
-  <title>Page not found - Resolve.</title>
-</svelte:head>
+<script>
+  import ErrorPage from '$lib/components/ErrorPage.svelte';
+</script>
 
-<div class="template-404">
-  <h1>Page not found</h1>
-  <h2>Sorry, this page could not be found.</h2>
-</div>
+<ErrorPage
+  title="Page not found"
+  message="Sorry, this page could not be found."
+  description="The page you requested could not be found."
+/>
