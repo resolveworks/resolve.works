@@ -6,11 +6,14 @@
   "github": "https://github.com/monneyboi/",
   "address": "Harju maakond, Tallinn, Lasnamäe linnaosa, Sepapaja tn 6, 15551",
   "vat": "EE102834268",
-  "register": { "url": "https://ariregister.rik.ee/eng/company/17154517/RESOLVE-SERVICES-OÜ", "display": "https://ariregister.rik.ee" },
+  "register": {
+    "url": "https://ariregister.rik.ee/eng/company/17154517/RESOLVE-SERVICES-OÜ",
+    "display": "https://ariregister.rik.ee"
+  },
   "registrationNote": "Estonian e-residency program",
   "taglines": ["Makes machines empower humans", "Made by 👨 and 🤖 in Europe"],
   "contact": {
-    "subject": "Free consultation request",
+    "subject": "Up for a coffee?",
     "body": "Hi,\n\nWe're curious about how you could help us with our current challenge.\n\n...\n\nBest regards,\n...",
     "bodyPersonal": "Hi Johan,\r\n\r\nWe're curious about how you could help us with our current challenge.\r\n\r\n...\r\n\r\nBest regards,\r\n..."
   }

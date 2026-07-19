@@ -130,9 +130,8 @@
         <li>
           <h3>Dead ends included.</h3>
           <p>
-            I write down <b>what didn't work</b> and why. The <a
-              href="https://discuss.opensanctions.org/t/poliloom-loom-for-weaving-politicians-data/121">PoliLoom devlog</a
-            > is what working with me actually looks like.
+            I write down <b>what didn't work</b> and why. Read the <a
+              href="https://discuss.opensanctions.org/t/poliloom-loom-for-weaving-politicians-data/121">PoliLoom devlog</a> to see what that looks like.
           </p>
         </li>
         <li>
