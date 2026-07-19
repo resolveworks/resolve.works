@@ -66,6 +66,7 @@ h6 {
 }
 
 /* Context-specific h3 styling for correct visual hierarchy */
+.features-block-2 h3,
 .features-block-3 h3,
 .section > ol > li > h3,
 .two-column-block h3 {
@@ -500,6 +501,7 @@ footer.section > a.site-name:hover {
     gap: 0.5rem;
   }
 
+  .features-block-2,
   .features-block-4 {
     display: grid;
     grid-template-columns: repeat(2, 1fr);

@@ -144,7 +144,7 @@
     <section class="section section-dark">
       <h2>What I do</h2>
       <p>Fifteen years of production work keeps circling back to the same set of capabilities:</p>
-      <Features columns={3}>
+      <Features columns={2}>
         <li>
           <h3>LLM extraction &amp; agents</h3>
           <p>Structured facts from unstructured documents, and agents that do the research.</p>
@@ -158,12 +158,12 @@
           <p>Human review as part of the pipeline: archived sources, highlighted evidence, citations.</p>
         </li>
         <li>
-          <h3>Stay up to date</h3>
-          <p>New models, tools and techniques, evaluated against real problems, adopted when they earn it.</p>
-        </li>
-        <li>
           <h3>Linux infrastructure</h3>
           <p>Servers are home turf: containers, deploy pipelines, backups, terabyte-scale processing.</p>
+        </li>
+        <li>
+          <h3>Stay up to date</h3>
+          <p>New models, tools and techniques, evaluated against real problems, adopted when they earn it.</p>
         </li>
         <li>
           <h3>The full product</h3>
