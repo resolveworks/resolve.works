@@ -9,14 +9,14 @@
 <Seo
   title="Articles - Resolve."
   socialTitle="Articles"
-  description="Thoughts on AI, automation, and building practical systems."
+  description="What I think about while the machines run."
   author={null}
   robots={null}
   ogImage={`${SITE_URL}/og/articles.png`}
 />
 
 <main>
-  <Hero title="Articles" size="small" intro="Thoughts on AI, automation, and building practical systems." />
+  <Hero title="Articles" size="small" intro="What I think about while the machines run." />
 
   <section class="section section-light">
     <ul class="article-list">

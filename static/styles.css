@@ -601,8 +601,19 @@ footer.section > a.site-name:hover {
     grid-column: span 1;
   }
 
-  footer.section > section {
+  footer.section > section,
+  .article-list article {
+    display: grid;
     grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+
+  .article-list .visualization {
+    width: calc(100% - 2rem);
+  }
+
+  .article-list .article-content {
+    grid-column: span 2;
   }
 
   .section > ol {
