@@ -1,13 +1,21 @@
 
-## When the tool becomes a product
+I have always built my own working environment. I used to heavily customize my editor through plugins. I use a Moonlander keyboard with a keymap that probably makes sense only to me. I use Arch, by the way. Not because everyone should manage their computer this way, but because I want my tools to adapt to how I work—not the other way around.
 
-For a long time, Anthropic's models and coding harness worked well for me. The models were good, and the harness was initially simple. Over time, though, the harness became bloated and slow. Then, in early 2026, Anthropic began [locking Claude subscription credentials to its own products](https://code.claude.com/docs/en/legal-and-compliance), blocking their use with third-party harnesses. API access remained available, but metered separately. That lock-in was the trigger for me to leave.
+There is an entirely reasonable alternative: let somebody else assemble the system, maintain it, and decide how its parts fit together. That removes responsibility and lets you concentrate on the work. The tradeoff is that you can only work within boundaries designed for the whole market. An open ecosystem lets you draw those boundaries yourself.
 
-To me, this marked the difference between buying inference and buying a product. An inference provider sells access to a model and leaves you to decide how to use it. A product bundles the model with a prescribed way of using it. Once the harness and subscription become one product, you inherit decisions made for the whole market—and all the compromises that come with them.
+For years, I have assembled my development environment from tools people shared on the internet. That ecosystem has given me more than software. I have learned from the code, documentation, and ideas that other people published freely.
+
+For about a year, Claude Code was an exception. I had used Anthropic’s coding harness since its early beta, its models were among the best for programming, and the whole thing did its job well. I had no reason to look elsewhere.
+
+Then, in early 2026, Anthropic [restricted Claude subscription credentials to its own products](https://code.claude.com/docs/en/legal-and-compliance), preventing third-party harnesses from using them. API access remained available, but was metered separately.
+
+The change clarified what Claude Max was: not a general model subscription, but a subscription to Anthropic’s products. That did not suit how I wanted to work. I wanted a harness I could shape myself, so I started looking for an open-source alternative.
 
 ## The harness that extends itself
 
-The [pi coding agent](https://github.com/earendil-works/pi) is built around a different idea: keep the default surface small—`read`, `write`, `edit`, and `bash`—and make everything else pluggable. Extensions, skills, prompt templates, themes, and packages let you add only what you need. Pi explicitly encourages you to ask the agent to build extensions for you, and ships comprehensive documentation and examples to support it.
+I found what I wanted in the [pi coding agent](https://github.com/earendil-works/pi). Pi starts with a deliberately small core: `read`, `write`, `edit`, and `bash`. Everything else—extensions, skills, prompt templates, themes, and packages—is pluggable. It feels more like the open ecosystem I came from than a product trying to anticipate every workflow. Pi even encourages you to ask the agent to build extensions for itself, and ships comprehensive documentation and examples to support it. The tool is designed to help you build the tool.
+
+Having used coding agents since their early days, I already had a good idea of where they struggled. The largest gap was exploration: building a global understanding of a codebase instead of accumulating a fragmented collection of files and snippets. I followed pi’s philosophy and resisted recreating every feature I had left behind. I would add only small, sharp tools for problems I had actually seen.
 
 Tool descriptions are instructions: they tell the model what it can call, when to call it, and how to structure the call. Adding more tools therefore adds more instructions and more competing choices. In [ManyIFEval](https://openreview.net/forum?id=R6q67CDBCH), models became steadily less reliable as they were asked to follow more simultaneous instructions. [LongFuncEval](https://arxiv.org/abs/2505.10570) found the same pattern in function calling. There is no universal cliff or safe number. The practical rule is simply to keep the active surface as small as the work allows, and make every tool earn its place.
 
@@ -24,6 +32,8 @@ Over the past six months, I've converged on this minimal set of extensions:
 **[mine](https://github.com/resolveworks/mine)** — web fetch through a real Chrome browser on a virtual display. JavaScript-heavy pages work fine. Cookie banners are dismissed automatically. Output is clean markdown.
 
 So far, I haven't needed anything else.
+
+Writing these extensions taught me a lot about how agentic LLMs function under the hood. That knowledge has been as valuable as the extensions themselves.
 
 ### A different intelligence
 
@@ -56,4 +66,8 @@ Git hooks are the other half of the deterministic layer. A `post-checkout` hook 
 Lately I'm mostly using open-weight models from Kimi, GLM, and DeepSeek. These are no longer budget alternatives to the frontier; they are part of it. Kimi K3 currently sits near the top of the [Artificial Analysis Intelligence Index](https://artificialanalysis.ai/models), while GLM and DeepSeek remain competitive at API prices often far below those of the leading closed providers. There's also a less obvious reason: these labs release their models, while closed providers do not. If my usage data contributes to training, I would rather that value flow toward models the public can run and build on than remain entirely inside a closed product.
 
 I still keep subscriptions to closed providers. For harder problems, I let models from different families respond to one another—either through sub-agents or by pasting one model's output into another context. They critique and build on each other's work. In my experience, the exchange surfaces ambiguities, edge cases, and bad assumptions that either model might accept on its own.
+
+In the end, I have an environment that works the way I think. Creating it has given me a satisfaction that no bought software ever could.
+
+Pi gave me a small core I could understand and change. Everything I added came from a problem I had actually encountered. I no longer have to adapt my work to a harness designed for everyone else. I can adapt the harness to my work.
 
