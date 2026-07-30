@@ -17,7 +17,7 @@ Then, in early 2026, Anthropic [restricted Claude subscription credentials to it
 
 The change clarified what Claude Max was: not a general model subscription, but a subscription to Anthropic’s products. That did not suit how I wanted to work. I wanted a harness I could shape myself, so I started looking for an open-source alternative.
 
-## The harness that extends itself
+## It extends itself
 
 I found what I wanted in the [pi coding agent](https://github.com/earendil-works/pi). Pi starts with a deliberately small core: `read`, `write`, `edit`, and `bash`. Everything else—extensions, skills, prompt templates, themes, and packages—is pluggable. It feels more like the open ecosystem I came from than a product trying to anticipate every workflow. Pi even encourages you to ask the agent to build extensions for itself, and ships comprehensive documentation and examples to support it. The tool is designed to help you build the tool.
 
@@ -29,13 +29,13 @@ Tool descriptions are instructions: they tell the model what it can call, when t
 
 Over the past six months, I've converged on this minimal set of extensions:
 
-**[fork](https://github.com/resolveworks/fork)** — spawn sub-agents in separate `tmux` windows. The parent gets `spawn_agent`, `message_agent`, and `close_agent`. A child gets the `report_result` tool and can run in an isolated Git worktree on its own branch, or share the parent's working tree.
+**[fork](https://github.com/resolveworks/fork)** — lets one Pi session hand a focused task to another. Each sub-agent starts with a fresh context in its own `tmux` window, reports its result to the parent, and remains available for review or revisions. For coding tasks that can run in parallel, fork can give each child an isolated Git worktree on its own branch.
 
-**[trace](https://github.com/resolveworks/trace)** — three deterministic tools (`def`, `callers`, `outline`) backed by tree-sitter and a SQLite index. Point it at any file or directory and it works. `callers` is intentionally syntactic — it finds call-shaped syntax without resolving imports or types — it's simple, and works on incomplete and broken source.
+**[trace](https://github.com/resolveworks/trace)** — gives Pi three deterministic ways to navigate code: `outline` maps the definitions in a file or directory, `def` retrieves a complete definition by name, and `callers` finds call sites to inspect. Tree-sitter provides the syntax trees, while SQLite caches the resulting index. `callers` is deliberately simple: it finds call-shaped syntax without resolving imports or types, so it also works on incomplete and broken source.
 
-**[scry](https://github.com/resolveworks/scry)** — web search via the Brave Search API. One tool: `web_search`, with optional freshness filtering.
+**[scry](https://github.com/resolveworks/scry)** — lets Pi search the web. Its single `web_search` tool returns links with enough context for the agent to decide what to open, and can restrict searches to recent results.
 
-**[mine](https://github.com/resolveworks/mine)** — web fetch through a real Chrome browser on a virtual display. JavaScript-heavy pages work fine. Cookie banners are dismissed automatically. Output is clean markdown.
+**[mine](https://github.com/resolveworks/mine)** — lets Pi read those pages. Its `web_fetch` tool opens a URL in Chrome, waits for JavaScript to render, dismisses cookie banners, and extracts the main content as clean markdown. Using a browser rather than a simple HTTP request makes client-rendered sites work too.
 
 So far, I haven't needed anything else.
 
