@@ -100,15 +100,13 @@ class EmbeddingVisualization {
     // Base edge opacity from connection strength (0-1, set by the generator)
     const edgeOpacity = (d) => 0.35 + 0.65 * (d.strength ?? 1);
 
-    // Adjacency for hover highlighting: node id -> incident edges/neighbors
+    // Adjacency for hover highlighting: node id -> incident edges
     const adjacency = new Map(
-      this.nodes.map((n) => [n.id, { edges: new Set(), neighbors: new Set() }])
+      this.nodes.map((n) => [n.id, { edges: new Set() }])
     );
     for (const e of this.edges) {
       adjacency.get(e.source).edges.add(e);
       adjacency.get(e.target).edges.add(e);
-      adjacency.get(e.source).neighbors.add(e.target);
-      adjacency.get(e.target).neighbors.add(e.source);
     }
 
     // Draw edges using precomputed strengths. Opacity via style (not attr)
@@ -136,7 +134,7 @@ class EmbeddingVisualization {
       .attr("transform", (d) => `translate(${xScale(d.x)}, ${yScale(d.y)})`);
 
     // Node circles with z-based radius
-    const circles = nodeGroups
+    nodeGroups
       .append("circle")
       .attr("r", (d) => this.getNodeRadius(d.z))
       .attr("fill", (d) => this.getNodeColor(d.position))
@@ -150,16 +148,13 @@ class EmbeddingVisualization {
         d3.select(event.currentTarget)
           .select("circle")
           .attr("r", this.getNodeRadius(d.z) + 4);
-        // Highlight the node's connections, dim everything else
-        const { edges, neighbors } = adjacency.get(d.id);
+        // Highlight the node's connections while leaving all nodes fully opaque.
+        const { edges } = adjacency.get(d.id);
         lines
           .style("stroke-opacity", (e) => (edges.has(e) ? 1 : 0.04))
           .attr("stroke-width", (e) =>
             edges.has(e) ? this.getStrokeWidth() * 1.8 : this.getStrokeWidth()
           );
-        circles.style("fill-opacity", (n) =>
-          n.id === d.id || neighbors.has(n.id) ? 1 : 0.5
-        );
         tooltip = d3
           .select("body")
           .append("div")
@@ -179,7 +174,6 @@ class EmbeddingVisualization {
         lines
           .style("stroke-opacity", edgeOpacity)
           .attr("stroke-width", this.getStrokeWidth());
-        circles.style("fill-opacity", 1);
         if (tooltip) {
           tooltip.remove();
           tooltip = null;

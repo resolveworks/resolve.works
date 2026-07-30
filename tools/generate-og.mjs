@@ -12,9 +12,8 @@
  * and rasterized by resvg — no text layout or font handling.
  *
  * Cards are content-derived (via the embeddings) and committed, so the site
- * build itself rasterizes nothing. Run after `pnpm generate-embeddings`
- * (its npm script chains this one, then rebuilds so build/ picks up the
- * fresh PNGs):
+ * build itself rasterizes nothing. Run after `pnpm generate-embeddings`;
+ * this npm script then rebuilds so build/ picks up the fresh PNGs:
  *
  *     pnpm generate-og
  */

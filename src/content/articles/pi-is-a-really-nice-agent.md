@@ -1,4 +1,3 @@
-
 ---
 title: "Pi is a really nice agent"
 intro: "Pi starts with a small core and lets you build the rest yourself. The result is an agent environment that works the way I think."
@@ -50,7 +49,7 @@ Tree-sitter is the right foundation for exploration. It builds a syntax tree on 
 
 Syntactic indexing provides most of what the agent needs to navigate: file outlines, definitions, and candidate call sites. It does not have to prove that every result is semantically exact; it has to point the agent toward the right code, which the agent can then read. Correctness belongs elsewhere. The linter, type checker, and test suite validate changes at explicit boundaries. This division gives the agent useful code intelligence with very little machinery.
 
-## Never roll back
+## Only forward, never back
 
 Long-running agent sessions eventually fill the context window. A common response is compaction: replace the earlier conversation with a summary and continue from there. This keeps the context bounded, but [summarization is inherently lossy](https://arxiv.org/abs/2605.23296). Constraints, decisions, and failed approaches can disappear, and repeated compactions make it harder to know what changed or why. I think of it as entropy: each rewrite introduces a little more noise.
 
@@ -68,13 +67,12 @@ All agents run within `tmux`, inside [Ward](https://github.com/resolveworks/ward
 
 Git hooks are the other half of the deterministic layer. A `post-checkout` hook prepares each new worktree, while `pre-commit` formats, lints, type-checks, and tests the result. This gives the agent lightweight tools for exploration and authoritative, project-specific validation before anything enters history.
 
-## Who's driving?
+## The models
 
 Lately I'm mostly using open-weight models from Kimi, GLM, and DeepSeek. These are no longer budget alternatives to the frontier; they are part of it. Kimi K3 currently sits near the top of the [Artificial Analysis Intelligence Index](https://artificialanalysis.ai/models), while GLM and DeepSeek remain competitive at API prices often far below those of the leading closed providers. There's also a less obvious reason: these labs release their models, while closed providers do not. If my usage data contributes to training, I would rather that value flow toward models the public can run and build on than remain entirely inside a closed product.
 
 I still keep subscriptions to closed providers. For harder problems, I let models from different families respond to one another—either through sub-agents or by pasting one model's output into another context. They critique and build on each other's work. In my experience, the exchange surfaces ambiguities, edge cases, and bad assumptions that either model might accept on its own.
 
-In the end, I have an environment that works the way I think. Creating it has given me a satisfaction that no bought software ever could.
+Models will come and go. What I wanted was an environment that could change with them and with me. That is what I have now, and creating it has given me a satisfaction that no bought software ever could.
 
 Pi gave me a small core I could understand and change. Everything I added came from a problem I had actually encountered. I no longer have to adapt my work to a harness designed for everyone else. I can adapt the harness to my work.
-

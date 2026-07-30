@@ -16,7 +16,7 @@
  * model + sentence hash) so re-tuning UMAP/edges skips the model run.
  *
  * Run after `pnpm build` (the npm script also rebuilds, so build/ picks up
- * the fresh JSON and cards):
+ * the fresh JSON):
  *
  *     pnpm build && pnpm generate-embeddings
  */
