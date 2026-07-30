@@ -1,27 +1,21 @@
 
 ## When the tool becomes a product
 
-For a long time, using Anthropic's models through their coding harness worked well for me. The models were good, and initially the harness was simple. However, over time, the harness became bloated and slow, and starting in January 2026, Anthropic disallowed using your subscription with third-party harnesses. 
+For a long time, Anthropic's models and coding harness worked well for me. The models were good, and the harness was initially simple. Over time, though, the harness became bloated and slow. Then, in early 2026, Anthropic began [locking Claude subscription credentials to its own products](https://code.claude.com/docs/en/legal-and-compliance), blocking their use with third-party harnesses. API access remained available, but metered separately. That lock-in was the trigger for me to leave.
 
-This was a shift from selling tokens to selling a product. An inference provider gives you a model and stays out of how you use it. A product draws a boundary around what you're allowed to do. That boundary however, has to work for everyone, which means a lot of compromises.
+To me, this marked the difference between buying inference and buying a product. An inference provider sells access to a model and leaves you to decide how to use it. A product bundles the model with a prescribed way of using it. Once the harness and subscription become one product, you inherit decisions made for the whole market—and all the compromises that come with them.
 
 ## The harness that extends itself
 
-The [pi coding agent](https://github.com/earendil-works/pi) is built around a different idea. Its core is intentionally minimal — a small, focused tool that does one thing well. Everything else is an extension. You add only what you need. You can build extensions yourself, using the agent, its built-in documentation is great and encourages this. 
+The [pi coding agent](https://github.com/earendil-works/pi) is built around a different idea: keep the default surface small—`read`, `write`, `edit`, and `bash`—and make everything else pluggable. Extensions, skills, prompt templates, themes, and packages let you add only what you need. Pi explicitly encourages you to ask the agent to build extensions for you, and ships comprehensive documentation and examples to support it.
 
-The more tools an agent has access to, the more its performance degrades. This is one of the most thoroughly replicated findings in the agent literature. The failure mode isn't a graceful slope — it's a cliff. Transformer attention is a fixed budget, and every irrelevant tool description steals weight from the correct one. A model that handles 19 tools without issue can [fail entirely at 46](https://arxiv.org/abs/2411.15399). The practical threshold is clear: keep the active tool set under 10. Four is well within the safe zone.
+Tool descriptions are instructions: they tell the model what it can call, when to call it, and how to structure the call. Adding more tools therefore adds more instructions and more competing choices. In [ManyIFEval](https://openreview.net/forum?id=R6q67CDBCH), models became steadily less reliable as they were asked to follow more simultaneous instructions. [LongFuncEval](https://arxiv.org/abs/2505.10570) found the same pattern in function calling. There is no universal cliff or safe number. The practical rule is simply to keep the active surface as small as the work allows, and make every tool earn its place.
 
-### A different intelligence
+### What I use
 
-Language Server Protocol is the obvious choice for code intelligence — it gives compiler-accurate answers about types, references, and diagnostics. But LSP was designed for a human sitting in an IDE: stateful, cursor-position-based, a session you connect to. An agent needs something different. It needs answers in milliseconds, with no daemon to start or crash. It needs to work on broken source, because the codebase is in an intermediate state while the agent is working on it. It needs tools designed for its exploration pattern.
+Over the past six months, I've converged on this minimal set of extensions:
 
-Tree-sitter is the right foundation. It parses source in roughly a millisecond per 10K lines, it has no startup cost, it consumes no memory when idle, and because it's purely syntactic, it works on half-edited code that would choke a compiler-backed tool. For what an agent spends most of its time doing — finding definitions, tracing callers, mapping file structure — syntactic understanding is enough. The agent can read the file directly when it needs deeper context.
-
-The same reasoning applies to task list tools. `TodoWrite` is useful — for the human watching the terminal. It makes the agent's internal plan visible. But the model doesn't need to maintain a formatted checklist to decompose a task; it needs clear instructions in a clean context. Adding a tool for this adds tokens to every turn, competing for the same limited attention budget.
-
-### The four
-
-**[fork](https://github.com/resolveworks/fork)** — spawn sub-agents in separate `tmux` windows. The parent gets `spawn_agent`, `message_agent`, and `close_agent`. A child gets the `report_result` tool and can run in an isolated Git worktree on its own branch, or share the parent's working tree. 
+**[fork](https://github.com/resolveworks/fork)** — spawn sub-agents in separate `tmux` windows. The parent gets `spawn_agent`, `message_agent`, and `close_agent`. A child gets the `report_result` tool and can run in an isolated Git worktree on its own branch, or share the parent's working tree.
 
 **[trace](https://github.com/resolveworks/trace)** — three deterministic tools (`def`, `callers`, `outline`) backed by tree-sitter and a SQLite index. Point it at any file or directory and it works. `callers` is intentionally syntactic — it finds call-shaped syntax without resolving imports or types — it's simple, and works on incomplete and broken source.
 
@@ -29,27 +23,37 @@ The same reasoning applies to task list tools. `TodoWrite` is useful — for the
 
 **[mine](https://github.com/resolveworks/mine)** — web fetch through a real Chrome browser on a virtual display. JavaScript-heavy pages work fine. Cookie banners are dismissed automatically. Output is clean markdown.
 
-Four extensions. So far, that's all I really need. When context is the scarcest resource, every tool description that doesn't earn its place is actively harmful.
+So far, I haven't needed anything else.
+
+### A different intelligence
+
+LSP is the obvious source of semantic code intelligence: precise answers about types, references, and diagnostics. But it carries a session model built for editors—a client starts a language server, synchronizes open documents, and asks position-based questions. What bothered me most was the timing. Language servers can take time to start and index a project, while [diagnostics are often published asynchronously](https://microsoft.github.io/language-server-protocol/specifications/lsp/3.18/specification/#textDocument_publishDiagnostics). By the time a result reaches the agent, it may already have continued editing, turning correct advice about an earlier state into confusing advice about the current one. Freshness checks, version tracking, and waiting can mitigate this, but add still more coordination. That slowness and complexity were the opposite of what I wanted from an agent tool.
+
+Tree-sitter is the right foundation for exploration. It builds a syntax tree on demand, without a daemon or synchronized session, and is [designed to produce useful results even when the source contains syntax errors](https://tree-sitter.github.io/tree-sitter/). That makes it dependable on half-edited files.
+
+Syntactic indexing provides most of what the agent needs to navigate: file outlines, definitions, and candidate call sites. It does not have to prove that every result is semantically exact; it has to point the agent toward the right code, which the agent can then read. Correctness belongs elsewhere. The linter, type checker, and test suite validate changes at explicit boundaries. This division gives the agent useful code intelligence with very little machinery.
 
 ## Never roll back
 
-Long-running agent sessions eventually exceed the context window. Something we "solve" with compaction — periodically summarizing conversation history. However, errors compound across cycles and important context gets lossed. I see it as a sort of entropy, we're introducing more and more noise.
+Long-running agent sessions eventually fill the context window. A common response is compaction: replace the earlier conversation with a summary and continue from there. This keeps the context bounded, but [summarization is inherently lossy](https://arxiv.org/abs/2605.23296). Constraints, decisions, and failed approaches can disappear, and repeated compactions make it harder to know what changed or why. I think of it as entropy: each rewrite introduces a little more noise.
 
-The approach here is to avoid the need for compaction and long-horizon plans by using sub-agents from the start. Instead of one agent doing research, making a plan, implementing, and compacting along the way: spawn research sub-agents that return summaries, from those summaries, make a plan, then spawn implementation sub-agents that receive chunks of the plan as tasks. After each chunk, the orchestrator can review and commit. Each agent's context stays clean and focused. 
+I avoid long-running specialist sessions by delegating early. Research goes to fresh agents, each returning a focused report. I talk through those reports with the orchestrator until the next step is clear. When we reach implementation, I give it a simple instruction: chunk the work and implement it. It delegates each chunk, reviews the result, and commits it. No specialist needs the history of the entire project; each starts with clean context and only its assignment.
 
-The orchestrator maintains the high-level picture, the plan if you will; the specialists do the detailed work. This has the added benefit of using different models for these different tasks. Implementation can be done with surprisingly small and quick models, especially if the orchestrator is made to supply a bit more context.
+The same reasoning applies to task-list tools. In a long-running single-agent session, `TodoWrite` can serve as external memory as well as making the plan visible to the human. Here, the orchestrator is the task list: it maintains the plan and hands each sub-agent one focused task at a time. That makes a dedicated checklist tool obsolete.
 
-This pattern can repeat into a tree. An orchestrator spawns feature leads, which spawn specialists. Unlike compaction, delegation doesn't lose information — it isolates it.
+Delegation also lets me choose a model for each role. I keep more capable models in the orchestration and review loop, while using smaller, faster models for well-scoped implementation work. Given a clear assignment and the relevant context, those smaller models are surprisingly capable.
+
+The pattern can recurse: an orchestrator spawns feature leads, which spawn specialists of their own. Each branch gets a focused context, and its results flow back up through explicit, reviewable handoffs.
 
 ## Mistakes happen
 
-The agent runs inside a container inside a `tmux` instance, with access only to the parts of the filesystem it needs. This won't stop a genuinely malicious agent, but the container protects against the far more common failure: an agent, especially a less capable one, making an "honest mistake". 
+All agents run within `tmux`, inside [Ward](https://github.com/resolveworks/ward), a single rootless container. The container exposes only the parts of the filesystem they need. This is not a complete security boundary against an adversary; it is a way to limit the blast radius of ordinary mistakes. If an agent misreads a cleanup instruction or constructs a destructive command, it can only damage what the container can reach.
 
-Git hooks are the other half of the deterministic enforcement layer. A `post-checkout` hook sets up worktrees, and `pre-commit` runs the linter, type checker, and test suite.
+Git hooks are the other half of the deterministic layer. A `post-checkout` hook prepares each new worktree, while `pre-commit` formats, lints, type-checks, and tests the result. This gives the agent lightweight tools for exploration and authoritative, project-specific validation before anything enters history.
 
 ## Who's driving?
 
-Lately I'm mostly using open-weight models — Kimi, GLM and DeepSeek. These models are  competitive, matching frontier performance at a fraction of the cost. There's also a less obvious reason. These labs publish their research. When data flows to an open-science lab, some of that value returns to the community as papers, weights, and techniques others can build on.
+Lately I'm mostly using open-weight models from Kimi, GLM, and DeepSeek. These are no longer budget alternatives to the frontier; they are part of it. Kimi K3 currently sits near the top of the [Artificial Analysis Intelligence Index](https://artificialanalysis.ai/models), while GLM and DeepSeek remain competitive at API prices often far below those of the leading closed providers. There's also a less obvious reason: these labs release their models, while closed providers do not. If my usage data contributes to training, I would rather that value flow toward models the public can run and build on than remain entirely inside a closed product.
 
-I still keep around subscriptions to closed providers. Using multiple models from different providers for looking at the same problem from different angles surfaces issues that any single model would miss. Models trained on different datasets bring different assumptions and catch different problems.
+I still keep subscriptions to closed providers. For harder problems, I let models from different families respond to one another—either through sub-agents or by pasting one model's output into another context. They critique and build on each other's work. In my experience, the exchange surfaces ambiguities, edge cases, and bad assumptions that either model might accept on its own.
 
