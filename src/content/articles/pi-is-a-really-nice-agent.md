@@ -1,4 +1,11 @@
 
+---
+title: "Pi is a really nice agent"
+intro: "Pi starts with a small core and lets you build the rest yourself. The result is an agent environment that works the way I think."
+description: "How I shaped pi around my work with focused extensions, delegated contexts, deterministic code intelligence, and open-weight models."
+date: "2026-07-30T19:06:28.631064+00:00"
+---
+
 I have always built my own working environment. I used to heavily customize my editor through plugins. I use a Moonlander keyboard with a keymap that probably makes sense only to me. I use Arch, by the way. Not because everyone should manage their computer this way, but because I want my tools to adapt to how I work—not the other way around.
 
 There is an entirely reasonable alternative: let somebody else assemble the system, maintain it, and decide how its parts fit together. That removes responsibility and lets you concentrate on the work. The tradeoff is that you can only work within boundaries designed for the whole market. An open ecosystem lets you draw those boundaries yourself.
