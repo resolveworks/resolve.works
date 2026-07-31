@@ -39,29 +39,29 @@ Over the past six months, I've converged on this minimal set of extensions:
 
 So far, I haven't needed anything else.
 
-Writing these extensions taught me a lot about how agentic LLMs function under the hood. That knowledge has been as valuable as the extensions themselves.
+Working with and building agents has taught me where they struggle and what kinds of support they need. That knowledge shaped these extensions and has been as valuable as the tools themselves. It has also shaped what I deliberately left out.
 
 ### Explore, then validate
 
-LSP is the obvious source of semantic code intelligence: precise answers about types, references, and diagnostics. But in Claude Code, language servers were slow to start and diagnostics often arrived too late, confusing the model.
+Every codebase is unfamiliar to an agent. Before it can make useful changes, it needs orientation: a high-level map of what is defined where, so it can decide what to inspect instead of reconstructing the architecture through a long sequence of grep searches.
 
-Tree-sitter is a better fit for exploration. It builds a syntax tree on demand and is [designed to produce useful results even when the source contains syntax errors](https://tree-sitter.github.io/tree-sitter/). That makes it dependable on half-edited files.
+A language server appears to be the obvious solution, but it solves two different problems: code navigation and diagnostics. Language servers are designed to power an entire interactive editor, with a broad set of continuously available semantic features. That makes them complex and slow, while an agent usually needs much less.
 
-Exploration does not require every result to be semantically exact; it needs to point the agent toward the right code. Correctness belongs at an explicit boundary: a Git `pre-commit` hook formats, lints, type-checks, and tests each change. Together, Tree-sitter and the hook give me what I wanted from a language server, while being simpler and faster.
+To build an overview, syntax trees are enough. Tree-sitter produces them on demand and is [designed to return useful results even when the source contains syntax errors](https://tree-sitter.github.io/tree-sitter/). Exploration does not require every result to be semantically exact; it needs to point the agent toward the right code.
+
+Diagnostics are different. They need to be precise, but the agent needs them only when it is ready to check its work. It can explicitly run the formatter, linter, type checker, and tests, while a Git `pre-commit` hook guarantees that those checks happen before a change is committed.
 
 ## Branch, not loop
 
-I structure agent work around fresh contexts and explicit handoffs. Long-running sessions eventually fill the context window, and a common response is compaction: replace the earlier conversation with a summary and continue. This keeps the context bounded, but [summarization is inherently lossy](https://arxiv.org/abs/2605.23296). Constraints, decisions, and failed approaches can disappear. I think of it as entropy: each rewrite introduces a little more noise.
+The same ideas apply to context, so I keep agent trajectories short. Long-running sessions eventually fill their context windows. A common response is compaction: replace the earlier conversation with a summary and continue. This keeps the context bounded, but summarization is inherently lossy. Constraints, decisions, and failed approaches can disappear. I think of it as entropy: each rewrite introduces a little more noise.
 
-I keep one Pi session at the center of the work, focused on direction and decisions. Research questions go from there to fresh agents, which return focused reports for us to discuss. Once the next step is clear, I ask the main agent to divide the implementation into chunks. It delegates each chunk, reviews the result, and commits it. The main session plays much the same role as plan mode in other harnesses: it carries the plan, while the other agents carry only what they need for their task.
+Instead of repeatedly compressing one conversation, I branch the work. One Pi session remains at the center, carrying the direction and decisions. Research questions branch into fresh agents and return as focused reports for us to discuss. Once the next step is clear, the main agent divides the implementation into chunks, delegates each one, reviews the results, and commits them. It plays much the same role as plan mode in other harnesses: it carries the plan, while the other agents carry only what they need for their task.
 
-Keeping those roles separate also lets me choose a model for each. I use more capable models for the main session, while smaller, faster models handle well-scoped implementation work. Given a clear assignment and the relevant context, those smaller models are surprisingly capable.
+On larger jobs, a delegated agent can branch the work again. The shape changes, but the principle does not: each agent gets a focused context, and each result returns through an explicit, reviewable handoff.
 
-On larger jobs, a delegated agent can branch the work again. The principle stays the same: each agent gets a focused context, and its results return through an explicit, reviewable handoff.
+These branches have a concrete foundation. The main session and every delegated agent run in separate `tmux` windows, where they remain available for review and revisions. Parallel coding tasks can also run in isolated Git worktrees. I keep the entire environment inside [Ward](https://github.com/resolveworks/ward), a single rootless container that exposes only the parts of the filesystem the agents need. It is not a complete security boundary against an adversary; it limits the blast radius of ordinary mistakes.
 
-## Mistakes happen
-
-All agents run within `tmux`, inside [Ward](https://github.com/resolveworks/ward), a single rootless container. The container exposes only the parts of the filesystem they need. This is not a complete security boundary against an adversary; it is a way to limit the blast radius of ordinary mistakes. If an agent misreads a cleanup instruction or constructs a destructive command, it can only damage what the container can reach.
+Separating the roles also lets me choose a model for each. I use more capable models for the main session, while smaller, faster models handle well-scoped implementation work. Given a clear assignment and the relevant context, those smaller models are surprisingly capable.
 
 ## The models
 
